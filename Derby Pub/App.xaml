@@ -1,0 +1,9 @@
+﻿<Application x:Class="Derby_Pub.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Derby_Pub"
+             StartupUri="Views/ClientSignUpWindow.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Derby Pub", "Derby Pub\Derby Pub.csproj", "{EAA4BA5D-42D2-4F26-8A89-C3047138491F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EAA4BA5D-42D2-4F26-8A89-C3047138491F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAA4BA5D-42D2-4F26-8A89-C3047138491F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAA4BA5D-42D2-4F26-8A89-C3047138491F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAA4BA5D-42D2-4F26-8A89-C3047138491F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A65542B0-2C2E-4EA3-9FC8-EE2012C0333E}
+	EndGlobalSection
+EndGlobal
