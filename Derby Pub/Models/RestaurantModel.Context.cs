@@ -60,5 +60,18 @@ namespace Derby_Pub.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsByAllergen_Result>("GetProductsByAllergen", allergenNameParameter);
         }
+    
+        public virtual ObjectResult<GetAllProductWithAnAllergenBasedOnCategory_Result> GetAllProductWithAnAllergenBasedOnCategory(string category, string allegenName)
+        {
+            var categoryParameter = category != null ?
+                new ObjectParameter("category", category) :
+                new ObjectParameter("category", typeof(string));
+    
+            var allegenNameParameter = allegenName != null ?
+                new ObjectParameter("allegenName", allegenName) :
+                new ObjectParameter("allegenName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllProductWithAnAllergenBasedOnCategory_Result>("GetAllProductWithAnAllergenBasedOnCategory", categoryParameter, allegenNameParameter);
+        }
     }
 }

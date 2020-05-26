@@ -10,13 +10,18 @@
         <Grid.Background>
             <ImageBrush ImageSource="../Assets/BackgroundImage.jpg"></ImageBrush>
         </Grid.Background>
+        
         <Image Margin="70,10,70,300" Source="../Assets/LogoDerby.png" Stretch="Fill"/>
+        
         <Button Content="Register" FontSize="25" HorizontalAlignment="Left" Margin="104,222,0,0" VerticalAlignment="Top" Width="225" Height="70" Background="Transparent" BorderBrush="Black" BorderThickness="1"   x:Name="RegisterButton" Click="RegisterButton_Click"/>
+        
         <Button Content="Login" FontSize="25" HorizontalAlignment="Left" Margin="104,330,0,0" VerticalAlignment="Top" Width="225" Height="70" Background="Transparent" BorderBrush="Black" BorderThickness="1"   x:Name="LoginButton"/>
-        <Button Content="" FontSize="25" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="75"  x:Name="BackButton">
+        
+        <Button Content="" FontSize="25" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="75"  x:Name="BackButton" Click="BackButton_Click">
             <Button.Background>
                 <ImageBrush ImageSource="../Assets/back-icon.png" />
             </Button.Background>
         </Button>
+        
     </Grid>
 </Window>

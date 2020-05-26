@@ -27,10 +27,9 @@
         <TextBlock HorizontalAlignment="Left" FontSize="20" Margin="24,327,0,0" TextWrapping="Wrap" Text="Telefon:" VerticalAlignment="Top" Height="30" Width="92" x:Name="PhoneBox"/>
         <TextBox HorizontalAlignment="Left" Height="31" Margin="137,373,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" x:Name="AdressBox" Text ="{Binding Path=Adress}"/>
         <TextBlock HorizontalAlignment="Left" FontSize="20" Margin="24,374,0,0" TextWrapping="Wrap" Text="Adresa:" VerticalAlignment="Top" Height="30" Width="92"/>
-        <TextBox HorizontalAlignment="Left" Height="31" Margin="137,418,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" x:Name="PasswordBox" Text ="{Binding Path=Password}"/>
+        <PasswordBox HorizontalAlignment="Left" Height="31" Margin="137,418,0,0" VerticalAlignment="Top" Width="188" x:Name="PasswordBox" />
         <TextBlock HorizontalAlignment="Left" FontSize="20" Margin="24,418,0,0" TextWrapping="Wrap" Text="Parola:" VerticalAlignment="Top" Height="30" Width="92"/>
-        <Button Content="Inregistreaza" FontSize="25" Background="Transparent" HorizontalAlignment="Left" Margin="24,492,0,0" VerticalAlignment="Top" Width="188" Height="56" Command="{Binding AddCommand}"/>
+        <Button Content="Inregistreaza" FontSize="25" Background="Transparent" HorizontalAlignment="Left" Margin="24,492,0,0" VerticalAlignment="Top" Width="188" Height="56" Command="{Binding AddCommand}" CommandParameter="{Binding ElementName=PasswordBox}" />
         <Button Content="Anuleaza" FontSize="25" Background="Transparent" HorizontalAlignment="Left" Margin="231,492,0,0" VerticalAlignment="Top" Width="188" Height="56" x:Name="CancelButton" Click="CancelButton_Click" />
-
     </Grid>
 </Window>

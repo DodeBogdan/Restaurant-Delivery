@@ -99,8 +99,13 @@
     <Compile Include="Models\Allergen.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BusinessLayer\ProductsBLL.cs" />
     <Compile Include="Models\BusinessLayer\UserBLL.cs" />
     <Compile Include="Models\Category.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityLayer\ClientProductsDisplay.cs" />
+    <Compile Include="Models\GetAllProductWithAnAllergenBasedOnCategory_Result.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetProductByCategory_Result.cs">
@@ -184,7 +189,6 @@
     </EmbeddedResource>
     <EntityDeploy Include="Models\RestaurantModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>RestaurantModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="Models\RestaurantModel.edmx.diagram">
       <DependentUpon>RestaurantModel.edmx</DependentUpon>
@@ -200,7 +204,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\DataAccesLayer\" />
-    <Folder Include="Models\EntityLayer\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\LogoDerby.png" />

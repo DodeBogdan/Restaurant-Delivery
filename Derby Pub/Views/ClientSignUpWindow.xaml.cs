@@ -31,5 +31,13 @@ namespace Derby_Pub.Views
             App.Current.MainWindow = registerWindow;
             App.Current.MainWindow.Show();
         }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            StartUpPageWindow startUpPageWindow = new StartUpPageWindow();
+            App.Current.MainWindow.Close();
+            App.Current.MainWindow = startUpPageWindow;
+            App.Current.MainWindow.Show();
+        }
     }
 }

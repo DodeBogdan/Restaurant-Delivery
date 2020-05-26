@@ -10,7 +10,7 @@
     <Window.DataContext>
         <ctx:MenuViewModel/>
     </Window.DataContext>
-    
+
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="../Assets/BackgroundImage.jpg"></ImageBrush>
@@ -19,7 +19,57 @@
 
         <ComboBox Name="comboPers" Width="200" HorizontalAlignment="Left" 
                       ItemsSource="{Binding CategoryList}"
-                      SelectedValuePath="PersonId" SelectedIndex="0" SelectedValue="{Binding CategoryId}" Margin="66,60,0,319">
+                      SelectedIndex="0" SelectedItem="{Binding CategorySelected}" Margin="100,60,0,315">
         </ComboBox>
+
+        <TextBlock HorizontalAlignment="Left" Margin="100,10,0,0" TextWrapping="Wrap" Text="Categorii" VerticalAlignment="Top" Height="50" Width="200" FontSize="35" TextAlignment="Center" FontWeight="Bold"/>
+
+        <Button Content="" FontSize="25" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="75"  x:Name="BackButton" Click="BackButton_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="/Derby Pub;component/Assets/back-icon.png" />
+            </Button.Background>
+        </Button>
+
+        <Button Content="Creeaza cont" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" Margin="519,10,0,0" VerticalAlignment="Top" Width="150" Height="50" x:Name="RegisterButton" Click="RegisterButton_Click" Background="Transparent"/>
+
+        <ComboBox HorizontalAlignment="Left" Margin="519,83,0,0" VerticalAlignment="Top" Width="120" Height="37" x:Name="SearchComboBox" ItemsSource="{Binding SearchList}"
+                      SelectedIndex="0" SelectedItem="{Binding SearchSelected}" FontSize="14" FontWeight="Bold"/>
+
+        <TextBox HorizontalAlignment="Left" Height="37" Margin="644,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Name="SearchTextBox" Text="{Binding SearchText}"/>
+
+        <TextBlock HorizontalAlignment="Left" FontSize="20" TextAlignment="Center" Margin="454,85,0,0" TextWrapping="Wrap" Text="Cauta:" VerticalAlignment="Top" Height="35" Width="65"/>
+        
+        <DataGrid x:Name="productsGrid" CanUserResizeColumns="False" CanUserResizeRows="False"
+                  AutoGenerateColumns="False" HorizontalAlignment="Left" Height="266" Margin="10,144,0,0" VerticalAlignment="Top" Width="774" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ClientProductsList}">
+            
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Numele preparatului">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Name="lblN" Content="{Binding Name}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
+                <DataGridTemplateColumn Header="Gramaj">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Name="lblA" Content="{Binding Quantity}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Pret">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Name="lblA" Content="{Binding Price}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Content="Cauta" HorizontalAlignment="Left" Margin="709,120,0,0" VerticalAlignment="Top" Width="75" Background="Transparent" x:Name="SearchButton" Command="{Binding AddCommand}"/>
     </Grid>
 </Window>
