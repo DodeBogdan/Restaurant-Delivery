@@ -15,20 +15,20 @@ using System.Windows.Shapes;
 namespace Derby_Pub.Views
 {
     /// <summary>
-    /// Interaction logic for ClientSignUpWindow.xaml
+    /// Interaction logic for RegisterWindow.xaml
     /// </summary>
-    public partial class ClientSignUpWindow : Window
+    public partial class RegisterWindow : Window
     {
-        public ClientSignUpWindow()
+        public RegisterWindow()
         {
             InitializeComponent();
         }
 
-        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            RegisterWindow registerWindow = new RegisterWindow();
+            ClientSignUpWindow clientSignUpWindow = new ClientSignUpWindow();
             App.Current.MainWindow.Close();
-            App.Current.MainWindow = registerWindow;
+            App.Current.MainWindow = clientSignUpWindow;
             App.Current.MainWindow.Show();
         }
     }

@@ -15,21 +15,13 @@ using System.Windows.Shapes;
 namespace Derby_Pub.Views
 {
     /// <summary>
-    /// Interaction logic for ClientSignUpWindow.xaml
+    /// Interaction logic for MenuNoAccountWindow.xaml
     /// </summary>
-    public partial class ClientSignUpWindow : Window
+    public partial class MenuNoAccountWindow : Window
     {
-        public ClientSignUpWindow()
+        public MenuNoAccountWindow()
         {
             InitializeComponent();
-        }
-
-        private void RegisterButton_Click(object sender, RoutedEventArgs e)
-        {
-            RegisterWindow registerWindow = new RegisterWindow();
-            App.Current.MainWindow.Close();
-            App.Current.MainWindow = registerWindow;
-            App.Current.MainWindow.Show();
         }
     }
 }

@@ -38,6 +38,11 @@ namespace Derby_Pub.Models
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<User> Users { get; set; }
     
+        public virtual ObjectResult<string> GetAllCategoryes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetAllCategoryes");
+        }
+    
         public virtual ObjectResult<GetProductByCategory_Result> GetProductByCategory(string categoryName)
         {
             var categoryNameParameter = categoryName != null ?

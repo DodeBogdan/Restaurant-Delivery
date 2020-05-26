@@ -75,6 +75,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\MenuNoAccountWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RegisterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\StartUpPageWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -83,12 +91,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helps\BaseVM.cs" />
+    <Compile Include="Helps\RelayCommand.cs" />
     <Compile Include="Models\AccountType.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Allergen.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BusinessLayer\UserBLL.cs" />
     <Compile Include="Models\Category.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
@@ -134,11 +145,19 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="Views\ClientSignUpWindow.xaml.cs">
       <DependentUpon>ClientSignUpWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EmployeeStartUpWindow.xaml.cs">
       <DependentUpon>EmployeeStartUpWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuNoAccountWindow.xaml.cs">
+      <DependentUpon>MenuNoAccountWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RegisterWindow.xaml.cs">
+      <DependentUpon>RegisterWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StartUpPageWindow.xaml.cs">
       <DependentUpon>StartUpPageWindow.xaml</DependentUpon>
@@ -180,11 +199,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Helps\" />
-    <Folder Include="Models\BusinessLayer\" />
     <Folder Include="Models\DataAccesLayer\" />
     <Folder Include="Models\EntityLayer\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\LogoDerby.png" />

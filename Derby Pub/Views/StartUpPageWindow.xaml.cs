@@ -1,4 +1,5 @@
 ﻿using Derby_Pub.Models;
+using Derby_Pub.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,12 +34,18 @@ namespace Derby_Pub
 
         private void NoAccountButton_Click(object sender, RoutedEventArgs e)
         {
-
+            MenuNoAccountWindow menuNoAccountWindow = new MenuNoAccountWindow();
+            App.Current.MainWindow.Close();
+            App.Current.MainWindow = menuNoAccountWindow;
+            App.Current.MainWindow.Show();
         }
 
         private void ClientButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ClientSignUpWindow clientSignUpWindow = new ClientSignUpWindow();
+            App.Current.MainWindow.Close();
+            App.Current.MainWindow = clientSignUpWindow;
+            App.Current.MainWindow.Show();
         }
     }
 }
