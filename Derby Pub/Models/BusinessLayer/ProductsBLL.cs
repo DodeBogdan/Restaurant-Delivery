@@ -1,9 +1,11 @@
 ﻿using Derby_Pub.Models.EntityLayer;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Derby_Pub.Models.BusinessLayer
 {
@@ -17,25 +19,41 @@ namespace Derby_Pub.Models.BusinessLayer
 
             List<ClientProductsDisplay> productsDisplays = new List<ClientProductsDisplay>();
 
-            foreach(var product in products)
+            foreach (var product in products)
             {
                 productsDisplays.Add(new ClientProductsDisplay()
                 {
                     Name = product.Name,
                     Price = product.Price.ToString() + "RON",
                     Quantity = product.Quantity.ToString() + "grams"
-                }) ;
+                });
             }
 
             return productsDisplays;
         }
 
-        public List<ClientProductsDisplay> GetProductsContaining(string category,string name)
+        internal List<string> GetImagesFromProductName(string productName)
+        {
+            List<string> images = restaurant.GetImagesFromProductName(productName).ToList();
+            for(int index = 0; index < images.Count; index++)
+            {
+                images[index] = images[index].Trim();
+            }
+
+            return images;
+        }
+
+        internal List<string> GetAllergensByProductName(string productName)
+        {
+            return restaurant.GetAllergenFromProductName(productName).ToList();
+        }
+
+        public List<ClientProductsDisplay> GetProductsContaining(string category, string name)
         {
             var products = restaurant.GetProductByCategory(category)
                 .Where((x) => x.Name.ToLower().Contains(name.ToLower()));
-                
-            
+
+
             List<ClientProductsDisplay> productsDisplays = new List<ClientProductsDisplay>();
 
             foreach (var product in products)
@@ -54,31 +72,24 @@ namespace Derby_Pub.Models.BusinessLayer
         internal List<ClientProductsDisplay> GetProductsWithoutAllergens(string categorySelected, string searchText)
         {
             var productsFromCategory = restaurant.GetProductByCategory(categorySelected).ToList();
-            var productsWithAllegen = restaurant.GetAllProductWithAnAllergenBasedOnCategory(categorySelected, searchText);
+            var productsWithAllegen = restaurant.GetAllProductWithAnAllergenBasedOnCategory(categorySelected, searchText).ToList();
 
             List<ClientProductsDisplay> productsDisplays = new List<ClientProductsDisplay>();
 
+
             foreach (var product in productsFromCategory)
             {
-                foreach(var p in productsWithAllegen)
+                if (!productsWithAllegen.Contains(product.Name))
                 {
-                    if(p.Name == product.Name)
+                    productsDisplays.Add(new ClientProductsDisplay()
                     {
-                        productsFromCategory.Remove(product);
-                        continue;
-                    }
+                        Name = product.Name,
+                        Price = product.Price.ToString() + "RON",
+                        Quantity = product.Quantity.ToString() + "grams"
+                    });
                 }
-
-                
             }
 
-            foreach (var product in productsFromCategory)
-                productsDisplays.Add(new ClientProductsDisplay()
-                {
-                    Name = product.Name,
-                    Price = product.Price.ToString() + "RON",
-                    Quantity = product.Quantity.ToString() + "grams"
-                });
 
             return productsDisplays;
         }

@@ -20,9 +20,8 @@ namespace Derby_Pub.Models
             this.Products = new HashSet<Product>();
         }
     
-        public int ImagesID { get; set; }
-        public string ImageName { get; set; }
-        public byte[] ImagePath { get; set; }
+        public int ImageId { get; set; }
+        public string ImagePath { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }

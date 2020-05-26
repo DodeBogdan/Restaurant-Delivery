@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Derby_Pub.Models.EntityLayer
 {
-    class ClientProductsDisplay
+    public class ClientProductsDisplay
     {
         public string Name { get; set; }
         public string Quantity { get; set; }

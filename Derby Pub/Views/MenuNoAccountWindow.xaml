@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ctx="clr-namespace:Derby_Pub.ViewModels"
         mc:Ignorable="d"
-        Title="MenuNoAccountWindow" Height="450" Width="800">
+        Title="MenuNoAccountWindow" Height="450" Width="800" ResizeMode="NoResize">
 
     <Window.DataContext>
         <ctx:MenuViewModel/>
@@ -38,10 +38,11 @@
         <TextBox HorizontalAlignment="Left" Height="37" Margin="644,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Name="SearchTextBox" Text="{Binding SearchText}"/>
 
         <TextBlock HorizontalAlignment="Left" FontSize="20" TextAlignment="Center" Margin="454,85,0,0" TextWrapping="Wrap" Text="Cauta:" VerticalAlignment="Top" Height="35" Width="65"/>
-        
+
         <DataGrid x:Name="productsGrid" CanUserResizeColumns="False" CanUserResizeRows="False"
-                  AutoGenerateColumns="False" HorizontalAlignment="Left" Height="266" Margin="10,144,0,0" VerticalAlignment="Top" Width="774" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ClientProductsList}">
-            
+                  AutoGenerateColumns="False" HorizontalAlignment="Left" Height="222" Margin="10,144,0,0" VerticalAlignment="Top" Width="774" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ClientProductsList}" SelectionMode="Single"
+                  SelectedItem="{Binding ProductSelected}">
+
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Numele preparatului">
                     <DataGridTemplateColumn.CellTemplate>
@@ -50,7 +51,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                
+
                 <DataGridTemplateColumn Header="Gramaj">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -66,10 +67,12 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                
+
             </DataGrid.Columns>
         </DataGrid>
 
         <Button Content="Cauta" HorizontalAlignment="Left" Margin="709,120,0,0" VerticalAlignment="Top" Width="75" Background="Transparent" x:Name="SearchButton" Command="{Binding AddCommand}"/>
+
+        <Button Content="Vezi detalii despre:" HorizontalAlignment="Left" Margin="332,385,0,0" VerticalAlignment="Top" Width="169" Name="DetailsButton" Command="{Binding SeeDetails}" />
     </Grid>
 </Window>

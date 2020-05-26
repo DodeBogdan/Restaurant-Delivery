@@ -39,5 +39,10 @@ namespace Derby_Pub.Views
             App.Current.MainWindow = registerWindow;
             App.Current.MainWindow.Show();
         }
+
+        private void productsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

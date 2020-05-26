@@ -43,25 +43,16 @@ namespace Derby_Pub.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetAllCategoryes");
         }
     
-        public virtual ObjectResult<GetProductByCategory_Result> GetProductByCategory(string categoryName)
+        public virtual ObjectResult<string> GetAllergenFromProductName(string productName)
         {
-            var categoryNameParameter = categoryName != null ?
-                new ObjectParameter("CategoryName", categoryName) :
-                new ObjectParameter("CategoryName", typeof(string));
+            var productNameParameter = productName != null ?
+                new ObjectParameter("ProductName", productName) :
+                new ObjectParameter("ProductName", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductByCategory_Result>("GetProductByCategory", categoryNameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetAllergenFromProductName", productNameParameter);
         }
     
-        public virtual ObjectResult<GetProductsByAllergen_Result> GetProductsByAllergen(string allergenName)
-        {
-            var allergenNameParameter = allergenName != null ?
-                new ObjectParameter("AllergenName", allergenName) :
-                new ObjectParameter("AllergenName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsByAllergen_Result>("GetProductsByAllergen", allergenNameParameter);
-        }
-    
-        public virtual ObjectResult<GetAllProductWithAnAllergenBasedOnCategory_Result> GetAllProductWithAnAllergenBasedOnCategory(string category, string allegenName)
+        public virtual ObjectResult<string> GetAllProductWithAnAllergenBasedOnCategory(string category, string allegenName)
         {
             var categoryParameter = category != null ?
                 new ObjectParameter("category", category) :
@@ -71,7 +62,34 @@ namespace Derby_Pub.Models
                 new ObjectParameter("allegenName", allegenName) :
                 new ObjectParameter("allegenName", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllProductWithAnAllergenBasedOnCategory_Result>("GetAllProductWithAnAllergenBasedOnCategory", categoryParameter, allegenNameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetAllProductWithAnAllergenBasedOnCategory", categoryParameter, allegenNameParameter);
+        }
+    
+        public virtual ObjectResult<string> GetImagesFromProductName(string productName)
+        {
+            var productNameParameter = productName != null ?
+                new ObjectParameter("ProductName", productName) :
+                new ObjectParameter("ProductName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetImagesFromProductName", productNameParameter);
+        }
+    
+        public virtual ObjectResult<GetProductByCategory_Result> GetProductByCategory(string categoryName)
+        {
+            var categoryNameParameter = categoryName != null ?
+                new ObjectParameter("CategoryName", categoryName) :
+                new ObjectParameter("CategoryName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductByCategory_Result>("GetProductByCategory", categoryNameParameter);
+        }
+    
+        public virtual int GetProductsByAllergen(string allergenName)
+        {
+            var allergenNameParameter = allergenName != null ?
+                new ObjectParameter("AllergenName", allergenName) :
+                new ObjectParameter("AllergenName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetProductsByAllergen", allergenNameParameter);
         }
     }
 }

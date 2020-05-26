@@ -2,6 +2,7 @@
 using Derby_Pub.Models;
 using Derby_Pub.Models.BusinessLayer;
 using Derby_Pub.Models.EntityLayer;
+using Derby_Pub.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -93,6 +94,18 @@ namespace Derby_Pub.ViewModels
             }
         }
 
+        private ClientProductsDisplay productSelected;
+
+        public ClientProductsDisplay ProductSelected
+        {
+            get { return productSelected; }
+            set { 
+                productSelected = value;
+                OnPropertyChanged("ProductSelected");
+            }
+        }
+
+
         private string searchText;
 
         public string SearchText
@@ -135,5 +148,25 @@ namespace Derby_Pub.ViewModels
             }
         }
 
+        private ICommand seeDetails;
+        public ICommand SeeDetails
+        {
+            get
+            {
+                if (seeDetails == null)
+                {
+                    seeDetails = new RelayCommand(ProductDetails);
+                }
+                return seeDetails;
+            }
+        }
+
+        private void ProductDetails(object obj)
+        {
+            string name = ProductSelected.Name.Trim();
+            ProductWindow productWindow = new ProductWindow(name);
+            App.Current.MainWindow = productWindow;
+            App.Current.MainWindow.Show();
+        }
     }
 }
