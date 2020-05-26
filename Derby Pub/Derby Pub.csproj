@@ -83,6 +83,57 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\AccountType.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Allergen.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Category.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetProductByCategory_Result.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetProductsByAllergen_Result.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Image.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Menu.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Menu_Product.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Order.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RestaurantModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RestaurantModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RestaurantModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RestaurantModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RestaurantModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\State.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Views\ClientSignUpWindow.xaml.cs">
       <DependentUpon>ClientSignUpWindow.xaml</DependentUpon>
     </Compile>
@@ -112,6 +163,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="Models\RestaurantModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RestaurantModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\RestaurantModel.edmx.diagram">
+      <DependentUpon>RestaurantModel.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -139,6 +197,18 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Models\RestaurantModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RestaurantModel.edmx</DependentUpon>
+      <LastGenOutput>RestaurantModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\RestaurantModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RestaurantModel.edmx</DependentUpon>
+      <LastGenOutput>RestaurantModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

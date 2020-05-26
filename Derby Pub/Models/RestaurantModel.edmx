@@ -1,0 +1,832 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DerbyPubModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AccountType">
+          <Key>
+            <PropertyRef Name="AccountTypeID" />
+          </Key>
+          <Property Name="AccountTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountTypeName" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Allergen">
+          <Key>
+            <PropertyRef Name="AllergenID" />
+          </Key>
+          <Property Name="AllergenID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ImagesID" />
+          </Key>
+          <Property Name="ImagesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImageName" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ImagePath" Type="image" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="MenuID" />
+          </Key>
+          <Property Name="MenuID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Menu_Product">
+          <Key>
+            <PropertyRef Name="Menu_ProductID" />
+          </Key>
+          <Property Name="Menu_ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MenuID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DerbyPub.dbo.Order_Product' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Order_Product">
+          <Key>
+            <PropertyRef Name="OrderID" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="StateID" Type="int" Nullable="false" />
+          <Property Name="UniqueCode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Order_Time" Type="datetime" Nullable="false" />
+          <Property Name="Estimated_Time" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Price" Type="real" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Total_Quantity" Type="int" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DerbyPub.dbo.Product_Allergen' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Product_Allergen">
+          <Key>
+            <PropertyRef Name="ProductID" />
+            <PropertyRef Name="AllgergenID" />
+          </Key>
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="AllgergenID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Product_Image">
+          <Key>
+            <PropertyRef Name="ProductID" />
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ImageID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="StateID" />
+          </Key>
+          <Property Name="StateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="State" Type="nchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="First_Name" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="Last_Name" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="Email" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="Phone" Type="nchar" MaxLength="11" Nullable="false" />
+          <Property Name="Adress" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="Account_Type" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Menu_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Menu">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Menu_Product_Menu">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="1" />
+          <End Role="Menu_Product" Type="Self.Menu_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="MenuID" />
+            </Principal>
+            <Dependent Role="Menu_Product">
+              <PropertyRef Name="MenuID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Menu_Product_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Menu_Product" Type="Self.Menu_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Menu_Product">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Product_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Order_Product" Type="Self.Order_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="Order_Product">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Product_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Order_Product" Type="Self.Order_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Order_Product">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Allergen_Allergen">
+          <End Role="Allergen" Type="Self.Allergen" Multiplicity="1" />
+          <End Role="Product_Allergen" Type="Self.Product_Allergen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Allergen">
+              <PropertyRef Name="AllergenID" />
+            </Principal>
+            <Dependent Role="Product_Allergen">
+              <PropertyRef Name="AllgergenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Allergen_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Product_Allergen" Type="Self.Product_Allergen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Product_Allergen">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Image_Image">
+          <End Role="Image" Type="Self.Image" Multiplicity="1" />
+          <End Role="Product_Image" Type="Self.Product_Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="ImagesID" />
+            </Principal>
+            <Dependent Role="Product_Image">
+              <PropertyRef Name="ImageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Image_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Product_Image" Type="Self.Product_Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Product_Image">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_State_Order">
+          <End Role="State" Type="Self.State" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_AccountType">
+          <End Role="AccountType" Type="Self.AccountType" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountType">
+              <PropertyRef Name="AccountTypeID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Account_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Order">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetProductByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CategoryName" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="GetProductsByAllergen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AllergenName" Type="nchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="DerbyPubModelStoreContainer">
+          <EntitySet Name="AccountType" EntityType="Self.AccountType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Allergen" EntityType="Self.Allergen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Menu_Product" EntityType="Self.Menu_Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_Product" EntityType="Self.Order_Product" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Order_Product].[OrderID] AS [OrderID], 
+    [Order_Product].[ProductID] AS [ProductID]
+    FROM [dbo].[Order_Product] AS [Order_Product]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Product_Allergen" EntityType="Self.Product_Allergen" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Product_Allergen].[ProductID] AS [ProductID], 
+    [Product_Allergen].[AllgergenID] AS [AllgergenID]
+    FROM [dbo].[Product_Allergen] AS [Product_Allergen]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Product_Image" EntityType="Self.Product_Image" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Product_Image].[ProductID] AS [ProductID], 
+    [Product_Image].[ImageID] AS [ImageID]
+    FROM [dbo].[Product_Image] AS [Product_Image]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Menu_Category" Association="Self.FK_Menu_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Menu" EntitySet="Menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Menu_Product_Menu" Association="Self.FK_Menu_Product_Menu">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="Menu_Product" EntitySet="Menu_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Menu_Product_Product" Association="Self.FK_Menu_Product_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Menu_Product" EntitySet="Menu_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Product_Orders" Association="Self.FK_Order_Product_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Order_Product" EntitySet="Order_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Product_Product" Association="Self.FK_Order_Product_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Order_Product" EntitySet="Order_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Allergen_Allergen" Association="Self.FK_Product_Allergen_Allergen">
+            <End Role="Allergen" EntitySet="Allergen" />
+            <End Role="Product_Allergen" EntitySet="Product_Allergen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Allergen_Product" Association="Self.FK_Product_Allergen_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Product_Allergen" EntitySet="Product_Allergen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Category" Association="Self.FK_Product_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Image_Image" Association="Self.FK_Product_Image_Image">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="Product_Image" EntitySet="Product_Image" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Image_Product" Association="Self.FK_Product_Image_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Product_Image" EntitySet="Product_Image" />
+          </AssociationSet>
+          <AssociationSet Name="FK_State_Order" Association="Self.FK_State_Order">
+            <End Role="State" EntitySet="State" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_AccountType" Association="Self.FK_User_AccountType">
+            <End Role="AccountType" EntitySet="AccountType" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Order" Association="Self.FK_User_Order">
+            <End Role="User" EntitySet="User" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DerbyPubModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AccountType">
+          <Key>
+            <PropertyRef Name="AccountTypeID" />
+          </Key>
+          <Property Name="AccountTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountTypeName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_AccountType" FromRole="AccountType" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Allergen">
+          <Key>
+            <PropertyRef Name="AllergenID" />
+          </Key>
+          <Property Name="AllergenID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="Self.Product_Allergen" FromRole="Allergen" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Menus" Relationship="Self.FK_Menu_Category" FromRole="Category" ToRole="Menu" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_Category" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ImagesID" />
+          </Key>
+          <Property Name="ImagesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImageName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ImagePath" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="Self.Product_Image" FromRole="Image" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="MenuID" />
+          </Key>
+          <Property Name="MenuID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_Menu_Category" FromRole="Menu" ToRole="Category" />
+          <NavigationProperty Name="Menu_Product" Relationship="Self.FK_Menu_Product_Menu" FromRole="Menu" ToRole="Menu_Product" />
+        </EntityType>
+        <EntityType Name="Menu_Product">
+          <Key>
+            <PropertyRef Name="Menu_ProductID" />
+          </Key>
+          <Property Name="Menu_ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MenuID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Menu" Relationship="Self.FK_Menu_Product_Menu" FromRole="Menu_Product" ToRole="Menu" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Menu_Product_Product" FromRole="Menu_Product" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="StateID" Type="Int32" Nullable="false" />
+          <Property Name="UniqueCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Order_Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Estimated_Time" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="State" Relationship="Self.FK_State_Order" FromRole="Orders" ToRole="State" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Order" FromRole="Orders" ToRole="User" />
+          <NavigationProperty Name="Products" Relationship="Self.Order_Product" FromRole="Orders" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Single" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Total_Quantity" Type="Int32" Nullable="false" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_Product_Category" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="Menu_Product" Relationship="Self.FK_Menu_Product_Product" FromRole="Product" ToRole="Menu_Product" />
+          <NavigationProperty Name="Orders" Relationship="Self.Order_Product" FromRole="Product" ToRole="Orders" />
+          <NavigationProperty Name="Allergens" Relationship="Self.Product_Allergen" FromRole="Product" ToRole="Allergen" />
+          <NavigationProperty Name="Images" Relationship="Self.Product_Image" FromRole="Product" ToRole="Image" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="StateID" />
+          </Key>
+          <Property Name="StateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="State1" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_State_Order" FromRole="State" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="First_Name" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Last_Name" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="11" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Adress" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Account_Type" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AccountType" Relationship="Self.FK_User_AccountType" FromRole="User" ToRole="AccountType" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_User_Order" FromRole="User" ToRole="Orders" />
+        </EntityType>
+        <Association Name="FK_User_AccountType">
+          <End Role="AccountType" Type="Self.AccountType" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountType">
+              <PropertyRef Name="AccountTypeID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Account_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Menu_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Menu">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Menu_Product_Menu">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="1" />
+          <End Role="Menu_Product" Type="Self.Menu_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="MenuID" />
+            </Principal>
+            <Dependent Role="Menu_Product">
+              <PropertyRef Name="MenuID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Menu_Product_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Menu_Product" Type="Self.Menu_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Menu_Product">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_State_Order">
+          <End Role="State" Type="Self.State" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Order">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Order_Product">
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+        </Association>
+        <Association Name="Product_Allergen">
+          <End Role="Allergen" Type="Self.Allergen" Multiplicity="*" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+        </Association>
+        <Association Name="Product_Image">
+          <End Role="Image" Type="Self.Image" Multiplicity="*" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="RestaurantModel" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AccountTypes" EntityType="Self.AccountType" />
+          <EntitySet Name="Allergens" EntityType="Self.Allergen" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Images" EntityType="Self.Image" />
+          <EntitySet Name="Menus" EntityType="Self.Menu" />
+          <EntitySet Name="Menu_Product" EntityType="Self.Menu_Product" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="States" EntityType="Self.State" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_User_AccountType" Association="Self.FK_User_AccountType">
+            <End Role="AccountType" EntitySet="AccountTypes" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Menu_Category" Association="Self.FK_Menu_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Menu" EntitySet="Menus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Category" Association="Self.FK_Product_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Menu_Product_Menu" Association="Self.FK_Menu_Product_Menu">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="Menu_Product" EntitySet="Menu_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Menu_Product_Product" Association="Self.FK_Menu_Product_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Menu_Product" EntitySet="Menu_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_State_Order" Association="Self.FK_State_Order">
+            <End Role="State" EntitySet="States" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Order" Association="Self.FK_User_Order">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="Order_Product" Association="Self.Order_Product">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="Product_Allergen" Association="Self.Product_Allergen">
+            <End Role="Allergen" EntitySet="Allergens" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="Product_Image" Association="Self.Product_Image">
+            <End Role="Image" EntitySet="Images" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <FunctionImport Name="GetProductByCategory" ReturnType="Collection(DerbyPubModel.GetProductByCategory_Result)">
+            <Parameter Name="CategoryName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetProductsByAllergen" ReturnType="Collection(DerbyPubModel.GetProductsByAllergen_Result)">
+            <Parameter Name="AllergenName" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetProductByCategory_Result">
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+          <Property Type="Single" Name="Price" Nullable="false" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="Int32" Name="Total_Quantity" Nullable="false" />
+          <Property Type="Int32" Name="CategoryID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetProductsByAllergen_Result">
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+          <Property Type="Single" Name="Price" Nullable="false" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="Int32" Name="Total_Quantity" Nullable="false" />
+          <Property Type="Int32" Name="CategoryID" Nullable="false" />
+          <Property Type="Int32" Name="ProductID1" Nullable="false" />
+          <Property Type="Int32" Name="AllgergenID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DerbyPubModelStoreContainer" CdmEntityContainer="RestaurantModel">
+          <EntitySetMapping Name="AccountTypes">
+            <EntityTypeMapping TypeName="DerbyPubModel.AccountType">
+              <MappingFragment StoreEntitySet="AccountType">
+                <ScalarProperty Name="AccountTypeID" ColumnName="AccountTypeID" />
+                <ScalarProperty Name="AccountTypeName" ColumnName="AccountTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Allergens">
+            <EntityTypeMapping TypeName="DerbyPubModel.Allergen">
+              <MappingFragment StoreEntitySet="Allergen">
+                <ScalarProperty Name="AllergenID" ColumnName="AllergenID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="DerbyPubModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="DerbyPubModel.Image">
+              <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="ImagesID" ColumnName="ImagesID" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menus">
+            <EntityTypeMapping TypeName="DerbyPubModel.Menu">
+              <MappingFragment StoreEntitySet="Menu">
+                <ScalarProperty Name="MenuID" ColumnName="MenuID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menu_Product">
+            <EntityTypeMapping TypeName="DerbyPubModel.Menu_Product">
+              <MappingFragment StoreEntitySet="Menu_Product">
+                <ScalarProperty Name="Menu_ProductID" ColumnName="Menu_ProductID" />
+                <ScalarProperty Name="MenuID" ColumnName="MenuID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="DerbyPubModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="UniqueCode" ColumnName="UniqueCode" />
+                <ScalarProperty Name="Order_Time" ColumnName="Order_Time" />
+                <ScalarProperty Name="Estimated_Time" ColumnName="Estimated_Time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="DerbyPubModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Total_Quantity" ColumnName="Total_Quantity" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="DerbyPubModel.State">
+              <MappingFragment StoreEntitySet="State">
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="State1" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DerbyPubModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Account_Type" ColumnName="Account_Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Order_Product" TypeName="DerbyPubModel.Order_Product" StoreEntitySet="Order_Product">
+            <EndProperty Name="Orders">
+              <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+            </EndProperty>
+            <EndProperty Name="Product">
+              <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Product_Allergen" TypeName="DerbyPubModel.Product_Allergen" StoreEntitySet="Product_Allergen">
+            <EndProperty Name="Allergen">
+              <ScalarProperty Name="AllergenID" ColumnName="AllgergenID" />
+            </EndProperty>
+            <EndProperty Name="Product">
+              <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Product_Image" TypeName="DerbyPubModel.Product_Image" StoreEntitySet="Product_Image">
+            <EndProperty Name="Image">
+              <ScalarProperty Name="ImagesID" ColumnName="ImageID" />
+            </EndProperty>
+            <EndProperty Name="Product">
+              <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="GetProductByCategory" FunctionName="DerbyPubModel.Store.GetProductByCategory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DerbyPubModel.GetProductByCategory_Result">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Total_Quantity" ColumnName="Total_Quantity" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProductsByAllergen" FunctionName="DerbyPubModel.Store.GetProductsByAllergen">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DerbyPubModel.GetProductsByAllergen_Result">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Total_Quantity" ColumnName="Total_Quantity" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="ProductID1" ColumnName="ProductID1" />
+                <ScalarProperty Name="AllgergenID" ColumnName="AllgergenID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
