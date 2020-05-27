@@ -1,4 +1,5 @@
 ﻿using Derby_Pub.Helps;
+using Derby_Pub.Models;
 using Derby_Pub.Models.BusinessLayer;
 using Derby_Pub.Models.EntityLayer;
 using System;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace Derby_Pub.ViewModels
@@ -18,7 +20,7 @@ namespace Derby_Pub.ViewModels
 
         private ProductsBLL products = new ProductsBLL();
         private string productName;
-        public List<string> ImageList;
+        public List<byte[]> ImageList;
         int index = 0;
 
         public string ProductName
@@ -29,9 +31,25 @@ namespace Derby_Pub.ViewModels
                 productName = value;
                 AllergenList = new ObservableCollection<string>(products.GetAllergensByProductName(ProductName));
                 ImageList = products.GetImagesFromProductName(ProductName);
-                CurrentImage = new BitmapImage(new Uri(@"..\..\Assets\carnatirondele2.jpg",UriKind.Relative));
+                if(ImageList.Count != 0)
+                    CurrentImage = ToImage(ImageList[0]);
             }
         }
+
+        public BitmapImage ToImage(byte[] array)
+        {
+            using (var ms = new System.IO.MemoryStream(array))
+            {
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.StreamSource = ms;
+                image.EndInit();
+                return image;
+            }
+        }
+
+
         private ObservableCollection<string> allergenList;
 
         public ObservableCollection<string> AllergenList
@@ -60,5 +78,53 @@ namespace Derby_Pub.ViewModels
             }
         }
 
+        private ICommand nextPhotoCommand;
+        public ICommand NextPhotoCommand
+        {
+            get
+            {
+                if (nextPhotoCommand == null)
+                {
+                    nextPhotoCommand = new RelayCommand(NextPhoto);
+                }
+                return nextPhotoCommand;
+            }
+        }
+
+        private void NextPhoto(object obj)
+        {
+            if (index+1 >= ImageList.Count)
+            {
+                index = 0;
+            }
+            else index++;
+
+            CurrentImage = ToImage(ImageList[index]);
+        }
+
+        private ICommand previousPhotoCommand;
+        public ICommand PreviousPhotoCommand
+        {
+            get
+            {
+                if (previousPhotoCommand == null)
+                {
+                    previousPhotoCommand = new RelayCommand(PreviousPhoto);
+                }
+                return previousPhotoCommand;
+            }
+        }
+
+        private void PreviousPhoto(object obj)
+        {
+            if (index <= 0)
+            {
+                index = ImageList.Count - 1;
+            }
+            else
+                index--;
+
+            CurrentImage = ToImage(ImageList[index]);
+        }
     }
 }

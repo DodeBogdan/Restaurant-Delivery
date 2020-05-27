@@ -165,8 +165,12 @@ namespace Derby_Pub.ViewModels
         {
             string name = ProductSelected.Name.Trim();
             ProductWindow productWindow = new ProductWindow(name);
+
+            var currentWondow = App.Current.MainWindow;
+
             App.Current.MainWindow = productWindow;
-            App.Current.MainWindow.Show();
+            App.Current.MainWindow.ShowDialog();
+            App.Current.MainWindow = currentWondow;
         }
     }
 }

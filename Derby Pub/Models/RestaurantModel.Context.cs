@@ -65,15 +65,6 @@ namespace Derby_Pub.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetAllProductWithAnAllergenBasedOnCategory", categoryParameter, allegenNameParameter);
         }
     
-        public virtual ObjectResult<string> GetImagesFromProductName(string productName)
-        {
-            var productNameParameter = productName != null ?
-                new ObjectParameter("ProductName", productName) :
-                new ObjectParameter("ProductName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetImagesFromProductName", productNameParameter);
-        }
-    
         public virtual ObjectResult<GetProductByCategory_Result> GetProductByCategory(string categoryName)
         {
             var categoryNameParameter = categoryName != null ?
@@ -90,6 +81,15 @@ namespace Derby_Pub.Models
                 new ObjectParameter("AllergenName", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetProductsByAllergen", allergenNameParameter);
+        }
+    
+        public virtual ObjectResult<byte[]> GetImagesByProductName(string productName)
+        {
+            var productNameParameter = productName != null ?
+                new ObjectParameter("ProductName", productName) :
+                new ObjectParameter("ProductName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<byte[]>("GetImagesByProductName", productNameParameter);
         }
     }
 }

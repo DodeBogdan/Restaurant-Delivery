@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DerbyPubModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DerbyPubModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AccountType">
           <Key>
             <PropertyRef Name="AccountTypeID" />
@@ -31,7 +31,7 @@
             <PropertyRef Name="ImageId" />
           </Key>
           <Property Name="ImageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ImagePath" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Image" Type="image" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -286,7 +286,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
           <Parameter Name="category" Type="nchar" Mode="In" />
           <Parameter Name="allegenName" Type="nchar" Mode="In" />
         </Function>
-        <Function Name="GetImagesFromProductName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="GetImagesByProductName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ProductName" Type="nchar" Mode="In" />
         </Function>
         <Function Name="GetProductByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -377,8 +377,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DerbyPubModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -412,7 +411,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             <PropertyRef Name="ImageId" />
           </Key>
           <Property Name="ImageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ImagePath" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Image1" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Products" Relationship="Self.Product_Image" FromRole="Image" ToRole="Product" />
         </EntityType>
         <EntityType Name="Menu">
@@ -638,20 +637,20 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
           </AssociationSet>
           <FunctionImport Name="GetAllCategoryes" ReturnType="Collection(String)" />
           <FunctionImport Name="GetAllergenFromProductName" ReturnType="Collection(String)">
-            <Parameter Name="ProductName" Mode="In" Type="String" />
+          <Parameter Name="ProductName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetAllProductWithAnAllergenBasedOnCategory" ReturnType="Collection(String)">
             <Parameter Name="category" Mode="In" Type="String" />
             <Parameter Name="allegenName" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetImagesFromProductName" ReturnType="Collection(String)">
-            <Parameter Name="ProductName" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="GetProductByCategory" ReturnType="Collection(DerbyPubModel.GetProductByCategory_Result)">
-            <Parameter Name="CategoryName" Mode="In" Type="String" />
+          <Parameter Name="CategoryName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetProductsByAllergen">
-            <Parameter Name="AllergenName" Mode="In" Type="String" />
+          <Parameter Name="AllergenName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetImagesByProductName" ReturnType="Collection(Binary)">
+            <Parameter Name="ProductName" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetProductByCategory_Result">
@@ -696,7 +695,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             <EntityTypeMapping TypeName="DerbyPubModel.Image">
               <MappingFragment StoreEntitySet="Image">
                 <ScalarProperty Name="ImageId" ColumnName="ImageId" />
-                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="Image1" ColumnName="Image" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -792,7 +791,6 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
           <FunctionImportMapping FunctionImportName="GetAllCategoryes" FunctionName="DerbyPubModel.Store.GetAllCategoryes" />
           <FunctionImportMapping FunctionImportName="GetAllergenFromProductName" FunctionName="DerbyPubModel.Store.GetAllergenFromProductName" />
           <FunctionImportMapping FunctionImportName="GetAllProductWithAnAllergenBasedOnCategory" FunctionName="DerbyPubModel.Store.GetAllProductWithAnAllergenBasedOnCategory" />
-          <FunctionImportMapping FunctionImportName="GetImagesFromProductName" FunctionName="DerbyPubModel.Store.GetImagesFromProductName" />
           <FunctionImportMapping FunctionImportName="GetProductByCategory" FunctionName="DerbyPubModel.Store.GetProductByCategory">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DerbyPubModel.GetProductByCategory_Result">
@@ -806,6 +804,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetProductsByAllergen" FunctionName="DerbyPubModel.Store.GetProductsByAllergen" />
+          <FunctionImportMapping FunctionImportName="GetImagesByProductName" FunctionName="DerbyPubModel.Store.GetImagesByProductName" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

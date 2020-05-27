@@ -21,7 +21,7 @@ namespace Derby_Pub.Models
         }
     
         public int ImageId { get; set; }
-        public string ImagePath { get; set; }
+        public byte[] Image1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }

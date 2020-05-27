@@ -17,9 +17,9 @@
 
         <Image Margin="250,10,280,300" Source="../Assets/LogoDerby.png" Stretch="Fill"/>
 
-        <Button Content="Inapoi" HorizontalAlignment="Left" Margin="526,310,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Inapoi" HorizontalAlignment="Left" Margin="526,310,0,0" VerticalAlignment="Top" Width="75" Command="{Binding PreviousPhotoCommand}"/>
 
-        <Button Content="Inainte" HorizontalAlignment="Left" Margin="643,310,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Inainte" HorizontalAlignment="Left" Margin="643,310,0,0" VerticalAlignment="Top" Width="75" Command="{Binding NextPhotoCommand}"/>
 
         <ListView HorizontalAlignment="Left" Height="165" Margin="28,143,0,0" VerticalAlignment="Top" Width="178" ItemsSource="{Binding AllergenList, UpdateSourceTrigger=PropertyChanged}">
             <ListView.View>
@@ -29,8 +29,7 @@
             </ListView.View>
         </ListView>
 
-        <Border Height="163" Margin="526,142,75.6,0" VerticalAlignment="Top" BorderThickness="1" BorderBrush="Black" Background="White">
-            <Image HorizontalAlignment="Left" Height="162" Margin="-0.8,0.2,-0.8,-0.6" VerticalAlignment="Top" Width="192" Source="{Binding CurrentImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        </Border>
+        <Image HorizontalAlignment="Left" Height="150" Margin="526,143,0,0" VerticalAlignment="Top" Width="200" Source="{Binding CurrentImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        
     </Grid>
 </Window>

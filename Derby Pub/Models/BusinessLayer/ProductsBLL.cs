@@ -32,15 +32,11 @@ namespace Derby_Pub.Models.BusinessLayer
             return productsDisplays;
         }
 
-        internal List<string> GetImagesFromProductName(string productName)
+        internal List<byte[]> GetImagesFromProductName(string productName)
         {
-            List<string> images = restaurant.GetImagesFromProductName(productName).ToList();
-            for(int index = 0; index < images.Count; index++)
-            {
-                images[index] = images[index].Trim();
-            }
+            List<byte[]> images = restaurant.GetImagesByProductName(productName).ToList();
 
-            return images;
+           return images;
         }
 
         internal List<string> GetAllergensByProductName(string productName)
