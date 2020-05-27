@@ -15,17 +15,31 @@ namespace Derby_Pub.Models.BusinessLayer
 
         public List<ClientProductsDisplay> GetProductsByCategory(string category)
         {
-            var products = restaurant.GetProductByCategory(category);
-
             List<ClientProductsDisplay> productsDisplays = new List<ClientProductsDisplay>();
+
+            var products = restaurant.GetProductByCategory(category);
 
             foreach (var product in products)
             {
                 productsDisplays.Add(new ClientProductsDisplay()
                 {
                     Name = product.Name,
-                    Price = product.Price.ToString() + "RON",
-                    Quantity = product.Quantity.ToString() + "grams"
+                    Price = $"{product.Price}RON",
+                    Quantity = $"{product.Quantity}grams",
+                    ProductType = "Preparat"
+                });
+            }
+
+            var menuProducts = restaurant.GetMenuDetails("Casa Derby").ToList();
+
+            foreach (var product in menuProducts)
+            {
+                productsDisplays.Add(new ClientProductsDisplay()
+                {
+                    Name = product.Name,
+                    Price = $"{product.Price}RON",
+                    Quantity = "Vezi la detalii",
+                    ProductType = "Meniu"
                 });
             }
 
@@ -36,7 +50,7 @@ namespace Derby_Pub.Models.BusinessLayer
         {
             List<byte[]> images = restaurant.GetImagesByProductName(productName).ToList();
 
-           return images;
+            return images;
         }
 
         internal List<string> GetAllergensByProductName(string productName)
@@ -57,8 +71,22 @@ namespace Derby_Pub.Models.BusinessLayer
                 productsDisplays.Add(new ClientProductsDisplay()
                 {
                     Name = product.Name,
-                    Price = product.Price.ToString() + "RON",
-                    Quantity = product.Quantity.ToString() + "grams"
+                    Price = $"{product.Price}RON",
+                    Quantity = $"{product.Quantity}grams",
+                    ProductType = "Preparat"
+                });
+            }
+
+            var menuProducts = restaurant.GetMenuDetails("Casa Derby").ToList();
+
+            foreach (var product in menuProducts)
+            {
+                productsDisplays.Add(new ClientProductsDisplay()
+                {
+                    Name = product.Name,
+                    Price = $"{product.Price}RON",
+                    Quantity = "Vezi la detalii",
+                    ProductType = "Meniu"
                 });
             }
 
@@ -80,14 +108,48 @@ namespace Derby_Pub.Models.BusinessLayer
                     productsDisplays.Add(new ClientProductsDisplay()
                     {
                         Name = product.Name,
-                        Price = product.Price.ToString() + "RON",
-                        Quantity = product.Quantity.ToString() + "grams"
+                        Price = $"{product.Price}RON",
+                        Quantity = $"{product.Quantity}grams",
+                        ProductType = "Preparat"
                     });
                 }
             }
 
+            var menuProducts = restaurant.GetMenuDetails("Casa Derby").ToList();
+
+            foreach (var product in menuProducts)
+            {
+                productsDisplays.Add(new ClientProductsDisplay()
+                {
+                    Name = product.Name,
+                    Price = $"{product.Price}RON",
+                    Quantity = "Vezi la detalii",
+                    ProductType = "Meniu"
+                });
+            }
 
             return productsDisplays;
         }
+
+        public List<ClientProductsDisplay> GetProductsByMenuName(string name)
+        {
+            var products = restaurant.GetProductsByMenuName(name);
+                
+            List<ClientProductsDisplay> productsDisplays = new List<ClientProductsDisplay>();
+
+            foreach (var product in products)
+            {
+                productsDisplays.Add(new ClientProductsDisplay()
+                {
+                    Name = product.Name,
+                    Price = $"{product.Price}RON",
+                    Quantity = product.Quantity.ToString() + "grams",
+                    ProductType = "Preparat"
+                });
+            }
+
+            return productsDisplays;
+        }
+
     }
 }

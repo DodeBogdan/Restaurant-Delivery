@@ -65,6 +65,33 @@ namespace Derby_Pub.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetAllProductWithAnAllergenBasedOnCategory", categoryParameter, allegenNameParameter);
         }
     
+        public virtual ObjectResult<byte[]> GetImagesByProductName(string productName)
+        {
+            var productNameParameter = productName != null ?
+                new ObjectParameter("ProductName", productName) :
+                new ObjectParameter("ProductName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<byte[]>("GetImagesByProductName", productNameParameter);
+        }
+    
+        public virtual ObjectResult<GetMenuByCategory_Result> GetMenuByCategory(string categoryName)
+        {
+            var categoryNameParameter = categoryName != null ?
+                new ObjectParameter("CategoryName", categoryName) :
+                new ObjectParameter("CategoryName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMenuByCategory_Result>("GetMenuByCategory", categoryNameParameter);
+        }
+    
+        public virtual ObjectResult<GetMenuDetails_Result> GetMenuDetails(string menuName)
+        {
+            var menuNameParameter = menuName != null ?
+                new ObjectParameter("MenuName", menuName) :
+                new ObjectParameter("MenuName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMenuDetails_Result>("GetMenuDetails", menuNameParameter);
+        }
+    
         public virtual ObjectResult<GetProductByCategory_Result> GetProductByCategory(string categoryName)
         {
             var categoryNameParameter = categoryName != null ?
@@ -83,13 +110,13 @@ namespace Derby_Pub.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetProductsByAllergen", allergenNameParameter);
         }
     
-        public virtual ObjectResult<byte[]> GetImagesByProductName(string productName)
+        public virtual ObjectResult<GetProductsByMenuName_Result> GetProductsByMenuName(string menuName)
         {
-            var productNameParameter = productName != null ?
-                new ObjectParameter("ProductName", productName) :
-                new ObjectParameter("ProductName", typeof(string));
+            var menuNameParameter = menuName != null ?
+                new ObjectParameter("MenuName", menuName) :
+                new ObjectParameter("MenuName", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<byte[]>("GetImagesByProductName", productNameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsByMenuName_Result>("GetProductsByMenuName", menuNameParameter);
         }
     }
 }

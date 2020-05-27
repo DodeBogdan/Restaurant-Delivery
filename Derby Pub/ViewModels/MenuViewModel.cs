@@ -163,14 +163,32 @@ namespace Derby_Pub.ViewModels
 
         private void ProductDetails(object obj)
         {
-            string name = ProductSelected.Name.Trim();
-            ProductWindow productWindow = new ProductWindow(name);
 
+            if (ProductSelected == null)
+                return;
+
+            string name = ProductSelected.Name.Trim();
             var currentWondow = App.Current.MainWindow;
 
-            App.Current.MainWindow = productWindow;
-            App.Current.MainWindow.ShowDialog();
-            App.Current.MainWindow = currentWondow;
+            switch (ProductSelected.ProductType)
+            {
+                case "Preparat":
+                    ProductWindow productWindow = new ProductWindow(name);
+
+                    App.Current.MainWindow = productWindow;
+                    App.Current.MainWindow.ShowDialog();
+                    App.Current.MainWindow = currentWondow;
+                    break;
+
+                default:
+                    MessageBox.Show("To be implemented.");
+                    MenuWindow menuWindow = new MenuWindow(name);
+
+                    App.Current.MainWindow = menuWindow;
+                    App.Current.MainWindow.ShowDialog();
+                    App.Current.MainWindow = currentWondow;
+                    break;
+            } 
         }
     }
 }

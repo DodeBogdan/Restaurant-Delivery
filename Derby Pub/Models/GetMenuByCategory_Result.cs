@@ -10,16 +10,10 @@
 namespace Derby_Pub.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Menu_Product
+    public partial class GetMenuByCategory_Result
     {
-        public int Menu_ProductID { get; set; }
-        public int FKMenuID { get; set; }
-        public int FKProductID { get; set; }
-        public int Quantity { get; set; }
-    
-        public virtual Menu Menu { get; set; }
-        public virtual Product Product { get; set; }
+        public string Name { get; set; }
+        public Nullable<double> Price { get; set; }
     }
 }

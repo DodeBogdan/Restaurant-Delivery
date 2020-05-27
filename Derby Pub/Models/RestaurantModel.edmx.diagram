@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="65d962af040b43d7a91ed7bc89e7cb26" Name="Diagram1">
+      <Diagram DiagramId="17ce53faa98d4dfb83b55fea61330d17" Name="Diagram1">
         <EntityTypeShape EntityType="DerbyPubModel.AccountType" Width="1.5" PointX="1.5" PointY="22.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DerbyPubModel.Allergen" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DerbyPubModel.Category" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
