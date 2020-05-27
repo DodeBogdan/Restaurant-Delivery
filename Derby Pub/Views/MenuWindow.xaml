@@ -14,10 +14,10 @@
         <Grid.Background>
             <ImageBrush ImageSource="../Assets/BackgroundImage.jpg"></ImageBrush>
         </Grid.Background>
-        <Image Margin="300,10,300,300" Source="../Assets/LogoDerby.png" Stretch="Fill"/>
+        <Image Margin="307,0,292.6,342" Source="../Assets/LogoDerby.png" Stretch="Fill"/>
 
         <DataGrid x:Name="productsGrid" CanUserResizeColumns="False" CanUserResizeRows="False"
-                  AutoGenerateColumns="False" HorizontalAlignment="Left" Height="222" Margin="10,144,0,0" VerticalAlignment="Top" Width="774" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ClientProductsList}" SelectionMode="Single"
+                  AutoGenerateColumns="False" HorizontalAlignment="Left" Height="107" Margin="10,83,0,0" VerticalAlignment="Top" Width="774" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ClientProductsList}" SelectionMode="Single"
                   SelectedItem="{Binding ProductSelected}">
 
             <DataGrid.Columns>
@@ -55,7 +55,19 @@
 
             </DataGrid.Columns>
         </DataGrid>
-
-        <Button Content="Vezi detalii despre:" HorizontalAlignment="Left" Margin="332,385,0,0" VerticalAlignment="Top" Width="169" Name="DetailsButton" Command="{Binding SeeDetails}" />
+        
+        <Button Content="Inapoi" HorizontalAlignment="Left" Margin="539,357,0,0" VerticalAlignment="Top" Width="75" Command="{Binding PreviousPhotoCommand}"/>
+        
+        <Button Content="Inainte" HorizontalAlignment="Left" Margin="656,357,0,0" VerticalAlignment="Top" Width="75" Command="{Binding NextPhotoCommand}"/>
+        
+        <ListView HorizontalAlignment="Left" Height="165" Margin="41,190,0,0" VerticalAlignment="Top" Width="178" ItemsSource="{Binding AllergenList, UpdateSourceTrigger=PropertyChanged}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Nume"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        
+        <Image HorizontalAlignment="Left" Height="150" Margin="539,190,0,0" VerticalAlignment="Top" Width="200" Source="{Binding CurrentImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </Window>

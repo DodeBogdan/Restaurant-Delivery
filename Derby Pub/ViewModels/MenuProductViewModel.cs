@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace Derby_Pub.ViewModels
 {
@@ -51,6 +52,14 @@ namespace Derby_Pub.ViewModels
             {
                 productSelected = value;
                 OnPropertyChanged("ProductSelected");
+
+                ImageList = productsBll.GetImagesFromProductName(ProductSelected.Name);
+
+                if (ImageList.Count != 0)
+                    CurrentImage = ToImage(ImageList[0]);
+                else
+                    CurrentImage = null;
+                AllergenList = new ObservableCollection<string>(productsBll.GetAllergensByProductName(ProductSelected.Name));
             }
         }
 
@@ -85,5 +94,97 @@ namespace Derby_Pub.ViewModels
 
         }
 
+        public List<byte[]> ImageList;
+        int index = 0;
+
+        public BitmapImage ToImage(byte[] array)
+        {
+            using (var ms = new System.IO.MemoryStream(array))
+            {
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.StreamSource = ms;
+                image.EndInit();
+                return image;
+            }
+        }
+
+        private ObservableCollection<string> allergenList;
+
+        public ObservableCollection<string> AllergenList
+        {
+            get
+            {
+                return allergenList;
+            }
+            set
+            {
+                allergenList = value;
+                OnPropertyChanged("AllergenList");
+            }
+
+        }
+
+        private BitmapImage currentImage;
+
+        public BitmapImage CurrentImage
+        {
+            get { return currentImage; }
+            set
+            {
+                currentImage = value;
+                OnPropertyChanged("CurrentImage");
+            }
+        }
+
+        private ICommand nextPhotoCommand;
+        public ICommand NextPhotoCommand
+        {
+            get
+            {
+                if (nextPhotoCommand == null)
+                {
+                    nextPhotoCommand = new RelayCommand(NextPhoto);
+                }
+                return nextPhotoCommand;
+            }
+        }
+
+        private void NextPhoto(object obj)
+        {
+            if (index + 1 >= ImageList.Count)
+            {
+                index = 0;
+            }
+            else index++;
+
+            CurrentImage = ToImage(ImageList[index]);
+        }
+
+        private ICommand previousPhotoCommand;
+        public ICommand PreviousPhotoCommand
+        {
+            get
+            {
+                if (previousPhotoCommand == null)
+                {
+                    previousPhotoCommand = new RelayCommand(PreviousPhoto);
+                }
+                return previousPhotoCommand;
+            }
+        }
+
+        private void PreviousPhoto(object obj)
+        {
+            if (index <= 0)
+            {
+                index = ImageList.Count - 1;
+            }
+            else
+                index--;
+
+            CurrentImage = ToImage(ImageList[index]);
+        }
     }
 }
