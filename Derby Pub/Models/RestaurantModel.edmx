@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DerbyPubModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DerbyPubModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AccountType">
           <Key>
             <PropertyRef Name="AccountTypeID" />
@@ -64,12 +64,15 @@ warning 6002: The table/view 'DerbyPub.dbo.Order_Product' does not have a primar
           <Key>
             <PropertyRef Name="OrderID" />
           </Key>
-          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="StateID" Type="int" Nullable="false" />
-          <Property Name="UniqueCode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UniqueCode" Type="int" Nullable="false" />
           <Property Name="Order_Time" Type="datetime" Nullable="false" />
           <Property Name="Estimated_Time" Type="datetime" Nullable="false" />
+          <Property Name="Transport_Cost" Type="real" Nullable="false" />
+          <Property Name="Discount" Type="real" Nullable="false" />
+          <Property Name="Total_Price" Type="real" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -86,11 +89,11 @@ warning 6002: The table/view 'DerbyPub.dbo.Order_Product' does not have a primar
 warning 6002: The table/view 'DerbyPub.dbo.Product_Allergen' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Product_Allergen">
           <Key>
-            <PropertyRef Name="ProductID" />
-            <PropertyRef Name="AllergenID" />
+            <PropertyRef Name="FKProductID" />
+            <PropertyRef Name="FKAllergenID" />
           </Key>
-          <Property Name="ProductID" Type="int" Nullable="false" />
-          <Property Name="AllergenID" Type="int" Nullable="false" />
+          <Property Name="FKProductID" Type="int" Nullable="false" />
+          <Property Name="FKAllergenID" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -190,7 +193,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
               <PropertyRef Name="AllergenID" />
             </Principal>
             <Dependent Role="Product_Allergen">
-              <PropertyRef Name="AllergenID" />
+              <PropertyRef Name="FKAllergenID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -202,7 +205,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
               <PropertyRef Name="ProductID" />
             </Principal>
             <Dependent Role="Product_Allergen">
-              <PropertyRef Name="ProductID" />
+              <PropertyRef Name="FKProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -278,6 +281,18 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="DeleteAllergen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AllergenName" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CategoryName" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteMenu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MenuName" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProductName" Type="nchar" Mode="In" />
+        </Function>
         <Function Name="GetAllCategoryes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllergenFromProductName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ProductName" Type="nchar" Mode="In" />
@@ -295,6 +310,10 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
         <Function Name="GetMenuDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MenuName" Type="nchar" Mode="In" />
         </Function>
+        <Function Name="GetProductBasedOnAllergens" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CategoryName" Type="nchar" Mode="In" />
+          <Parameter Name="AllergenName" Type="nchar" Mode="In" />
+        </Function>
         <Function Name="GetProductByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CategoryName" Type="nchar" Mode="In" />
         </Function>
@@ -303,6 +322,10 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
         </Function>
         <Function Name="GetProductsByMenuName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MenuName" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="InsertIntoOrder_Product" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrderId" Type="int" Mode="In" />
+          <Parameter Name="ProductId" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="DerbyPubModelStoreContainer">
           <EntitySet Name="AccountType" EntityType="Self.AccountType" Schema="dbo" store:Type="Tables" />
@@ -323,8 +346,8 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
           </EntitySet>
           <EntitySet Name="Product_Allergen" EntityType="Self.Product_Allergen" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [Product_Allergen].[ProductID] AS [ProductID], 
-    [Product_Allergen].[AllergenID] AS [AllergenID]
+    [Product_Allergen].[FKProductID] AS [FKProductID], 
+    [Product_Allergen].[FKAllergenID] AS [FKAllergenID]
     FROM [dbo].[Product_Allergen] AS [Product_Allergen]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Product_Image" EntityType="Self.Product_Image" store:Type="Tables" store:Schema="dbo">
@@ -386,7 +409,8 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DerbyPubModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -448,12 +472,15 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
           <Key>
             <PropertyRef Name="OrderID" />
           </Key>
-          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="StateID" Type="Int32" Nullable="false" />
-          <Property Name="UniqueCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UniqueCode" Type="Int32" Nullable="false" />
           <Property Name="Order_Time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Estimated_Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Transport_Cost" Type="Single" Nullable="false" />
+          <Property Name="Discount" Type="Single" Nullable="false" />
+          <Property Name="Total_Price" Type="Single" Nullable="false" />
           <NavigationProperty Name="State" Relationship="Self.FK_State_Order" FromRole="Orders" ToRole="State" />
           <NavigationProperty Name="User" Relationship="Self.FK_User_Order" FromRole="Orders" ToRole="User" />
           <NavigationProperty Name="Products" Relationship="Self.Order_Product" FromRole="Orders" ToRole="Product" />
@@ -644,31 +671,51 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             <End Role="Image" EntitySet="Images" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
+          <FunctionImport Name="DeleteAllergen">
+            <Parameter Name="AllergenName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteCategory">
+            <Parameter Name="CategoryName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteMenu">
+            <Parameter Name="MenuName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteProduct">
+            <Parameter Name="ProductName" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="GetAllCategoryes" ReturnType="Collection(String)" />
           <FunctionImport Name="GetAllergenFromProductName" ReturnType="Collection(String)">
-          <Parameter Name="ProductName" Mode="In" Type="String" />
+            <Parameter Name="ProductName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetAllProductWithAnAllergenBasedOnCategory" ReturnType="Collection(String)">
             <Parameter Name="category" Mode="In" Type="String" />
             <Parameter Name="allegenName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetImagesByProductName" ReturnType="Collection(Binary)">
-          <Parameter Name="ProductName" Mode="In" Type="String" />
+            <Parameter Name="ProductName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetMenuByCategory" ReturnType="Collection(DerbyPubModel.GetMenuByCategory_Result)">
-          <Parameter Name="CategoryName" Mode="In" Type="String" />
+            <Parameter Name="CategoryName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetMenuDetails" ReturnType="Collection(DerbyPubModel.GetMenuDetails_Result)">
-          <Parameter Name="MenuName" Mode="In" Type="String" />
+            <Parameter Name="MenuName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetProductBasedOnAllergens" ReturnType="Collection(DerbyPubModel.GetProductBasedOnAllergens_Result)">
+            <Parameter Name="CategoryName" Mode="In" Type="String" />
+            <Parameter Name="AllergenName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetProductByCategory" ReturnType="Collection(DerbyPubModel.GetProductByCategory_Result)">
-          <Parameter Name="CategoryName" Mode="In" Type="String" />
+            <Parameter Name="CategoryName" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetProductsByAllergen">
-          <Parameter Name="AllergenName" Mode="In" Type="String" />
+          <FunctionImport Name="GetProductsByAllergen" ReturnType="Collection(DerbyPubModel.GetProductsByAllergen_Result)">
+            <Parameter Name="AllergenName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetProductsByMenuName" ReturnType="Collection(DerbyPubModel.GetProductsByMenuName_Result)">
             <Parameter Name="MenuName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertIntoOrder_Product">
+            <Parameter Name="OrderId" Mode="In" Type="Int32" />
+            <Parameter Name="ProductId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetMenuByCategory_Result">
@@ -679,6 +726,11 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
           <Property Type="String" Name="Name" Nullable="false" MaxLength="30" />
           <Property Type="Double" Name="Price" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="GetProductBasedOnAllergens_Result">
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+          <Property Type="Single" Name="Price" Nullable="false" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="GetProductByCategory_Result">
           <Property Type="Int32" Name="ProductID" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
@@ -686,6 +738,16 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
           <Property Type="Int32" Name="Quantity" Nullable="false" />
           <Property Type="Int32" Name="Total_Quantity" Nullable="false" />
           <Property Type="Int32" Name="CategoryID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetProductsByAllergen_Result">
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+          <Property Type="Single" Name="Price" Nullable="false" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="Int32" Name="Total_Quantity" Nullable="false" />
+          <Property Type="Int32" Name="CategoryID" Nullable="false" />
+          <Property Type="Int32" Name="FKProductID" Nullable="false" />
+          <Property Type="Int32" Name="FKAllergenID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="GetProductsByMenuName_Result">
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
@@ -758,6 +820,9 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
                 <ScalarProperty Name="UniqueCode" ColumnName="UniqueCode" />
                 <ScalarProperty Name="Order_Time" ColumnName="Order_Time" />
                 <ScalarProperty Name="Estimated_Time" ColumnName="Estimated_Time" />
+                <ScalarProperty Name="Transport_Cost" ColumnName="Transport_Cost" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Total_Price" ColumnName="Total_Price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -805,10 +870,10 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
           </AssociationSetMapping>
           <AssociationSetMapping Name="Product_Allergen" TypeName="DerbyPubModel.Product_Allergen" StoreEntitySet="Product_Allergen">
             <EndProperty Name="Allergen">
-              <ScalarProperty Name="AllergenID" ColumnName="AllergenID" />
+              <ScalarProperty Name="AllergenID" ColumnName="FKAllergenID" />
             </EndProperty>
             <EndProperty Name="Product">
-              <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              <ScalarProperty Name="ProductID" ColumnName="FKProductID" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="Product_Image" TypeName="DerbyPubModel.Product_Image" StoreEntitySet="Product_Image">
@@ -819,6 +884,10 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
               <ScalarProperty Name="ProductID" ColumnName="ProductID" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="DeleteAllergen" FunctionName="DerbyPubModel.Store.DeleteAllergen" />
+          <FunctionImportMapping FunctionImportName="DeleteCategory" FunctionName="DerbyPubModel.Store.DeleteCategory" />
+          <FunctionImportMapping FunctionImportName="DeleteMenu" FunctionName="DerbyPubModel.Store.DeleteMenu" />
+          <FunctionImportMapping FunctionImportName="DeleteProduct" FunctionName="DerbyPubModel.Store.DeleteProduct" />
           <FunctionImportMapping FunctionImportName="GetAllCategoryes" FunctionName="DerbyPubModel.Store.GetAllCategoryes" />
           <FunctionImportMapping FunctionImportName="GetAllergenFromProductName" FunctionName="DerbyPubModel.Store.GetAllergenFromProductName" />
           <FunctionImportMapping FunctionImportName="GetAllProductWithAnAllergenBasedOnCategory" FunctionName="DerbyPubModel.Store.GetAllProductWithAnAllergenBasedOnCategory" />
@@ -839,6 +908,15 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProductBasedOnAllergens" FunctionName="DerbyPubModel.Store.GetProductBasedOnAllergens">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DerbyPubModel.GetProductBasedOnAllergens_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetProductByCategory" FunctionName="DerbyPubModel.Store.GetProductByCategory">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DerbyPubModel.GetProductByCategory_Result">
@@ -851,7 +929,20 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetProductsByAllergen" FunctionName="DerbyPubModel.Store.GetProductsByAllergen" />
+          <FunctionImportMapping FunctionImportName="GetProductsByAllergen" FunctionName="DerbyPubModel.Store.GetProductsByAllergen">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DerbyPubModel.GetProductsByAllergen_Result">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Total_Quantity" ColumnName="Total_Quantity" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="FKProductID" ColumnName="FKProductID" />
+                <ScalarProperty Name="FKAllergenID" ColumnName="FKAllergenID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetProductsByMenuName" FunctionName="DerbyPubModel.Store.GetProductsByMenuName">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DerbyPubModel.GetProductsByMenuName_Result">
@@ -861,6 +952,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertIntoOrder_Product" FunctionName="DerbyPubModel.Store.InsertIntoOrder_Product" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

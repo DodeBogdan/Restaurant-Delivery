@@ -10,7 +10,8 @@ namespace Derby_Pub.ViewModels
 {
     class AutentificationViewModel : BaseVM
     {
-        readonly UserBLL user = new UserBLL();
+        readonly UserBLL userBll = new UserBLL();
+        readonly OrderBLL orderBll = new OrderBLL();
 
         private string email;
         public string Email
@@ -50,7 +51,7 @@ namespace Derby_Pub.ViewModels
                 return;
             }
 
-            User newUser = user.Login(email, password);
+            User newUser = userBll.Login(email, password);
 
             if (newUser.First_Name == null)
             {
@@ -61,9 +62,11 @@ namespace Derby_Pub.ViewModels
 
             if (newUser.AccountType.AccountTypeID == 1)
             {
-                MenuWithClientAccountWindow menuWithClientAccount = new MenuWithClientAccountWindow(newUser);
+                orderBll.ChangeOrdersStatus();
+
+                ClientAccountWindow clientAccountWindow = new ClientAccountWindow(newUser);
                 App.Current.MainWindow.Close();
-                App.Current.MainWindow = menuWithClientAccount;
+                App.Current.MainWindow = clientAccountWindow;
                 App.Current.MainWindow.Show();
             }
         }

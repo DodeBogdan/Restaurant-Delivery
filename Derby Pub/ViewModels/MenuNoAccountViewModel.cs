@@ -7,50 +7,23 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace Derby_Pub.ViewModels
 {
-    class MenuWithClientAccountViewModel : BaseVM
+    class MenuNoAccountViewModel : BaseVM
     {
-        private readonly Dictionary<string, int> productsName = new Dictionary<string, int>();
+
+        private readonly RestaurantModel restaurantModel = new RestaurantModel();
         private readonly ProductsBLL productsBll = new ProductsBLL();
 
-        #region User
-
-        private User actualUser;
-        public User ActualUser
-        {
-            get { return actualUser; }
-            set
-            {
-                actualUser = value;
-                ActualUserName = $"{actualUser.First_Name.Trim()} {actualUser.Last_Name.Trim()}.";
-            }
-        }
-
-        private string actualUserName;
-
-        public string ActualUserName
-        {
-            get { return actualUserName; }
-            set
-            {
-                actualUserName = value;
-                OnPropertyChanged("ActualUserName");
-            }
-        }
-        #endregion
-
-        #region CategorySelectComboBox
         private List<string> categoryList;
         public List<string> CategoryList
         {
             get
             {
-                categoryList = productsBll.GetAllCategoryes();
+                categoryList = restaurantModel.GetAllCategoryes().ToList();
                 return categoryList;
             }
             set
@@ -72,9 +45,8 @@ namespace Derby_Pub.ViewModels
                 OnPropertyChanged("CategorySelected");
             }
         }
-        #endregion
 
-        #region ContainComboBox
+
         private List<string> searchList;
 
         public List<string> SearchList
@@ -106,9 +78,7 @@ namespace Derby_Pub.ViewModels
                 OnPropertyChanged("SearchSelected");
             }
         }
-        #endregion
 
-        #region ProductList
         private ObservableCollection<ClientProductsDisplay> clientProductsList = new ObservableCollection<ClientProductsDisplay>();
         public ObservableCollection<ClientProductsDisplay> ClientProductsList
         {
@@ -123,6 +93,8 @@ namespace Derby_Pub.ViewModels
             }
         }
 
+        public List<byte[]> ImageList;
+        int index = 0;
 
         private ClientProductsDisplay productSelected;
 
@@ -145,9 +117,7 @@ namespace Derby_Pub.ViewModels
                     CurrentImage = null;
             }
         }
-        #endregion
 
-        #region SearchButton
 
         private string searchText;
 
@@ -161,16 +131,17 @@ namespace Derby_Pub.ViewModels
             }
         }
 
-        private ICommand displayProductComamnd;
-        public ICommand DisplayProductComamnd
+
+        private ICommand addCommand;
+        public ICommand AddCommand
         {
             get
             {
-                if (displayProductComamnd == null)
+                if (addCommand == null)
                 {
-                    displayProductComamnd = new RelayCommand(DisplayProducts);
+                    addCommand = new RelayCommand(DisplayProducts);
                 }
-                return displayProductComamnd;
+                return addCommand;
             }
         }
 
@@ -180,7 +151,8 @@ namespace Derby_Pub.ViewModels
                 return;
 
             AllergenList = null;
-            ImageList.Clear();
+            if(ImageList != null)
+                ImageList.Clear();
 
             switch (SearchSelected)
             {
@@ -192,10 +164,6 @@ namespace Derby_Pub.ViewModels
                     break;
             }
         }
-
-        #endregion
-
-        #region SeeDetaliesButton 
 
         private ICommand seeDetails;
         public ICommand SeeDetails
@@ -209,6 +177,7 @@ namespace Derby_Pub.ViewModels
                 return seeDetails;
             }
         }
+
         private void ProductDetails(object obj)
         {
 
@@ -228,9 +197,20 @@ namespace Derby_Pub.ViewModels
             }
         }
 
-        #endregion
+        public BitmapImage ToImage(byte[] array)
+        {
+            using (var ms = new System.IO.MemoryStream(array))
+            {
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.StreamSource = ms;
+                image.EndInit();
+                return image;
+            }
+        }
 
-        #region Allergens
+
         private ObservableCollection<string> allergenList;
 
         public ObservableCollection<string> AllergenList
@@ -245,23 +225,6 @@ namespace Derby_Pub.ViewModels
                 OnPropertyChanged("AllergenList");
             }
 
-        }
-        #endregion
-
-        #region Immage
-        public List<byte[]> ImageList;
-        int index = 0;
-        public BitmapImage ToImage(byte[] array)
-        {
-            using (var ms = new System.IO.MemoryStream(array))
-            {
-                var image = new BitmapImage();
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.StreamSource = ms;
-                image.EndInit();
-                return image;
-            }
         }
 
         private BitmapImage currentImage;
@@ -330,94 +293,6 @@ namespace Derby_Pub.ViewModels
 
             CurrentImage = ToImage(ImageList[index]);
         }
-        #endregion
 
-        #region Orders
-
-        private ICommand addToCartCommand;
-        public ICommand AddToCartCommand
-        {
-            get
-            {
-                if (addToCartCommand == null)
-                {
-                    addToCartCommand = new RelayCommand(AddToCartMethod);
-                }
-                return addToCartCommand;
-            }
-        }
-
-        private void AddToCartMethod(object obj)
-        {
-            Window currentWindow = App.Current.MainWindow;
-
-            DialogWindow dialogWindow = new DialogWindow();
-
-            App.Current.MainWindow = dialogWindow;
-            App.Current.MainWindow.ShowDialog();
-
-            App.Current.MainWindow = currentWindow;
-
-            var count = dialogWindow.GetNoProducts();
-            if (count == 0)
-                return;
-
-            if (productsName.ContainsKey(ProductSelected.Name))
-                productsName[ProductSelected.Name] += count;
-            else
-                productsName.Add(ProductSelected.Name, count);
-        }
-
-        private ICommand buyProductsCommand;
-        public ICommand BuyProductsCommand
-        {
-            get
-            {
-                if (buyProductsCommand == null)
-                {
-                    buyProductsCommand = new RelayCommand(BuyProducts);
-                }
-                return buyProductsCommand;
-            }
-        }
-
-        private void BuyProducts(object obj)
-        {
-            if (productsName.Count == 0)
-            {
-                MessageBox.Show("Nu aveti nimic in cos.");
-                return;
-            }
-
-            Window currentWindow = App.Current.MainWindow;
-
-            OrderWindow orderWindow = new OrderWindow(productsName, ActualUser);
-
-            App.Current.MainWindow = orderWindow;
-            App.Current.MainWindow.ShowDialog();
-
-            App.Current.MainWindow = currentWindow;
-        }
-
-        private ICommand removeProductsCommand;
-        public ICommand RemoveProductsCommand
-        {
-            get
-            {
-                if (removeProductsCommand == null)
-                {
-                    removeProductsCommand = new RelayCommand(RemoveProducts);
-
-                }
-                return removeProductsCommand;
-            }
-        }
-
-        private void RemoveProducts(object obj)
-        {
-            productsName.Clear();
-        }
-
-        #endregion
     }
 }

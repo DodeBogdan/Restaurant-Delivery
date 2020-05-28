@@ -26,6 +26,9 @@ namespace Derby_Pub.Models
         public int UniqueCode { get; set; }
         public System.DateTime Order_Time { get; set; }
         public System.DateTime Estimated_Time { get; set; }
+        public float Transport_Cost { get; set; }
+        public float Discount { get; set; }
+        public float Total_Price { get; set; }
     
         public virtual State State { get; set; }
         public virtual User User { get; set; }

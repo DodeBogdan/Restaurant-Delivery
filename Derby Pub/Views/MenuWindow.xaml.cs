@@ -11,7 +11,7 @@ namespace Derby_Pub.Views
         public MenuWindow(string menuName)
         {
             InitializeComponent();
-            ((MenuProductViewModel)this.DataContext).MenuName = menuName;
+            ((MenuViewModel)this.DataContext).MenuName = menuName;
         }
     }
 }

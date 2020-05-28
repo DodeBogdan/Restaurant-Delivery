@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ctx="clr-namespace:Derby_Pub.ViewModels"
         mc:Ignorable="d"
-        Title="MenuNoAccountWindow" Height="650" Width="800" ResizeMode="NoResize">
+        Title="DerbyPub" Height="650" Width="800" ResizeMode="NoResize">
 
     <Window.DataContext>
-        <ctx:MenuViewModel/>
+        <ctx:MenuNoAccountViewModel/>
     </Window.DataContext>
 
     <Grid>

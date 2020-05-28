@@ -38,6 +38,42 @@ namespace Derby_Pub.Models
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<User> Users { get; set; }
     
+        public virtual int DeleteAllergen(string allergenName)
+        {
+            var allergenNameParameter = allergenName != null ?
+                new ObjectParameter("AllergenName", allergenName) :
+                new ObjectParameter("AllergenName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteAllergen", allergenNameParameter);
+        }
+    
+        public virtual int DeleteCategory(string categoryName)
+        {
+            var categoryNameParameter = categoryName != null ?
+                new ObjectParameter("CategoryName", categoryName) :
+                new ObjectParameter("CategoryName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteCategory", categoryNameParameter);
+        }
+    
+        public virtual int DeleteMenu(string menuName)
+        {
+            var menuNameParameter = menuName != null ?
+                new ObjectParameter("MenuName", menuName) :
+                new ObjectParameter("MenuName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteMenu", menuNameParameter);
+        }
+    
+        public virtual int DeleteProduct(string productName)
+        {
+            var productNameParameter = productName != null ?
+                new ObjectParameter("ProductName", productName) :
+                new ObjectParameter("ProductName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteProduct", productNameParameter);
+        }
+    
         public virtual ObjectResult<string> GetAllCategoryes()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetAllCategoryes");
@@ -92,6 +128,19 @@ namespace Derby_Pub.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMenuDetails_Result>("GetMenuDetails", menuNameParameter);
         }
     
+        public virtual ObjectResult<GetProductBasedOnAllergens_Result> GetProductBasedOnAllergens(string categoryName, string allergenName)
+        {
+            var categoryNameParameter = categoryName != null ?
+                new ObjectParameter("CategoryName", categoryName) :
+                new ObjectParameter("CategoryName", typeof(string));
+    
+            var allergenNameParameter = allergenName != null ?
+                new ObjectParameter("AllergenName", allergenName) :
+                new ObjectParameter("AllergenName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductBasedOnAllergens_Result>("GetProductBasedOnAllergens", categoryNameParameter, allergenNameParameter);
+        }
+    
         public virtual ObjectResult<GetProductByCategory_Result> GetProductByCategory(string categoryName)
         {
             var categoryNameParameter = categoryName != null ?
@@ -101,13 +150,13 @@ namespace Derby_Pub.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductByCategory_Result>("GetProductByCategory", categoryNameParameter);
         }
     
-        public virtual int GetProductsByAllergen(string allergenName)
+        public virtual ObjectResult<GetProductsByAllergen_Result> GetProductsByAllergen(string allergenName)
         {
             var allergenNameParameter = allergenName != null ?
                 new ObjectParameter("AllergenName", allergenName) :
                 new ObjectParameter("AllergenName", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetProductsByAllergen", allergenNameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsByAllergen_Result>("GetProductsByAllergen", allergenNameParameter);
         }
     
         public virtual ObjectResult<GetProductsByMenuName_Result> GetProductsByMenuName(string menuName)
@@ -117,6 +166,19 @@ namespace Derby_Pub.Models
                 new ObjectParameter("MenuName", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsByMenuName_Result>("GetProductsByMenuName", menuNameParameter);
+        }
+    
+        public virtual int InsertIntoOrder_Product(Nullable<int> orderId, Nullable<int> productId)
+        {
+            var orderIdParameter = orderId.HasValue ?
+                new ObjectParameter("OrderId", orderId) :
+                new ObjectParameter("OrderId", typeof(int));
+    
+            var productIdParameter = productId.HasValue ?
+                new ObjectParameter("ProductId", productId) :
+                new ObjectParameter("ProductId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertIntoOrder_Product", orderIdParameter, productIdParameter);
         }
     }
 }

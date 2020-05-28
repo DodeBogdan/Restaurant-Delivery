@@ -1,8 +1,12 @@
 ﻿using Derby_Pub.Helps;
+using Derby_Pub.Models;
 using Derby_Pub.Models.BusinessLayer;
 using Derby_Pub.Models.EntityLayer;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Derby_Pub.ViewModels
 {
@@ -11,6 +15,7 @@ namespace Derby_Pub.ViewModels
         private double sum;
         readonly ProductsBLL productsBLL = new ProductsBLL();
 
+        public User ActualUser;
         private Dictionary<string, int> productDictionaryList;
 
         public Dictionary<string, int> ProductDictionaryList
@@ -66,9 +71,7 @@ namespace Derby_Pub.ViewModels
             }
         }
 
-
         private double price;
-
         public double Price
         {
             get { return price; }
@@ -80,7 +83,6 @@ namespace Derby_Pub.ViewModels
         }
 
         private double discount;
-
         public double Discount
         {
             get { return discount; }
@@ -92,7 +94,6 @@ namespace Derby_Pub.ViewModels
         }
 
         private double transport;
-
         public double Transport
         {
             get { return transport; }
@@ -104,7 +105,6 @@ namespace Derby_Pub.ViewModels
         }
 
         private double fullPrice;
-
         public double FullPrice
         {
             get { return fullPrice; }
@@ -115,6 +115,24 @@ namespace Derby_Pub.ViewModels
             }
         }
 
+        private ICommand buyProductsCommand;
+        public ICommand BuyProductsCommand
+        {
+            get
+            {
+                if (buyProductsCommand == null)
+                {
+                    buyProductsCommand = new RelayCommand(BuyProducts);
+                }
+                return buyProductsCommand;
+            }
 
+        }
+
+        private void BuyProducts(object obj)
+        {
+            MessageBox.Show("BUY");
+            productsBLL.BuyProducts(ActualUser.UserID, Transport, Discount, sum, productDictionaryList);
+        }
     }
 }

@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ctx="clr-namespace:Derby_Pub.ViewModels"
         mc:Ignorable="d"
-        Title="MenuWindow" Height="450" Width="800">
+        Title="DerbyPub" Height="450" Width="800">
     <Window.DataContext>
-        <ctx:MenuProductViewModel/>
+        <ctx:MenuViewModel/>
     </Window.DataContext>
 
     <Grid>

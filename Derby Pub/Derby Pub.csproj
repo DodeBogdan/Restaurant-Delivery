@@ -37,6 +37,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>LogoDerby.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -69,6 +72,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Views\AutentificationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ClientAccountWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -121,6 +128,7 @@
     <Compile Include="Models\Allergen.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BusinessLayer\OrderBLL.cs" />
     <Compile Include="Models\BusinessLayer\ProductsBLL.cs" />
     <Compile Include="Models\BusinessLayer\UserBLL.cs" />
     <Compile Include="Models\Category.cs">
@@ -134,7 +142,13 @@
     <Compile Include="Models\GetMenuDetails_Result.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetProductBasedOnAllergens_Result.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GetProductByCategory_Result.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetProductsByAllergen_Result.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetProductsByMenuName_Result.cs">
@@ -178,13 +192,16 @@
     </Compile>
     <Compile Include="ViewModels\AutentificationViewModel.cs" />
     <Compile Include="ViewModels\DialogViewModel.cs" />
-    <Compile Include="ViewModels\MenuProductViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\MenuNoAccountViewModel.cs" />
     <Compile Include="ViewModels\MenuWithClientAccountViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="Views\AutentificationWindow.xaml.cs">
       <DependentUpon>AutentificationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClientAccountWindow.xaml.cs">
+      <DependentUpon>ClientAccountWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ClientSignUpWindow.xaml.cs">
       <DependentUpon>ClientSignUpWindow.xaml</DependentUpon>
@@ -263,6 +280,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="LogoDerby.ico" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Models\RestaurantModel.Context.tt">

@@ -9,16 +9,18 @@ namespace Derby_Pub.Views
     /// </summary>
     public partial class MenuWithClientAccountWindow : Window
     {
+        private User user;
         public MenuWithClientAccountWindow(User user)
         {
             InitializeComponent();
             ((MenuWithClientAccountViewModel)this.DataContext).ActualUser = user;
+            this.user = user;
         }
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            StartUpPageWindow startUpPageWindow = new StartUpPageWindow();
+            ClientAccountWindow clientAccountWindow = new ClientAccountWindow(user);
             App.Current.MainWindow.Close();
-            App.Current.MainWindow = startUpPageWindow;
+            App.Current.MainWindow = clientAccountWindow;
             App.Current.MainWindow.Show();
         }
     }

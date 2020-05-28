@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Derby_Pub.ViewModels"
         mc:Ignorable="d"
-        Title="DialogWindow" Height="200" Width="200">
+        Title="DerbyPub" Height="250" Width="250">
 
     <Window.DataContext>
         <local:DialogViewModel/>
@@ -18,11 +18,11 @@
 
         <Image Margin="70,10,70,100" Source="../Assets/LogoDerby.png" Stretch="Fill"/>
 
-        <TextBlock HorizontalAlignment="Left" Margin="10,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="Cate produse doresti?"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="Cate produse doresti?"/>
         
-        <TextBox HorizontalAlignment="Left" Height="18" Margin="135,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" x:Name="NoProducts" Text="{Binding NoProducts}" />
+        <TextBox HorizontalAlignment="Left" Height="18" Margin="151,135,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" x:Name="NoProducts" Text="{Binding NoProducts}" Background="Transparent" BorderThickness="1" BorderBrush="Black"/>
         
-        <Button Content="Ok" HorizontalAlignment="Left" Margin="59,134,0,0" VerticalAlignment="Top" Width="75" 
+        <Button Content="Ok" HorizontalAlignment="Left" Margin="98,182,0,0" VerticalAlignment="Top" Width="75" 
                 Command="{Binding OkButtonCommand}"/>
 
 

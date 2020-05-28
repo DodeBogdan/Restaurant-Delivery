@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Derby_Pub.ViewModels"
         mc:Ignorable="d"
-        Title="MenuWithClientAccountWindow" Height="650" Width="800">
+        Title="DerbyPub" Height="650" Width="800">
 
     <Window.DataContext>
         <local:MenuWithClientAccountViewModel/>
