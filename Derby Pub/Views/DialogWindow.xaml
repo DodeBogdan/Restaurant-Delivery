@@ -1,0 +1,31 @@
+﻿<Window x:Class="Derby_Pub.Views.DialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Derby_Pub.ViewModels"
+        mc:Ignorable="d"
+        Title="DialogWindow" Height="200" Width="200">
+
+    <Window.DataContext>
+        <local:DialogViewModel/>
+    </Window.DataContext>
+    
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="../Assets/BackgroundImage.jpg"></ImageBrush>
+        </Grid.Background>
+
+        <Image Margin="70,10,70,100" Source="../Assets/LogoDerby.png" Stretch="Fill"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="10,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="Cate produse doresti?"/>
+        
+        <TextBox HorizontalAlignment="Left" Height="18" Margin="135,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" x:Name="NoProducts" Text="{Binding NoProducts}" />
+        
+        <Button Content="Ok" HorizontalAlignment="Left" Margin="59,134,0,0" VerticalAlignment="Top" Width="75" 
+                Command="{Binding OkButtonCommand}"/>
+
+
+
+    </Grid>
+</Window>

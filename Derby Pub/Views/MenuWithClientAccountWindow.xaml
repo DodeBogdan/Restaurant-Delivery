@@ -10,20 +10,20 @@
     <Window.DataContext>
         <local:MenuWithClientAccountViewModel/>
     </Window.DataContext>
-    
+
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="../Assets/BackgroundImage.jpg"></ImageBrush>
         </Grid.Background>
         <Image Margin="300,10,299.6,485.6" Source="../Assets/LogoDerby.png" Stretch="Fill"/>
-        
+
         <ComboBox Name="comboPers" Width="200" HorizontalAlignment="Left" 
                       ItemsSource="{Binding CategoryList}"
                       SelectedIndex="0" SelectedItem="{Binding CategorySelected}" Margin="100,60,0,520.6">
         </ComboBox>
-       
+
         <TextBlock HorizontalAlignment="Left" Margin="100,10,0,0" TextWrapping="Wrap" Text="Categorii" VerticalAlignment="Top" Height="50" Width="200" FontSize="35" TextAlignment="Center" FontWeight="Bold"/>
-        
+
         <Button Content="" FontSize="25" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="75"  x:Name="BackButton" Click="BackButton_Click">
             <Button.Background>
                 <ImageBrush ImageSource="/Derby Pub;component/Assets/back-icon.png" />
@@ -32,7 +32,7 @@
 
         <ComboBox HorizontalAlignment="Left" Margin="519,10,0,0" VerticalAlignment="Top" Width="120" Height="37" x:Name="SearchComboBox" ItemsSource="{Binding SearchList}"
                       SelectedIndex="0" SelectedItem="{Binding SearchSelected}" FontSize="14" FontWeight="Bold"/>
-        
+
         <TextBox HorizontalAlignment="Left" Height="37" Margin="644,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Name="SearchTextBox" Text="{Binding SearchText}"/>
 
         <TextBlock HorizontalAlignment="Left" FontSize="20" TextAlignment="Center" Margin="454,12,0,0" TextWrapping="Wrap" Text="Cauta:" VerticalAlignment="Top" Height="35" Width="65"/>
@@ -77,9 +77,9 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Content="Cauta" HorizontalAlignment="Left" Margin="709,52,0,0" VerticalAlignment="Top" Width="75" Background="Transparent" x:Name="SearchButton" Command="{Binding AddCommand}"/>
+        <Button Content="Cauta" HorizontalAlignment="Left" Margin="709,52,0,0" VerticalAlignment="Top" Width="75" Background="Transparent" x:Name="SearchButton" Command="{Binding DisplayProductComamnd}"/>
 
-        <Button Content="Vezi detalii despre:" HorizontalAlignment="Left" Margin="300,574,0,0" VerticalAlignment="Top" Width="169" Name="DetailsButton" Command="{Binding SeeDetails}" />
+        <Button Content="Vezi detalii despre:" HorizontalAlignment="Left" Margin="239,574,0,0" VerticalAlignment="Top" Width="169" Name="DetailsButton" Command="{Binding SeeDetails}" />
         <Button Content="Inapoi" HorizontalAlignment="Left" Margin="519,538,0,0" VerticalAlignment="Top" Width="75" Command="{Binding PreviousPhotoCommand}"/>
         <Button Content="Inainte" HorizontalAlignment="Left" Margin="636,538,0,0" VerticalAlignment="Top" Width="75" Command="{Binding NextPhotoCommand}"/>
 
@@ -92,9 +92,16 @@
         </ListView>
 
         <Image HorizontalAlignment="Left" Height="150" Margin="519,371,0,0" VerticalAlignment="Top" Width="200" Source="{Binding CurrentImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        
-        <Button Content="Adauga in cos" HorizontalAlignment="Left" Margin="21,574,0,0" VerticalAlignment="Top" Width="178"/>
 
-        <Button Content="Vezi cosul/ Plaseaza comanda" HorizontalAlignment="Left" Margin="592,574,0,0" VerticalAlignment="Top" Width="192"/>
+        <Button Content="Adauga in cos" HorizontalAlignment="Left" Margin="21,574,0,0" VerticalAlignment="Top" Width="178" Command="{Binding AddToCartCommand}"/>
+
+        <Button Content="Vezi cosul/ Plaseaza comanda" HorizontalAlignment="Left" Margin="447,574,0,0" VerticalAlignment="Top" Width="192"
+                Command="{Binding BuyProductsCommand}"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="470,72,0,0"  Text="User:" VerticalAlignment="Top" Height="27" Width="74" FontSize="20"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="544,72,0,0" Text="{Binding ActualUserName}" VerticalAlignment="Top" Height="27" Width="167" FontSize="20"/>
+
+        <Button Content="Sterge tot din cos" HorizontalAlignment="Left" Margin="666,574,0,0" VerticalAlignment="Top" Width="105" Command="{Binding RemoveProductsCommand}"/>
     </Grid>
 </Window>

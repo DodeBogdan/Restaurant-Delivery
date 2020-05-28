@@ -59,12 +59,13 @@ namespace Derby_Pub.ViewModels
             }
 
 
-
-            MenuWithClientAccountWindow menuWithClientAccount = new MenuWithClientAccountWindow(newUser);
-            App.Current.MainWindow.Close();
-            App.Current.MainWindow = menuWithClientAccount;
-            App.Current.MainWindow.Show();
-
+            if (newUser.AccountType.AccountTypeID == 1)
+            {
+                MenuWithClientAccountWindow menuWithClientAccount = new MenuWithClientAccountWindow(newUser);
+                App.Current.MainWindow.Close();
+                App.Current.MainWindow = menuWithClientAccount;
+                App.Current.MainWindow.Show();
+            }
         }
 
     }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
@@ -14,17 +15,35 @@ namespace Derby_Pub.ViewModels
 {
     class MenuWithClientAccountViewModel : BaseVM
     {
-        private User actualUser;
-
-        public User ActualUser
-        {
-            get { return actualUser; }
-            set { actualUser = value; }
-        }
-
+        private readonly Dictionary<string, int> productsName = new Dictionary<string, int>();
 
         private readonly RestaurantModel restaurantModel = new RestaurantModel();
         private readonly ProductsBLL productsBll = new ProductsBLL();
+
+        private User actualUser;
+        public User ActualUser
+        {
+            get { return actualUser; }
+            set
+            {
+                actualUser = value;
+                ActualUserName = $"{actualUser.First_Name.Trim()} {actualUser.Last_Name.Trim()}.";
+            }
+        }
+
+        private string actualUserName;
+
+        public string ActualUserName
+        {
+            get { return actualUserName; }
+            set
+            {
+                actualUserName = value;
+                OnPropertyChanged("ActualUserName");
+            }
+        }
+
+
 
         private List<string> categoryList;
         public List<string> CategoryList
@@ -140,16 +159,16 @@ namespace Derby_Pub.ViewModels
         }
 
 
-        private ICommand addCommand;
-        public ICommand AddCommand
+        private ICommand displayProductComamnd;
+        public ICommand DisplayProductComamnd
         {
             get
             {
-                if (addCommand == null)
+                if (displayProductComamnd == null)
                 {
-                    addCommand = new RelayCommand(DisplayProducts);
+                    displayProductComamnd = new RelayCommand(DisplayProducts);
                 }
-                return addCommand;
+                return displayProductComamnd;
             }
         }
 
@@ -298,5 +317,85 @@ namespace Derby_Pub.ViewModels
             CurrentImage = ToImage(ImageList[index]);
         }
 
+        private ICommand addToCartCommand;
+        public ICommand AddToCartCommand
+        {
+            get
+            {
+                if (addToCartCommand == null)
+                {
+                    addToCartCommand = new RelayCommand(AddToCartMethod);
+                }
+                return addToCartCommand;
+            }
+        }
+
+        private void AddToCartMethod(object obj)
+        {
+            Window currentWindow = App.Current.MainWindow;
+
+            DialogWindow dialogWindow = new DialogWindow();
+
+            App.Current.MainWindow = dialogWindow;
+            App.Current.MainWindow.ShowDialog();
+
+            App.Current.MainWindow = currentWindow;
+
+            var count = dialogWindow.GetNoProducts();
+            if (count == 0)
+                return;
+
+            productsName.Add(ProductSelected.Name, count);
+        }
+
+        private ICommand buyProductsCommand;
+        public ICommand BuyProductsCommand
+        {
+            get
+            {
+                if (buyProductsCommand == null)
+                {
+                    buyProductsCommand = new RelayCommand(BuyProducts);
+                }
+                return buyProductsCommand;
+            }
+        }
+
+        private void BuyProducts(object obj)
+        {
+            if (productsName.Count == 0)
+            {
+                MessageBox.Show("Nu aveti nimic in cos.");
+                return;
+            }
+
+            Window currentWindow = App.Current.MainWindow;
+
+            OrderWindow orderWindow = new OrderWindow(productsName);
+
+            App.Current.MainWindow = orderWindow;
+            App.Current.MainWindow.ShowDialog();
+
+            App.Current.MainWindow = currentWindow;
+        }
+
+        private ICommand removeProductsCommand;
+        public ICommand RemoveProductsCommand
+        {
+            get
+            {
+                if (removeProductsCommand == null)
+                {
+                    removeProductsCommand = new RelayCommand(RemoveProducts);
+
+                }
+                return removeProductsCommand;
+            }
+        }
+
+        private void RemoveProducts(object obj)
+        {
+            productsName.Clear();
+        }
     }
 }

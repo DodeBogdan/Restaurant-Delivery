@@ -76,6 +76,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\DialogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\EmployeeStartUpWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -89,6 +93,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MenuWithClientAccountWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OrderWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -119,6 +127,7 @@
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EntityLayer\ClientProductsDisplay.cs" />
+    <Compile Include="Models\EntityLayer\SelectedProduct.cs" />
     <Compile Include="Models\GetMenuByCategory_Result.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
@@ -168,15 +177,20 @@
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AutentificationViewModel.cs" />
+    <Compile Include="ViewModels\DialogViewModel.cs" />
     <Compile Include="ViewModels\MenuProductViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\MenuWithClientAccountViewModel.cs" />
+    <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="Views\AutentificationWindow.xaml.cs">
       <DependentUpon>AutentificationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ClientSignUpWindow.xaml.cs">
       <DependentUpon>ClientSignUpWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DialogWindow.xaml.cs">
+      <DependentUpon>DialogWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EmployeeStartUpWindow.xaml.cs">
       <DependentUpon>EmployeeStartUpWindow.xaml</DependentUpon>
@@ -189,6 +203,9 @@
     </Compile>
     <Compile Include="Views\MenuWithClientAccountWindow.xaml.cs">
       <DependentUpon>MenuWithClientAccountWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OrderWindow.xaml.cs">
+      <DependentUpon>OrderWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RegisterWindow.xaml.cs">
       <DependentUpon>RegisterWindow.xaml</DependentUpon>

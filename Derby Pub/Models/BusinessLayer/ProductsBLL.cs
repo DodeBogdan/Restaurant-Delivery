@@ -43,6 +43,12 @@ namespace Derby_Pub.Models.BusinessLayer
             return productsDisplays;
         }
 
+        internal double GetPriceOfProduct(string key)
+        {
+            return restaurant.Products.Where((x) => x.Name == key)
+                .Select((x) => x.Price).FirstOrDefault();
+        }
+
         internal List<byte[]> GetImagesFromProductName(string productName)
         {
             List<byte[]> images = restaurant.GetImagesByProductName(productName).ToList();
