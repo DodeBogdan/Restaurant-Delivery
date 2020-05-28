@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace Derby_Pub.Models.BusinessLayer
 {
@@ -35,6 +31,19 @@ namespace Derby_Pub.Models.BusinessLayer
 
             return true;
         }
-        
+
+        public User Login(string email, string password)
+        {
+            if (!EmailExistence(email))
+                return new User();
+
+            var user = restaurant.Users
+                .Where((x) => x.Email == email).First();
+
+            if (user.Password.Trim() != password)
+                return new User();
+
+            return user;
+        }
     }
 }

@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace Derby_Pub.Views
 {
@@ -37,6 +25,14 @@ namespace Derby_Pub.Views
             StartUpPageWindow startUpPageWindow = new StartUpPageWindow();
             App.Current.MainWindow.Close();
             App.Current.MainWindow = startUpPageWindow;
+            App.Current.MainWindow.Show();
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            AutentificationWindow autentificationWindow = new AutentificationWindow();
+            App.Current.MainWindow.Close();
+            App.Current.MainWindow = autentificationWindow;
             App.Current.MainWindow.Show();
         }
     }

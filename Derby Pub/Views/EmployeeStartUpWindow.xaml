@@ -11,11 +11,14 @@
             <ImageBrush ImageSource="../Assets/BackgroundImage.jpg"></ImageBrush>
         </Grid.Background>
         <Image Margin="70,10,70,300" Source="../Assets/LogoDerby.png" Stretch="Fill"/>
-        <Button Content="Login" FontSize="25" HorizontalAlignment="Left" Margin="99,263,0,0" VerticalAlignment="Top" Width="225" Height="70" Background="Transparent" BorderBrush="Black" BorderThickness="1"   x:Name="LoginButton"/>
+        
+        <Button Content="Autentificare" FontSize="25" HorizontalAlignment="Left" Margin="99,263,0,0" VerticalAlignment="Top" Width="225" Height="70" Background="Transparent" BorderBrush="Black" BorderThickness="1"   x:Name="LoginButton"/>
+        
         <Button Content="" FontSize="25" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="75"  x:Name="BackButton" Click="BackButton_Click">
             <Button.Background>
                 <ImageBrush ImageSource="../Assets/back-icon.png" />
             </Button.Background>
         </Button>
+        
     </Grid>
 </Window>

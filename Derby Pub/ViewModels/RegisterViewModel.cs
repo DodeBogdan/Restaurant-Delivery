@@ -1,13 +1,7 @@
 ﻿using Derby_Pub.Helps;
-using Derby_Pub.Models;
 using Derby_Pub.Models.BusinessLayer;
 using Derby_Pub.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -156,7 +150,7 @@ namespace Derby_Pub.ViewModels
 
             var email = user.EmailExistence(Email);
 
-            if(email)
+            if (email)
             {
                 MessageBox.Show("Email-ul este deja folosit.\nIntroduceti un alt email.");
                 return;

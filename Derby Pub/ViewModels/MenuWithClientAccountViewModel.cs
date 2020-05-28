@@ -12,8 +12,16 @@ using System.Windows.Media.Imaging;
 
 namespace Derby_Pub.ViewModels
 {
-    class MenuViewModel : BaseVM
+    class MenuWithClientAccountViewModel : BaseVM
     {
+        private User actualUser;
+
+        public User ActualUser
+        {
+            get { return actualUser; }
+            set { actualUser = value; }
+        }
+
 
         private readonly RestaurantModel restaurantModel = new RestaurantModel();
         private readonly ProductsBLL productsBll = new ProductsBLL();

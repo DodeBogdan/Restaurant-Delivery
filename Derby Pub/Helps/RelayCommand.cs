@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Derby_Pub.Helps
 {
     class RelayCommand : ICommand
     {
-        private Action<object> commandTask;
-        private Predicate<object> canExecuteTask;
+        private readonly Action<object> commandTask;
+        private readonly Predicate<object> canExecuteTask;
 
         public RelayCommand(Action<object> workToDo)
             : this(workToDo, DefaultCanExecute)

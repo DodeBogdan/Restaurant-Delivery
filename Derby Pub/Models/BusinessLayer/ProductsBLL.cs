@@ -1,12 +1,7 @@
 ﻿using Derby_Pub.Helps;
 using Derby_Pub.Models.EntityLayer;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace Derby_Pub.Models.BusinessLayer
 {
@@ -32,7 +27,7 @@ namespace Derby_Pub.Models.BusinessLayer
                 });
             }
 
-            var menuProducts = restaurant.GetMenuDetails("Casa Derby").ToList();
+            var menuProducts = restaurant.GetMenuByCategory(category).ToList();
 
             foreach (var product in menuProducts)
             {
@@ -79,7 +74,7 @@ namespace Derby_Pub.Models.BusinessLayer
                 });
             }
 
-            var menuProducts = restaurant.GetMenuDetails("Casa Derby").ToList();
+            var menuProducts = restaurant.GetMenuByCategory(category).ToList();
 
             foreach (var product in menuProducts)
             {
@@ -117,14 +112,14 @@ namespace Derby_Pub.Models.BusinessLayer
                 }
             }
 
-            var menuProducts = restaurant.GetMenuDetails("Casa Derby").ToList();
+            var menuProducts = restaurant.GetMenuByCategory(categorySelected).ToList();
 
             foreach (var product in menuProducts)
             {
                 productsDisplays.Add(new ClientProductsDisplay()
                 {
                     Name = product.Name,
-                    Price = $"{product.Price - (AppConfigHelper.MenuDiscount/100 * product.Price)}RON",
+                    Price = $"{product.Price - (AppConfigHelper.MenuDiscount / 100 * product.Price)}RON",
                     Quantity = "Vezi la detalii",
                     ProductType = "Meniu"
                 });
@@ -136,7 +131,7 @@ namespace Derby_Pub.Models.BusinessLayer
         public List<ClientProductsDisplay> GetProductsByMenuName(string name)
         {
             var products = restaurant.GetProductsByMenuName(name);
-                
+
             List<ClientProductsDisplay> productsDisplays = new List<ClientProductsDisplay>();
 
             foreach (var product in products)
