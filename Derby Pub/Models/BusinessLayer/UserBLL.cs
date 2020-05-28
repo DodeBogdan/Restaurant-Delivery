@@ -24,5 +24,17 @@ namespace Derby_Pub.Models.BusinessLayer
 
             restaurant.SaveChanges();
         }
+
+        public bool EmailExistence(string email)
+        {
+            var user = restaurant.Users
+                .Where((x) => x.Email == email).ToList();
+
+            if (user.Count == 0)
+                return false;
+
+            return true;
+        }
+        
     }
 }

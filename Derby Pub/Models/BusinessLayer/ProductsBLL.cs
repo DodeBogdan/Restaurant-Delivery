@@ -1,4 +1,5 @@
-﻿using Derby_Pub.Models.EntityLayer;
+﻿using Derby_Pub.Helps;
+using Derby_Pub.Models.EntityLayer;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,11 +14,12 @@ namespace Derby_Pub.Models.BusinessLayer
     {
         private readonly RestaurantModel restaurant = new RestaurantModel();
 
+
         public List<ClientProductsDisplay> GetProductsByCategory(string category)
         {
             List<ClientProductsDisplay> productsDisplays = new List<ClientProductsDisplay>();
 
-            var products = restaurant.GetProductByCategory(category);
+            var products = restaurant.GetProductByCategory(category).ToList();
 
             foreach (var product in products)
             {
@@ -37,7 +39,7 @@ namespace Derby_Pub.Models.BusinessLayer
                 productsDisplays.Add(new ClientProductsDisplay()
                 {
                     Name = product.Name,
-                    Price = $"{product.Price}RON",
+                    Price = $"{product.Price - (AppConfigHelper.MenuDiscount / 100 * product.Price)}RON",
                     Quantity = "Vezi la detalii",
                     ProductType = "Meniu"
                 });
@@ -61,7 +63,7 @@ namespace Derby_Pub.Models.BusinessLayer
         public List<ClientProductsDisplay> GetProductsContaining(string category, string name)
         {
             var products = restaurant.GetProductByCategory(category)
-                .Where((x) => x.Name.ToLower().Contains(name.ToLower()));
+                .Where((x) => x.Name.ToLower().Contains(name.ToLower())).ToList();
 
 
             List<ClientProductsDisplay> productsDisplays = new List<ClientProductsDisplay>();
@@ -84,7 +86,7 @@ namespace Derby_Pub.Models.BusinessLayer
                 productsDisplays.Add(new ClientProductsDisplay()
                 {
                     Name = product.Name,
-                    Price = $"{product.Price}RON",
+                    Price = $"{product.Price - (AppConfigHelper.MenuDiscount / 100 * product.Price)}RON",
                     Quantity = "Vezi la detalii",
                     ProductType = "Meniu"
                 });
@@ -122,7 +124,7 @@ namespace Derby_Pub.Models.BusinessLayer
                 productsDisplays.Add(new ClientProductsDisplay()
                 {
                     Name = product.Name,
-                    Price = $"{product.Price}RON",
+                    Price = $"{product.Price - (AppConfigHelper.MenuDiscount/100 * product.Price)}RON",
                     Quantity = "Vezi la detalii",
                     ProductType = "Meniu"
                 });
@@ -150,6 +152,5 @@ namespace Derby_Pub.Models.BusinessLayer
 
             return productsDisplays;
         }
-
     }
 }

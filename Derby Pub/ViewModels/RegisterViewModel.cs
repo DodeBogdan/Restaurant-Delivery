@@ -154,6 +154,14 @@ namespace Derby_Pub.ViewModels
         private void AddUser(object param)
         {
 
+            var email = user.EmailExistence(Email);
+
+            if(email)
+            {
+                MessageBox.Show("Email-ul este deja folosit.\nIntroduceti un alt email.");
+                return;
+            }
+
             var password = (param as PasswordBox).Password;
 
             if (password.Length < 6)

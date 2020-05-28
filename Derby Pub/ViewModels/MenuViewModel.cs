@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace Derby_Pub.ViewModels
 {
@@ -94,14 +95,25 @@ namespace Derby_Pub.ViewModels
             }
         }
 
+        public List<byte[]> ImageList;
+        int index = 0;
+
         private ClientProductsDisplay productSelected;
 
         public ClientProductsDisplay ProductSelected
         {
             get { return productSelected; }
-            set { 
+            set
+            {
                 productSelected = value;
                 OnPropertyChanged("ProductSelected");
+
+                AllergenList = new ObservableCollection<string>(productsBll.GetAllergensByProductName(ProductSelected.Name));
+                ImageList = productsBll.GetImagesFromProductName(ProductSelected.Name);
+                if (ImageList.Count != 0)
+                    CurrentImage = ToImage(ImageList[0]);
+                else
+                    CurrentImage = null;
             }
         }
 
@@ -170,25 +182,112 @@ namespace Derby_Pub.ViewModels
             string name = ProductSelected.Name.Trim();
             var currentWondow = App.Current.MainWindow;
 
-            switch (ProductSelected.ProductType)
+            if (ProductSelected.ProductType == "Meniu")
             {
-                case "Preparat":
-                    ProductWindow productWindow = new ProductWindow(name);
+                MenuWindow menuWindow = new MenuWindow(name);
 
-                    App.Current.MainWindow = productWindow;
-                    App.Current.MainWindow.ShowDialog();
-                    App.Current.MainWindow = currentWondow;
-                    break;
-
-                default:
-                    MessageBox.Show("To be implemented.");
-                    MenuWindow menuWindow = new MenuWindow(name);
-
-                    App.Current.MainWindow = menuWindow;
-                    App.Current.MainWindow.ShowDialog();
-                    App.Current.MainWindow = currentWondow;
-                    break;
-            } 
+                App.Current.MainWindow = menuWindow;
+                App.Current.MainWindow.ShowDialog();
+                App.Current.MainWindow = currentWondow;
+            }
         }
+
+        public BitmapImage ToImage(byte[] array)
+        {
+            using (var ms = new System.IO.MemoryStream(array))
+            {
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.StreamSource = ms;
+                image.EndInit();
+                return image;
+            }
+        }
+
+
+        private ObservableCollection<string> allergenList;
+
+        public ObservableCollection<string> AllergenList
+        {
+            get
+            {
+                return allergenList;
+            }
+            set
+            {
+                allergenList = value;
+                OnPropertyChanged("AllergenList");
+            }
+
+        }
+
+        private BitmapImage currentImage;
+
+        public BitmapImage CurrentImage
+        {
+            get { return currentImage; }
+            set
+            {
+                currentImage = value;
+                OnPropertyChanged("CurrentImage");
+            }
+        }
+
+        private ICommand nextPhotoCommand;
+        public ICommand NextPhotoCommand
+        {
+            get
+            {
+                if (nextPhotoCommand == null)
+                {
+                    nextPhotoCommand = new RelayCommand(NextPhoto);
+                }
+                return nextPhotoCommand;
+            }
+        }
+
+        private void NextPhoto(object obj)
+        {
+            if (ImageList.Count == 0)
+                return;
+
+            if (index + 1 >= ImageList.Count)
+            {
+                index = 0;
+            }
+            else index++;
+
+            CurrentImage = ToImage(ImageList[index]);
+        }
+
+        private ICommand previousPhotoCommand;
+        public ICommand PreviousPhotoCommand
+        {
+            get
+            {
+                if (previousPhotoCommand == null)
+                {
+                    previousPhotoCommand = new RelayCommand(PreviousPhoto);
+                }
+                return previousPhotoCommand;
+            }
+        }
+
+        private void PreviousPhoto(object obj)
+        {
+            if (ImageList.Count == 0)
+                return;
+
+            if (index <= 0)
+            {
+                index = ImageList.Count - 1;
+            }
+            else
+                index--;
+
+            CurrentImage = ToImage(ImageList[index]);
+        }
+
     }
 }

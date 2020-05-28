@@ -63,37 +63,6 @@ namespace Derby_Pub.ViewModels
             }
         }
 
-        private ICommand seeDetails;
-        public ICommand SeeDetails
-        {
-            get
-            {
-                if (seeDetails == null)
-                {
-                    seeDetails = new RelayCommand(ProductDetails);
-                }
-                return seeDetails;
-            }
-        }
-
-        private void ProductDetails(object obj)
-        {
-
-            if (ProductSelected == null)
-                return;
-
-            string name = ProductSelected.Name.Trim();
-            var currentWondow = App.Current.MainWindow;
-
-            ProductWindow productWindow = new ProductWindow(name);
-
-            App.Current.MainWindow = productWindow;
-            App.Current.MainWindow.ShowDialog();
-            App.Current.MainWindow = currentWondow;
-
-
-        }
-
         public List<byte[]> ImageList;
         int index = 0;
 
@@ -153,11 +122,15 @@ namespace Derby_Pub.ViewModels
 
         private void NextPhoto(object obj)
         {
+            if (ImageList.Count == 0)
+                return;
+
             if (index + 1 >= ImageList.Count)
             {
                 index = 0;
             }
             else index++;
+
 
             CurrentImage = ToImage(ImageList[index]);
         }
@@ -177,6 +150,8 @@ namespace Derby_Pub.ViewModels
 
         private void PreviousPhoto(object obj)
         {
+            if (ImageList.Count == 0)
+                return;
             if (index <= 0)
             {
                 index = ImageList.Count - 1;

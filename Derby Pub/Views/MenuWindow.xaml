@@ -63,7 +63,7 @@
         <ListView HorizontalAlignment="Left" Height="165" Margin="41,190,0,0" VerticalAlignment="Top" Width="178" ItemsSource="{Binding AllergenList, UpdateSourceTrigger=PropertyChanged}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Nume"/>
+                    <GridViewColumn Header="Alergeni"/>
                 </GridView>
             </ListView.View>
         </ListView>
