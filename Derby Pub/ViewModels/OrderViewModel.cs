@@ -15,23 +15,27 @@ namespace Derby_Pub.ViewModels
         readonly ProductsBLL productsBLL = new ProductsBLL();
 
         public User ActualUser;
-        private Dictionary<string, int> productDictionaryList;
+        private List<ProductDetalies> productDetalies;
 
-        public Dictionary<string, int> ProductDictionaryList
+        public List<ProductDetalies> ProductDetalies
         {
-            get { return productDictionaryList; }
+            get { return productDetalies; }
             set
             {
-                productDictionaryList = value;
-                foreach (var product in ProductDictionaryList)
+                productDetalies = value;
+                foreach (var product in ProductDetalies)
                 {
                     ProductList.Add(new SelectedProduct()
                     {
-                        Name = product.Key,
-                        Quantity = product.Value
+                        Name = product.Name,
+                        Quantity = product.Quantity
                     });
-
-                    sum += product.Value * productsBLL.GetPriceOfProduct(product.Key);
+                    if(product.Type == "Preparat")
+                        sum += product.Quantity * productsBLL.GetPriceOfProduct(product.Name);
+                    else
+                    {
+                        sum += product.Quantity * (productsBLL.GetPriceOfMenu(product.Name) - (AppConfigHelper.MenuDiscount / 100 * productsBLL.GetPriceOfMenu(product.Name)));
+                    }
 
                 }
                 Price = sum;
@@ -131,7 +135,7 @@ namespace Derby_Pub.ViewModels
         private void BuyProducts(object obj)
         {
             MessageBox.Show("BUY");
-            productsBLL.BuyProducts(ActualUser.UserID, Transport, Discount, sum, productDictionaryList);
+            productsBLL.BuyProducts(ActualUser.UserID, Transport, Discount, sum, ProductDetalies);
         }
     }
 }

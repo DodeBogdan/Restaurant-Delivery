@@ -9,7 +9,10 @@ namespace Derby_Pub.Models.BusinessLayer
     class ProductsBLL
     {
         private readonly RestaurantModel restaurant = new RestaurantModel();
-
+        internal double GetPriceOfMenu(string name)
+        {
+            return (double)restaurant.GetPriceOfMenu(name).First();
+        }
         internal double GetPriceOfProduct(string key)
         {
             return restaurant.Products.Where((x) => x.Name == key)
@@ -310,19 +313,31 @@ namespace Derby_Pub.Models.BusinessLayer
 
             return productsDisplays;
         }
-        private void AddOrderProduct(int userId, Dictionary<string, int> dictionary)
+        private void AddOrderProduct(int userId, List<ProductDetalies> productDetalies)
         {
-            foreach (var d in dictionary)
+            foreach (var d in productDetalies)
             {
-                for (int index = 0; index < d.Value; index++)
+                if (d.Type == "Preparat")
                 {
-                    int productId = (from product in restaurant.Products where product.Name.Contains(d.Key) select product.ProductID).First();
-                    int orderId = (from order in restaurant.Orders where order.UserID == userId select order.OrderID).First();
-                    restaurant.InsertIntoOrder_Product(orderId, productId);
+                    for (int index = 0; index < d.Quantity; index++)
+                    {
+                        int productId = (from product in restaurant.Products where product.Name.Contains(d.Name) select product.ProductID).First();
+                        int orderId = (from order in restaurant.Orders where order.UserID == userId select order.OrderID).First();
+                        restaurant.InsertIntoOrder_Product(orderId, productId);
+                    }
+                }
+                else
+                {
+                    for(int index = 0; index < d.Quantity; index++)
+                    {
+                        int menuId = (from menu in restaurant.Menus where menu.Name.Contains(d.Name) select menu.MenuID).First();
+                        int orderId = (from order in restaurant.Orders where order.UserID == userId select order.OrderID).First();
+                        restaurant.InsertIntoOrder_Menu(orderId, menuId);
+                    }
                 }
             }
         }
-        public void BuyProducts(int userId, double transport_cost, double discount, double total_price, Dictionary<string, int> dictionary)
+        public void BuyProducts(int userId, double transport_cost, double discount, double total_price, List<ProductDetalies> productDetalies)
         {
             Random rnd = new Random();
             int random = rnd.Next(999, 100000);
@@ -348,7 +363,7 @@ namespace Derby_Pub.Models.BusinessLayer
 
             restaurant.SaveChanges();
 
-            AddOrderProduct(userId, dictionary);
+            AddOrderProduct(userId, productDetalies);
         }
 
     }

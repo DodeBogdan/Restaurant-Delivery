@@ -194,5 +194,53 @@ namespace Derby_Pub.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllMenusBasedOnAllergen_Result>("GetAllMenusBasedOnAllergen", categoryNameParameter, allergenNameParameter);
         }
+    
+        public virtual ObjectResult<GetAllMenusWithoutAnAllergen_Result> GetAllMenusWithoutAnAllergen(string categoryName, string allergenName)
+        {
+            var categoryNameParameter = categoryName != null ?
+                new ObjectParameter("CategoryName", categoryName) :
+                new ObjectParameter("CategoryName", typeof(string));
+    
+            var allergenNameParameter = allergenName != null ?
+                new ObjectParameter("AllergenName", allergenName) :
+                new ObjectParameter("AllergenName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllMenusWithoutAnAllergen_Result>("GetAllMenusWithoutAnAllergen", categoryNameParameter, allergenNameParameter);
+        }
+    
+        public virtual ObjectResult<GetAllProductsWihoutAnAllergen_Result> GetAllProductsWihoutAnAllergen(string categoryName, string allergenName)
+        {
+            var categoryNameParameter = categoryName != null ?
+                new ObjectParameter("CategoryName", categoryName) :
+                new ObjectParameter("CategoryName", typeof(string));
+    
+            var allergenNameParameter = allergenName != null ?
+                new ObjectParameter("AllergenName", allergenName) :
+                new ObjectParameter("AllergenName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllProductsWihoutAnAllergen_Result>("GetAllProductsWihoutAnAllergen", categoryNameParameter, allergenNameParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<double>> GetPriceOfMenu(string menuName)
+        {
+            var menuNameParameter = menuName != null ?
+                new ObjectParameter("MenuName", menuName) :
+                new ObjectParameter("MenuName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("GetPriceOfMenu", menuNameParameter);
+        }
+    
+        public virtual int InsertIntoOrder_Menu(Nullable<int> oderId, Nullable<int> menuId)
+        {
+            var oderIdParameter = oderId.HasValue ?
+                new ObjectParameter("OderId", oderId) :
+                new ObjectParameter("OderId", typeof(int));
+    
+            var menuIdParameter = menuId.HasValue ?
+                new ObjectParameter("MenuId", menuId) :
+                new ObjectParameter("MenuId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertIntoOrder_Menu", oderIdParameter, menuIdParameter);
+        }
     }
 }

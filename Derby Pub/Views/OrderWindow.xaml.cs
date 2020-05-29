@@ -1,4 +1,5 @@
 ﻿using Derby_Pub.Models;
+using Derby_Pub.Models.EntityLayer;
 using Derby_Pub.ViewModels;
 using System.Collections.Generic;
 using System.Windows;
@@ -10,10 +11,10 @@ namespace Derby_Pub.Views
     /// </summary>
     public partial class OrderWindow : Window
     {
-        public OrderWindow(Dictionary<string, int> productDictionaryList, User user)
+        public OrderWindow(List<ProductDetalies> productDetalies, User user)
         {
             InitializeComponent();
-            ((OrderViewModel)this.DataContext).ProductDictionaryList = productDictionaryList;
+            ((OrderViewModel)this.DataContext).ProductDetalies = productDetalies;
             ((OrderViewModel)this.DataContext).ActualUser = user;
         }
 

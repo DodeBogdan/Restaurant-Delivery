@@ -14,7 +14,7 @@ namespace Derby_Pub.ViewModels
 {
     class MenuWithClientAccountViewModel : BaseVM
     {
-        private readonly Dictionary<string, int> productsName = new Dictionary<string, int>();
+        private readonly List<ProductDetalies> productsName = new List<ProductDetalies>();
         private readonly ProductsBLL productsBll = new ProductsBLL();
 
         #region User
@@ -409,10 +409,24 @@ namespace Derby_Pub.ViewModels
             if (count == 0)
                 return;
 
-            if (productsName.ContainsKey(ProductSelected.Name))
-                productsName[ProductSelected.Name] += count;
-            else
-                productsName.Add(ProductSelected.Name, count);
+            bool contains = false;
+            foreach (var product in productsName)
+            {
+                if (product.Name == ProductSelected.Name)
+                {
+                    product.Quantity += count;
+                    contains = true;
+                }
+            }
+            if (!contains)
+            {
+                productsName.Add(new ProductDetalies()
+                {
+                    Name = ProductSelected.Name,
+                    Quantity = count,
+                    Type = ProductSelected.ProductType
+                });
+            }
         }
 
         private ICommand buyProductsCommand;
