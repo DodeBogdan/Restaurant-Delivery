@@ -45,7 +45,7 @@ namespace Derby_Pub.ViewModels
 
             var password = (param as PasswordBox).Password;
 
-            if (password.Length < 6)
+            if (password.Length < 1)
             {
                 MessageBox.Show("Parola incorecta. Va rugam reincercati!");
                 return;
@@ -67,6 +67,13 @@ namespace Derby_Pub.ViewModels
                 ClientAccountWindow clientAccountWindow = new ClientAccountWindow(newUser);
                 App.Current.MainWindow.Close();
                 App.Current.MainWindow = clientAccountWindow;
+                App.Current.MainWindow.Show();
+            }
+            else 
+            {
+                AdminAccountWindow adminAccountWindow = new AdminAccountWindow();
+                App.Current.MainWindow.Close();
+                App.Current.MainWindow = adminAccountWindow;
                 App.Current.MainWindow.Show();
             }
         }

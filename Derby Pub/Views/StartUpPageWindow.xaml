@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Derby_Pub"
         mc:Ignorable="d"
-        Title="DerbyPub" Height="700" Width="450" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="DerbyPub" Height="621.589" Width="450" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.Resources>
         
     </Window.Resources>
@@ -14,10 +14,9 @@
         <Grid.Background>
             <ImageBrush ImageSource="../Assets/BackgroundImage.jpg"></ImageBrush>
         </Grid.Background>
-        <Image Margin="70,10,70,500" Source="../Assets/LogoDerby.png" Stretch="Fill"/>
+        <Image Margin="70,10,70.2,423" Source="../Assets/LogoDerby.png" Stretch="Fill"/>
         <Button Content="Continue without account" FontSize="25" HorizontalAlignment="Left" Margin="60,250,0,0" VerticalAlignment="Top" Width="300" Height="70" Background="Transparent" BorderBrush="Black" BorderThickness="1"   x:Name="NoAccountButton" Click="NoAccountButton_Click"/>
-        <Button Content="Client" FontSize="25"  HorizontalAlignment="Left" Margin="100,350,0,0" VerticalAlignment="Top" Width="224" Height="70" Background="Transparent" BorderBrush="Black" BorderThickness="1"  x:Name="ClientButton" Click="ClientButton_Click"/>
-        <Button Content="Employee" FontSize="25"  HorizontalAlignment="Left" Margin="100,450,0,0" VerticalAlignment="Top" Width="224" Height="70" Background="Transparent" BorderBrush="Black" BorderThickness="1" x:Name="EmployeeButton"/>
-        <Button Content="Exit" FontSize="25"  HorizontalAlignment="Left" Margin="100,550,0,0" VerticalAlignment="Top" Width="224" Height="70" Background="Transparent" BorderBrush="Black" BorderThickness="1" x:Name="ExitButton" Click="ExitButton_Click"/>
+        <Button Content="Autentificare" FontSize="25"  HorizontalAlignment="Left" Margin="100,357,0,0" VerticalAlignment="Top" Width="224" Height="70" Background="Transparent" BorderBrush="Black" BorderThickness="1"  x:Name="ClientButton" Click="ClientButton_Click"/>
+        <Button Content="Exit" FontSize="25"  HorizontalAlignment="Left" Margin="100,473,0,0" VerticalAlignment="Top" Width="224" Height="70" Background="Transparent" BorderBrush="Black" BorderThickness="1" x:Name="ExitButton" Click="ExitButton_Click"/>
     </Grid>
 </Window>

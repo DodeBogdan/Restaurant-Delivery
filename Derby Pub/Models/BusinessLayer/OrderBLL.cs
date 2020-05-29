@@ -11,11 +11,15 @@ namespace Derby_Pub.Models.BusinessLayer
     {
         private readonly RestaurantModel restaurant = new RestaurantModel();
 
-        public void ChangeOrdersStatus()
+        internal void ChangeOrdersStatus()
         {
             var orderState = (from order in restaurant.Orders
                               where order.StateID != 1 && order.Estimated_Time < DateTime.Now
                               select order).FirstOrDefault();
+
+            //var smt = restaurant.Orders
+            //    .Where(x => x.StateID != 1 && x.Estimated_Time < DateTime.Now)
+            //    .FirstOrDefault();
 
             if (orderState != null)
             {
@@ -24,11 +28,96 @@ namespace Derby_Pub.Models.BusinessLayer
             }
         }
 
+        internal ObservableCollection<AdminViewOrders> GetActiveOrders()
+        {
+            ObservableCollection<AdminViewOrders> list = new ObservableCollection<AdminViewOrders>();
+
+            var query = (from order in restaurant.Orders
+                         join status in restaurant.States on order.StateID equals status.StateID 
+                         where status.StateID != 4 && status.StateID != 5
+                         select new
+                         {
+                             order.Order_Time,
+                             order.UniqueCode,
+                             order.Total_Price,
+                             order.Transport_Cost,
+                             order.Discount,
+                             order.Estimated_Time,
+                             status.StateName
+                         }).ToList();
+                        
+            foreach (var product in query)
+            {
+                list.Add(new AdminViewOrders()
+                {
+                    OrderDate = product.Order_Time,
+                    OrderCode = product.UniqueCode,
+                    OrderEstimatedTime = product.Estimated_Time,
+                    OrderPrice = product.Total_Price + product.Discount - product.Transport_Cost,
+                    OrderTotalCost = product.Total_Price,
+                    OrderTransport = product.Transport_Cost,
+                    OrderStatus = product.StateName
+                }) ;
+            }
+
+            return list;
+        }
+
+        internal ObservableCollection<AdminViewOrders> GetOrders()
+        {
+            ObservableCollection<AdminViewOrders> list = new ObservableCollection<AdminViewOrders>();
+
+            var query = (from order in restaurant.Orders
+                         join status in restaurant.States on order.StateID equals status.StateID
+                         select new
+                         {
+                             order.Order_Time,
+                             order.UniqueCode,
+                             order.Total_Price,
+                             order.Transport_Cost,
+                             order.Discount,
+                             order.Estimated_Time,
+                             status.StateName
+                         }).ToList();
+
+            foreach (var product in query)
+            {
+                list.Add(new AdminViewOrders()
+                {
+                    OrderDate = product.Order_Time,
+                    OrderCode = product.UniqueCode,
+                    OrderEstimatedTime = product.Estimated_Time,
+                    OrderPrice = product.Total_Price + product.Discount - product.Transport_Cost,
+                    OrderTotalCost = product.Total_Price,
+                    OrderTransport = product.Transport_Cost,
+                    OrderStatus = product.StateName
+                });
+            }
+
+            return list;
+        }
+
         internal double GetTotalPrice(int orderCode)
         {
             return (from order in restaurant.Orders
                     where order.UniqueCode == orderCode
                     select order.Total_Price).First();
+        }
+
+        internal void AdminChangeOrderStatus(int orderCode, string status)
+        {
+            var stateId = restaurant.States
+                .Where(x => x.StateName.Contains(status))
+                .Select(x => x.StateID)
+                .FirstOrDefault();
+
+            var currentOrder = restaurant.Orders
+                .Where(x => x.UniqueCode == orderCode)
+                .FirstOrDefault();
+
+            currentOrder.StateID = stateId;
+            restaurant.SaveChanges();
+                
         }
 
         internal double GetDiscountCost(int orderCode)

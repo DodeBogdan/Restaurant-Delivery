@@ -1,0 +1,30 @@
+﻿<Window x:Class="Derby_Pub.Views.ChangeOrderStatusWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Derby_Pub.ViewModels"
+        mc:Ignorable="d"
+        Title="DerbyPub" Height="250" Width="250">
+
+    <Window.DataContext>
+        <local:ChangeOrderStatusViewModel/>
+    </Window.DataContext>
+    
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="../Assets/BackgroundImage.jpg"></ImageBrush>
+        </Grid.Background>
+
+        <Image Margin="70,10,70,100" Source="../Assets/LogoDerby.png" Stretch="Fill"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="10,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="Selectati noul status:"/>
+
+        <Button Content="Ok" HorizontalAlignment="Left" Margin="83,181,0,0" VerticalAlignment="Top" Width="75" x:Name="OkButton" Click="OkButton_Click"/>
+
+        <ComboBox Name="OrderStatus" Width="88" HorizontalAlignment="Left" 
+                      ItemsSource="{Binding OrderStatusList}"
+                      SelectedIndex="0" SelectedItem="{Binding SelectedStatus}" Margin="124,137,0,67">
+        </ComboBox>
+    </Grid>
+</Window>

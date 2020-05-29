@@ -118,7 +118,7 @@ namespace Derby_Pub.ViewModels
             set
             {
                 clientProductsList = value;
-                OnPropertyChanged("ClientProductsList");
+                OnPropertyChanged(nameof(ClientProductsList));
             }
         }
 
@@ -136,7 +136,7 @@ namespace Derby_Pub.ViewModels
                 if (ProductSelected != null)
                 {
                     AllergenList = new ObservableCollection<string>(productsBll.GetAllergensByProductName(ProductSelected.Name));
-                    ImageList = productsBll.GetImagesFromProductName(ProductSelected.Name);
+                    ImageList = productsBll.GetImagesFromProductName(ProductSelected.Name); 
                 }
                 if (ImageList.Count != 0)
                     CurrentImage = ToImage(ImageList[0]);
@@ -295,7 +295,7 @@ namespace Derby_Pub.ViewModels
         }
         #endregion
 
-        #region Immage
+        #region Image
         public List<byte[]> ImageList;
         int index = 0;
         public BitmapImage ToImage(byte[] array)
