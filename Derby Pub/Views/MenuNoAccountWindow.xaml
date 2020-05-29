@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ctx="clr-namespace:Derby_Pub.ViewModels"
         mc:Ignorable="d"
-        Title="DerbyPub" Height="650" Width="800" ResizeMode="NoResize">
+        Title="DerbyPub" Height="678.8" Width="800" ResizeMode="NoResize">
 
     <Window.DataContext>
         <ctx:MenuNoAccountViewModel/>
@@ -15,11 +15,11 @@
         <Grid.Background>
             <ImageBrush ImageSource="../Assets/BackgroundImage.jpg"></ImageBrush>
         </Grid.Background>
-        <Image Margin="300,10,299.6,485.6" Source="../Assets/LogoDerby.png" Stretch="Fill"/>
+        <Image Margin="300,10,299.6,528.8" Source="../Assets/LogoDerby.png" Stretch="Fill"/>
 
         <ComboBox Name="comboPers" Width="200" HorizontalAlignment="Left" 
                       ItemsSource="{Binding CategoryList}"
-                      SelectedIndex="0" SelectedItem="{Binding CategorySelected}" Margin="100,60,0,520.6">
+                      SelectedIndex="0" SelectedItem="{Binding CategorySelected}" Margin="100,60,0,549.8">
         </ComboBox>
 
         <TextBlock HorizontalAlignment="Left" Margin="100,10,0,0" TextWrapping="Wrap" Text="Categorii" VerticalAlignment="Top" Height="50" Width="200" FontSize="35" TextAlignment="Center" FontWeight="Bold"/>
@@ -40,7 +40,7 @@
         <TextBlock HorizontalAlignment="Left" FontSize="20" TextAlignment="Center" Margin="454,85,0,0" TextWrapping="Wrap" Text="Cauta:" VerticalAlignment="Top" Height="35" Width="65"/>
 
         <DataGrid x:Name="productsGrid" CanUserResizeColumns="False" CanUserResizeRows="False"
-                  AutoGenerateColumns="False" HorizontalAlignment="Left" Height="222" Margin="10,144,0,0" VerticalAlignment="Top" Width="774" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ClientProductsList}" SelectionMode="Single"
+                  AutoGenerateColumns="False" HorizontalAlignment="Left" Height="222" Margin="10,187,0,0" VerticalAlignment="Top" Width="774" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ClientProductsList}" SelectionMode="Single"
                   SelectedItem="{Binding ProductSelected}">
 
             <DataGrid.Columns>
@@ -79,20 +79,22 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Content="Cauta" HorizontalAlignment="Left" Margin="709,120,0,0" VerticalAlignment="Top" Width="75" Background="Transparent" x:Name="SearchButton" Command="{Binding AddCommand}"/>
+        <Button Content="Cauta" HorizontalAlignment="Left" Margin="644,120,0,0" VerticalAlignment="Top" Width="140" Background="Transparent" x:Name="SearchButton" Command="{Binding AddCommand}" Height="39" FontSize="30"/>
 
-        <Button Content="Vezi detalii despre:" HorizontalAlignment="Left" Margin="325,576,0,0" VerticalAlignment="Top" Width="169" Name="DetailsButton" Command="{Binding SeeDetails}" />
-        <Button Content="Inapoi" HorizontalAlignment="Left" Margin="519,538,0,0" VerticalAlignment="Top" Width="75" Command="{Binding PreviousPhotoCommand}"/>
-        <Button Content="Inainte" HorizontalAlignment="Left" Margin="636,538,0,0" VerticalAlignment="Top" Width="75" Command="{Binding NextPhotoCommand}"/>
-        
-        <ListView HorizontalAlignment="Left" Height="165" Margin="21,371,0,0" VerticalAlignment="Top" Width="178" ItemsSource="{Binding AllergenList, UpdateSourceTrigger=PropertyChanged}">
+        <Button Content="Vezi detalii despre:" HorizontalAlignment="Left" Margin="325,619,0,0" VerticalAlignment="Top" Width="169" Name="DetailsButton" Command="{Binding SeeDetails}" />
+        <Button Content="Inapoi" HorizontalAlignment="Left" Margin="519,581,0,0" VerticalAlignment="Top" Width="75" Command="{Binding PreviousPhotoCommand}"/>
+        <Button Content="Inainte" HorizontalAlignment="Left" Margin="636,581,0,0" VerticalAlignment="Top" Width="75" Command="{Binding NextPhotoCommand}"/>
+
+        <ListView HorizontalAlignment="Left" Height="165" Margin="21,414,0,0" VerticalAlignment="Top" Width="178" ItemsSource="{Binding AllergenList, UpdateSourceTrigger=PropertyChanged}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Alergeni"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        
+
         <Image HorizontalAlignment="Left" Height="150" Margin="519,371,0,0" VerticalAlignment="Top" Width="200" Source="{Binding CurrentImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <ComboBox HorizontalAlignment="Left" Margin="519,125,0,0" VerticalAlignment="Top" Width="120" Height="34" ItemsSource="{Binding TypeList}" SelectedIndex="0" SelectedItem="{Binding TypeSelected}"/>
     </Grid>
 </Window>

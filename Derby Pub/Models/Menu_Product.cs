@@ -14,6 +14,12 @@ namespace Derby_Pub.Models
     
     public partial class Menu_Product
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Menu_Product()
+        {
+            this.Order_Menu = new HashSet<Order_Menu>();
+        }
+    
         public int Menu_ProductID { get; set; }
         public int FKMenuID { get; set; }
         public int FKProductID { get; set; }
@@ -21,5 +27,7 @@ namespace Derby_Pub.Models
     
         public virtual Menu Menu { get; set; }
         public virtual Product Product { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order_Menu> Order_Menu { get; set; }
     }
 }

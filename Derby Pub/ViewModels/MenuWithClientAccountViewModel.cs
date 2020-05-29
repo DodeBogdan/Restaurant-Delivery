@@ -5,7 +5,6 @@ using Derby_Pub.Models.EntityLayer;
 using Derby_Pub.Views;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -160,7 +159,37 @@ namespace Derby_Pub.ViewModels
                 OnPropertyChanged("SearchText");
             }
         }
+        private List<string> typeList;
 
+        public List<string> TypeList
+        {
+            get
+            {
+                typeList = new List<string>()
+                {
+                    new StringBuilder("Preparat:").ToString(),
+                    new StringBuilder("Alergen:").ToString()
+                };
+                return typeList;
+            }
+            set
+            {
+                typeList = value;
+                OnPropertyChanged("TypeList");
+            }
+        }
+
+        private string typeSelected;
+
+        public string TypeSelected
+        {
+            get { return typeSelected; }
+            set
+            {
+                typeSelected = value;
+                OnPropertyChanged("SearchSelected");
+            }
+        }
         private ICommand displayProductComamnd;
         public ICommand DisplayProductComamnd
         {
@@ -180,15 +209,33 @@ namespace Derby_Pub.ViewModels
                 return;
 
             AllergenList = null;
-            ImageList.Clear();
+            if (ImageList != null)
+                ImageList.Clear();
 
             switch (SearchSelected)
             {
                 case "Contin:":
-                    ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productsBll.GetProductsContaining(categorySelected, SearchText));
+                    switch (TypeSelected)
+                    {
+                        case "Preparat:":
+                            ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productsBll.GetProductsContainingName(categorySelected, SearchText));
+                            break;
+                        default:
+                            ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productsBll.GetProductsContainingAllergen(categorySelected, SearchText));
+                            break;
+                    }
                     break;
                 default:
-                    ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productsBll.GetProductsWithoutAllergens(categorySelected, SearchText));
+                    switch (TypeSelected)
+                    {
+                        case "Preparat:":
+                            ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productsBll.GetProductsNotContainingName(categorySelected, SearchText));
+                            break;
+                        default:
+                            ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productsBll.GetProductsWithoutAllergens(categorySelected, SearchText));
+
+                            break;
+                    }
                     break;
             }
         }

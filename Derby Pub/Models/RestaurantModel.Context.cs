@@ -33,6 +33,7 @@ namespace Derby_Pub.Models
         public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
         public virtual DbSet<Menu_Product> Menu_Product { get; set; }
+        public virtual DbSet<Order_Menu> Order_Menu { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<State> States { get; set; }
@@ -88,7 +89,7 @@ namespace Derby_Pub.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetAllergenFromProductName", productNameParameter);
         }
     
-        public virtual ObjectResult<string> GetAllProductWithAnAllergenBasedOnCategory(string category, string allegenName)
+        public virtual ObjectResult<GetAllProductWithAnAllergenBasedOnCategory_Result> GetAllProductWithAnAllergenBasedOnCategory(string category, string allegenName)
         {
             var categoryParameter = category != null ?
                 new ObjectParameter("category", category) :
@@ -98,7 +99,7 @@ namespace Derby_Pub.Models
                 new ObjectParameter("allegenName", allegenName) :
                 new ObjectParameter("allegenName", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetAllProductWithAnAllergenBasedOnCategory", categoryParameter, allegenNameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllProductWithAnAllergenBasedOnCategory_Result>("GetAllProductWithAnAllergenBasedOnCategory", categoryParameter, allegenNameParameter);
         }
     
         public virtual ObjectResult<byte[]> GetImagesByProductName(string productName)
@@ -179,6 +180,19 @@ namespace Derby_Pub.Models
                 new ObjectParameter("ProductId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertIntoOrder_Product", orderIdParameter, productIdParameter);
+        }
+    
+        public virtual ObjectResult<GetAllMenusBasedOnAllergen_Result> GetAllMenusBasedOnAllergen(string categoryName, string allergenName)
+        {
+            var categoryNameParameter = categoryName != null ?
+                new ObjectParameter("CategoryName", categoryName) :
+                new ObjectParameter("CategoryName", typeof(string));
+    
+            var allergenNameParameter = allergenName != null ?
+                new ObjectParameter("AllergenName", allergenName) :
+                new ObjectParameter("AllergenName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllMenusBasedOnAllergen_Result>("GetAllMenusBasedOnAllergen", categoryNameParameter, allergenNameParameter);
         }
     }
 }

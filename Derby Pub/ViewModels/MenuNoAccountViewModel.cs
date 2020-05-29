@@ -18,6 +18,8 @@ namespace Derby_Pub.ViewModels
         private readonly RestaurantModel restaurantModel = new RestaurantModel();
         private readonly ProductsBLL productsBll = new ProductsBLL();
 
+        #region CategorySelect
+
         private List<string> categoryList;
         public List<string> CategoryList
         {
@@ -45,8 +47,9 @@ namespace Derby_Pub.ViewModels
                 OnPropertyChanged("CategorySelected");
             }
         }
+        #endregion
 
-
+        #region SearchSection
         private List<string> searchList;
 
         public List<string> SearchList
@@ -78,6 +81,104 @@ namespace Derby_Pub.ViewModels
                 OnPropertyChanged("SearchSelected");
             }
         }
+
+        private List<string> typeList;
+
+        public List<string> TypeList
+        {
+            get
+            {
+                typeList = new List<string>()
+                {
+                    new StringBuilder("Preparat:").ToString(),
+                    new StringBuilder("Alergen:").ToString()
+                };
+                return typeList;
+            }
+            set
+            {
+                typeList = value;
+                OnPropertyChanged("TypeList");
+            }
+        }
+
+        private string typeSelected;
+
+        public string TypeSelected
+        {
+            get { return typeSelected; }
+            set
+            {
+                typeSelected = value;
+                OnPropertyChanged("SearchSelected");
+            }
+        }
+
+        private string searchText;
+
+        public string SearchText
+        {
+            get { return searchText; }
+            set
+            {
+                searchText = value;
+                OnPropertyChanged("SearchText");
+            }
+        }
+
+
+        private ICommand addCommand;
+        public ICommand AddCommand
+        {
+            get
+            {
+                if (addCommand == null)
+                {
+                    addCommand = new RelayCommand(DisplayProducts);
+                }
+                return addCommand;
+            }
+        }
+
+        private void DisplayProducts(object obj)
+        {
+            if (SearchText == null)
+                return;
+
+            AllergenList = null;
+            if (ImageList != null)
+                ImageList.Clear();
+
+            switch (SearchSelected)
+            {
+                case "Contin:":
+                    switch (TypeSelected)
+                    {
+                        case "Preparat:":
+                            ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productsBll.GetProductsContainingName(categorySelected, SearchText));
+                            break;
+                        default:
+                            ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productsBll.GetProductsContainingAllergen(categorySelected, SearchText));
+                            break;
+                    }
+                    break;
+                default:
+                    switch (TypeSelected)
+                    {
+                        case "Preparat:":
+                            ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productsBll.GetProductsNotContainingName(categorySelected, SearchText));
+                            break;
+                        default:
+                            ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productsBll.GetProductsWithoutAllergens(categorySelected, SearchText));
+
+                            break;
+                    }
+                    break;
+            }
+        }
+
+        #endregion
+
 
         private ObservableCollection<ClientProductsDisplay> clientProductsList = new ObservableCollection<ClientProductsDisplay>();
         public ObservableCollection<ClientProductsDisplay> ClientProductsList
@@ -119,51 +220,7 @@ namespace Derby_Pub.ViewModels
         }
 
 
-        private string searchText;
 
-        public string SearchText
-        {
-            get { return searchText; }
-            set
-            {
-                searchText = value;
-                OnPropertyChanged("SearchText");
-            }
-        }
-
-
-        private ICommand addCommand;
-        public ICommand AddCommand
-        {
-            get
-            {
-                if (addCommand == null)
-                {
-                    addCommand = new RelayCommand(DisplayProducts);
-                }
-                return addCommand;
-            }
-        }
-
-        private void DisplayProducts(object obj)
-        {
-            if (SearchText == null)
-                return;
-
-            AllergenList = null;
-            if(ImageList != null)
-                ImageList.Clear();
-
-            switch (SearchSelected)
-            {
-                case "Contin:":
-                    ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productsBll.GetProductsContaining(categorySelected, SearchText));
-                    break;
-                default:
-                    ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productsBll.GetProductsWithoutAllergens(categorySelected, SearchText));
-                    break;
-            }
-        }
 
         private ICommand seeDetails;
         public ICommand SeeDetails

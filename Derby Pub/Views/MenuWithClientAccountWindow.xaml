@@ -19,7 +19,7 @@
 
         <ComboBox Name="comboPers" Width="200" HorizontalAlignment="Left" 
                       ItemsSource="{Binding CategoryList}"
-                      SelectedIndex="0" SelectedItem="{Binding CategorySelected}" Margin="100,60,0,520.6">
+                      SelectedIndex="0" SelectedItem="{Binding CategorySelected}" Margin="100,60,0,520.6" FontSize="14" FontWeight="Bold">
         </ComboBox>
 
         <TextBlock HorizontalAlignment="Left" Margin="100,10,0,0" TextWrapping="Wrap" Text="Categorii" VerticalAlignment="Top" Height="50" Width="200" FontSize="35" TextAlignment="Center" FontWeight="Bold"/>
@@ -33,7 +33,7 @@
         <ComboBox HorizontalAlignment="Left" Margin="519,10,0,0" VerticalAlignment="Top" Width="120" Height="37" x:Name="SearchComboBox" ItemsSource="{Binding SearchList}"
                       SelectedIndex="0" SelectedItem="{Binding SearchSelected}" FontSize="14" FontWeight="Bold"/>
 
-        <TextBox HorizontalAlignment="Left" Height="37" Margin="644,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Name="SearchTextBox" Text="{Binding SearchText}"/>
+        <TextBox HorizontalAlignment="Left" Height="37" Margin="644,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Name="SearchTextBox" Text="{Binding SearchText}" FontSize="14" FontWeight="Bold"/>
 
         <TextBlock HorizontalAlignment="Left" FontSize="20" TextAlignment="Center" Margin="454,12,0,0" TextWrapping="Wrap" Text="Cauta:" VerticalAlignment="Top" Height="35" Width="65"/>
 
@@ -77,7 +77,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Content="Cauta" HorizontalAlignment="Left" Margin="709,52,0,0" VerticalAlignment="Top" Width="75" Background="Transparent" x:Name="SearchButton" Command="{Binding DisplayProductComamnd}"/>
+        <Button Content="Cauta" HorizontalAlignment="Left" Margin="644,52,0,0" VerticalAlignment="Top" Width="140" Background="Transparent" x:Name="SearchButton" Command="{Binding DisplayProductComamnd}" Height="33" FontSize="25"/>
 
         <Button Content="Vezi detalii despre:" HorizontalAlignment="Left" Margin="239,574,0,0" VerticalAlignment="Top" Width="169" Name="DetailsButton" Command="{Binding SeeDetails}" />
         <Button Content="Inapoi" HorizontalAlignment="Left" Margin="519,538,0,0" VerticalAlignment="Top" Width="75" Command="{Binding PreviousPhotoCommand}"/>
@@ -98,10 +98,12 @@
         <Button Content="Vezi cosul/ Plaseaza comanda" HorizontalAlignment="Left" Margin="447,574,0,0" VerticalAlignment="Top" Width="192"
                 Command="{Binding BuyProductsCommand}"/>
 
-        <TextBlock HorizontalAlignment="Left" Margin="470,72,0,0"  Text="User:" VerticalAlignment="Top" Height="27" Width="74" FontSize="20"/>
+        <TextBlock HorizontalAlignment="Left" Margin="471,91,0,0"  Text="User:" VerticalAlignment="Top" Height="27" Width="74" FontSize="20"/>
 
-        <TextBlock HorizontalAlignment="Left" Margin="544,72,0,0" Text="{Binding ActualUserName}" VerticalAlignment="Top" Height="27" Width="167" FontSize="20"/>
+        <TextBlock HorizontalAlignment="Left" Margin="545,91,0,0" Text="{Binding ActualUserName}" VerticalAlignment="Top" Height="27" Width="167" FontSize="20"/>
 
         <Button Content="Sterge tot din cos" HorizontalAlignment="Left" Margin="666,574,0,0" VerticalAlignment="Top" Width="105" Command="{Binding RemoveProductsCommand}"/>
+
+        <ComboBox HorizontalAlignment="Left" Margin="519,52,0,0" VerticalAlignment="Top" Width="120" Height="34" ItemsSource="{Binding TypeList}" SelectedIndex="0" SelectedItem="{Binding TypeSelected}" FontSize="14" FontWeight="Bold"/>
     </Grid>
 </Window>

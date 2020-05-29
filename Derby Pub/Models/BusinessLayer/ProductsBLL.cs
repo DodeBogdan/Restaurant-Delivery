@@ -10,32 +10,25 @@ namespace Derby_Pub.Models.BusinessLayer
     {
         private readonly RestaurantModel restaurant = new RestaurantModel();
 
-
-
         internal double GetPriceOfProduct(string key)
         {
             return restaurant.Products.Where((x) => x.Name == key)
                 .Select((x) => x.Price).FirstOrDefault();
         }
-
         internal List<string> GetAllCategoryes()
         {
             return restaurant.GetAllCategoryes().ToList();
         }
-
         internal List<byte[]> GetImagesFromProductName(string productName)
         {
             List<byte[]> images = restaurant.GetImagesByProductName(productName).ToList();
 
             return images;
         }
-
         internal List<string> GetAllergensByProductName(string productName)
         {
             return restaurant.GetAllergenFromProductName(productName).ToList();
         }
-
-        #region GetProductsByCategory
         public List<ClientProductsDisplay> GetProductsByCategory(string category)
         {
             List<ClientProductsDisplay> productsDisplays = new List<ClientProductsDisplay>();
@@ -69,17 +62,15 @@ namespace Derby_Pub.Models.BusinessLayer
             productsDisplays.Sort((x, y) => x.Name.CompareTo(y.Name));
             return productsDisplays;
         }
-        #endregion
-
-        public List<ClientProductsDisplay> GetProductsContaining(string category, string name)
+        public List<ClientProductsDisplay> GetProductsContainingName(string category, string name)
         {
             var products = restaurant.GetProductByCategory(category)
                 .Where((x) => x.Name.ToLower().Contains(name.ToLower())).ToList();
 
-            var productAllergen = restaurant.GetProductBasedOnAllergens(category, name).ToList();
+            var menus = restaurant.GetMenuByCategory(category)
+                .Where((x) => x.Name.ToLower().Contains(name.ToLower())).ToList();
 
             List<ClientProductsDisplay> productsList = new List<ClientProductsDisplay>();
-            List<ClientProductsDisplay> allergensList = new List<ClientProductsDisplay>();
 
             foreach (var product in products)
             {
@@ -92,9 +83,60 @@ namespace Derby_Pub.Models.BusinessLayer
                 });
             }
 
-            foreach (var product in productAllergen)
+            foreach (var product in menus)
             {
-                allergensList.Add(new ClientProductsDisplay()
+                productsList.Add(new ClientProductsDisplay()
+                {
+                    Name = product.Name,
+                    Price = $"{product.Price - (AppConfigHelper.MenuDiscount / 100 * product.Price)}RON",
+                    Quantity = $"Vezi Detalii",
+                    ProductType = "Preparat"
+                });
+            }
+
+            productsList.Sort((x, y) => x.Name.CompareTo(y.Name));
+            return productsList;
+        }
+
+        private List<ClientProductsDisplay> GetListWithoutDoubles(List<ClientProductsDisplay> list)
+        {
+            if (list.Count == 0)
+                return new List<ClientProductsDisplay>();
+
+            List<ClientProductsDisplay> newList = new List<ClientProductsDisplay>();
+            newList.Add(list[0]);
+
+            for (int index = 0; index < list.Count; index++)
+            {
+                bool exist = false;
+
+                for (int index1 = 0; index1 < newList.Count; index1++)
+                {
+                    if (list[index].Name == newList[index1].Name)
+                        exist = true;
+                }
+
+                if (exist == false)
+                {
+                    newList.Add(list[index]);
+                }
+            }
+
+            return newList;
+
+        }
+
+        public List<ClientProductsDisplay> GetProductsContainingAllergen(string category, string name)
+        {
+            var products = restaurant.GetAllProductWithAnAllergenBasedOnCategory(category, name);
+
+            var menus = restaurant.GetAllMenusBasedOnAllergen(category, name);
+
+            List<ClientProductsDisplay> productsList = new List<ClientProductsDisplay>();
+
+            foreach (var product in products)
+            {
+                productsList.Add(new ClientProductsDisplay()
                 {
                     Name = product.Name,
                     Price = $"{product.Price}RON",
@@ -103,69 +145,150 @@ namespace Derby_Pub.Models.BusinessLayer
                 });
             }
 
-            productsList = Intersect(productsList, allergensList);
+            foreach (var product in menus)
+            {
+                productsList.Add(new ClientProductsDisplay()
+                {
+                    Name = product.Name,
+                    Price = $"{product.Price - (AppConfigHelper.MenuDiscount / 100 * product.Price)}RON",
+                    Quantity = $"Vezi Detalii",
+                    ProductType = "Preparat"
+                });
+            }
+
+            productsList = GetListWithoutDoubles(productsList);
 
             productsList.Sort((x, y) => x.Name.CompareTo(y.Name));
             return productsList;
         }
 
-        private List<ClientProductsDisplay> Intersect(List<ClientProductsDisplay> productsList, List<ClientProductsDisplay> allergensList)
+        public List<ClientProductsDisplay> GetProductsNotContainingName(string category, string name)
         {
-            List<ClientProductsDisplay> productsDisplays = productsList;
+            var products = restaurant.GetProductByCategory(category)
+                .Where((x) => !x.Name.ToLower().Contains(name.ToLower())).ToList();
 
-            for (int index = 0; index < allergensList.Count; index++)
+            var menus = restaurant.GetMenuByCategory(category)
+                .Where((x) => !x.Name.ToLower().Contains(name.ToLower())).ToList();
+
+            List<ClientProductsDisplay> productsList = new List<ClientProductsDisplay>();
+
+            foreach (var product in products)
             {
-                bool este = true;
-
-                for (int index1 = 0; index1 < productsList.Count; index1++)
+                productsList.Add(new ClientProductsDisplay()
                 {
-                    if (allergensList[index].Name == productsList[index1].Name)
-                        este = false;
-                }
-
-                if (este == true)
-                    productsDisplays.Add(allergensList[index]);
+                    Name = product.Name,
+                    Price = $"{product.Price}RON",
+                    Quantity = $"{product.Quantity}grams",
+                    ProductType = "Preparat"
+                });
             }
 
-            return productsDisplays;
+            foreach (var product in menus)
+            {
+                productsList.Add(new ClientProductsDisplay()
+                {
+                    Name = product.Name,
+                    Price = $"{product.Price - (AppConfigHelper.MenuDiscount / 100 * product.Price)}RON",
+                    Quantity = $"Vezi Detalii",
+                    ProductType = "Preparat"
+                });
+            }
+
+            productsList.Sort((x, y) => x.Name.CompareTo(y.Name));
+            return productsList;
+        }
+
+        internal List<ClientProductsDisplay> GetUnique(List<ClientProductsDisplay> list1, List<ClientProductsDisplay> list2)
+        {
+            List<ClientProductsDisplay> newList = new List<ClientProductsDisplay>();
+
+            for (int index = 0; index < list1.Count; index++)
+            {
+                bool contain = false;
+                for (int index1 = 0; index1 < list2.Count; index1++)
+                {
+                    if (list1[index].Name == list2[index1].Name)
+                        contain = true;
+                }
+
+                if (!contain)
+                    newList.Add(list1[index]);
+            }
+
+            return newList;
         }
 
         internal List<ClientProductsDisplay> GetProductsWithoutAllergens(string categorySelected, string searchText)
         {
             var productsFromCategory = restaurant.GetProductByCategory(categorySelected).ToList();
-            var productsWithAllegen = restaurant.GetAllProductWithAnAllergenBasedOnCategory(categorySelected, searchText).ToList();
+            var productsWithAllergens = restaurant.GetAllProductWithAnAllergenBasedOnCategory(categorySelected, searchText);
 
-            List<ClientProductsDisplay> productsDisplays = new List<ClientProductsDisplay>();
-
+            List<ClientProductsDisplay> productList = new List<ClientProductsDisplay>();
+            List<ClientProductsDisplay> productListWithAllergen = new List<ClientProductsDisplay>();
 
             foreach (var product in productsFromCategory)
             {
-                if (!productsWithAllegen.Contains(product.Name))
-                {
-                    productsDisplays.Add(new ClientProductsDisplay()
+                productList.Add(
+                    new ClientProductsDisplay()
                     {
                         Name = product.Name,
                         Price = $"{product.Price}RON",
                         Quantity = $"{product.Quantity}grams",
                         ProductType = "Preparat"
                     });
-                }
             }
 
-            var menuProducts = restaurant.GetMenuByCategory(categorySelected).ToList();
-
-            foreach (var product in menuProducts)
+            foreach (var product in productsWithAllergens)
             {
-                productsDisplays.Add(new ClientProductsDisplay()
-                {
-                    Name = product.Name,
-                    Price = $"{product.Price - (AppConfigHelper.MenuDiscount / 100 * product.Price)}RON",
-                    Quantity = "Vezi la detalii",
-                    ProductType = "Meniu"
-                });
+                productListWithAllergen.Add(
+                    new ClientProductsDisplay()
+                    {
+                        Name = product.Name,
+                        Price = $"{product.Price}RON",
+                        Quantity = $"{product.Quantity}grams",
+                        ProductType = "Preparat"
+                    });
             }
 
-            return productsDisplays;
+            productList = GetUnique(productList, productListWithAllergen);
+
+            var menuFromCategory = restaurant.GetMenuByCategory(categorySelected);
+            var menuWithAllergens = restaurant.GetAllMenusBasedOnAllergen(categorySelected, searchText);
+
+            List<ClientProductsDisplay> menuList = new List<ClientProductsDisplay>();
+            List<ClientProductsDisplay> menuListWithAllergen = new List<ClientProductsDisplay>();
+
+            foreach (var product in menuFromCategory)
+            {
+                menuList.Add(
+                    new ClientProductsDisplay()
+                    {
+                        Name = product.Name,
+                        Price = $"{product.Price}RON",
+                        Quantity = $"Vezi la detalii",
+                        ProductType = "Preparat"
+                    });
+            }
+
+            foreach (var product in menuWithAllergens)
+            {
+                menuListWithAllergen.Add(
+                    new ClientProductsDisplay()
+                    {
+                        Name = product.Name,
+                        Price = $"{product.Price}RON",
+                        Quantity = $"Vezi la detalii",
+                        ProductType = "Preparat"
+                    });
+            }
+
+            menuList = GetUnique(menuList, menuListWithAllergen);
+            foreach (var product in menuList)
+            {
+                productList.Add(product);
+            }
+
+            return productList;
         }
 
         public List<ClientProductsDisplay> GetProductsByMenuName(string name)
@@ -189,9 +312,9 @@ namespace Derby_Pub.Models.BusinessLayer
         }
         private void AddOrderProduct(int userId, Dictionary<string, int> dictionary)
         {
-            foreach(var d in dictionary)
+            foreach (var d in dictionary)
             {
-                for(int index = 0; index < d.Value; index++)
+                for (int index = 0; index < d.Value; index++)
                 {
                     int productId = (from product in restaurant.Products where product.Name.Contains(d.Key) select product.ProductID).First();
                     int orderId = (from order in restaurant.Orders where order.UserID == userId select order.OrderID).First();
@@ -199,13 +322,13 @@ namespace Derby_Pub.Models.BusinessLayer
                 }
             }
         }
-        public void BuyProducts(int userId,double transport_cost, double discount, double total_price, Dictionary<string, int> dictionary)
+        public void BuyProducts(int userId, double transport_cost, double discount, double total_price, Dictionary<string, int> dictionary)
         {
             Random rnd = new Random();
             int random = rnd.Next(999, 100000);
             var uniqueCode = (from order in restaurant.Orders where order.UniqueCode == random select order.UniqueCode).ToList();
 
-            while(uniqueCode.Count !=0)
+            while (uniqueCode.Count != 0)
             {
                 random = rnd.Next(999, 100000);
                 uniqueCode = (from order in restaurant.Orders where order.UniqueCode == random select order.UniqueCode).ToList();
@@ -225,7 +348,7 @@ namespace Derby_Pub.Models.BusinessLayer
 
             restaurant.SaveChanges();
 
-            AddOrderProduct(userId,dictionary);
+            AddOrderProduct(userId, dictionary);
         }
 
     }

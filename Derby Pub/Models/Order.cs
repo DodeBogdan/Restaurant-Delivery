@@ -17,6 +17,7 @@ namespace Derby_Pub.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Order()
         {
+            this.Order_Menu = new HashSet<Order_Menu>();
             this.Products = new HashSet<Product>();
         }
     
@@ -30,6 +31,8 @@ namespace Derby_Pub.Models
         public float Discount { get; set; }
         public float Total_Price { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order_Menu> Order_Menu { get; set; }
         public virtual State State { get; set; }
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

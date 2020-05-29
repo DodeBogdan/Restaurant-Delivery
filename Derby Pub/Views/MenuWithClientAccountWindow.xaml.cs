@@ -9,7 +9,7 @@ namespace Derby_Pub.Views
     /// </summary>
     public partial class MenuWithClientAccountWindow : Window
     {
-        private User user;
+        private readonly User user;
         public MenuWithClientAccountWindow(User user)
         {
             InitializeComponent();

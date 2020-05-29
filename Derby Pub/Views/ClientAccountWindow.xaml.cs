@@ -1,17 +1,5 @@
 ﻿using Derby_Pub.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Derby_Pub.Views
 {
@@ -20,7 +8,7 @@ namespace Derby_Pub.Views
     /// </summary>
     public partial class ClientAccountWindow : Window
     {
-        private User newUser;
+        private readonly User newUser;
         public ClientAccountWindow(User newUser)
         {
             InitializeComponent();

@@ -136,6 +136,12 @@
     </Compile>
     <Compile Include="Models\EntityLayer\ClientProductsDisplay.cs" />
     <Compile Include="Models\EntityLayer\SelectedProduct.cs" />
+    <Compile Include="Models\GetAllMenusBasedOnAllergen_Result.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetAllProductWithAnAllergenBasedOnCategory_Result.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GetMenuByCategory_Result.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
@@ -164,6 +170,9 @@
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Order.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Order_Menu.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Product.cs">
