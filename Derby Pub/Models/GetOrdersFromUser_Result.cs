@@ -10,20 +10,13 @@
 namespace Derby_Pub.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class State
+    public partial class GetOrdersFromUser_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public State()
-        {
-            this.Orders = new HashSet<Order>();
-        }
-    
-        public int StateID { get; set; }
+        public System.DateTime Estimated_Time { get; set; }
+        public System.DateTime Order_Time { get; set; }
+        public float Total_Price { get; set; }
+        public int UniqueCode { get; set; }
         public string StateName { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Orders { get; set; }
     }
 }

@@ -313,7 +313,7 @@ namespace Derby_Pub.Models.BusinessLayer
 
             return productsDisplays;
         }
-        private void AddOrderProduct(int userId, List<ProductDetalies> productDetalies)
+        private void AddOrderProduct(int UniqueCode, List<ProductDetalies> productDetalies)
         {
             foreach (var d in productDetalies)
             {
@@ -322,7 +322,7 @@ namespace Derby_Pub.Models.BusinessLayer
                     for (int index = 0; index < d.Quantity; index++)
                     {
                         int productId = (from product in restaurant.Products where product.Name.Contains(d.Name) select product.ProductID).First();
-                        int orderId = (from order in restaurant.Orders where order.UserID == userId select order.OrderID).First();
+                        int orderId = (from order in restaurant.Orders where order.UniqueCode == UniqueCode select order.OrderID).First();
                         restaurant.InsertIntoOrder_Product(orderId, productId);
                     }
                 }
@@ -331,7 +331,7 @@ namespace Derby_Pub.Models.BusinessLayer
                     for(int index = 0; index < d.Quantity; index++)
                     {
                         int menuId = (from menu in restaurant.Menus where menu.Name.Contains(d.Name) select menu.MenuID).First();
-                        int orderId = (from order in restaurant.Orders where order.UserID == userId select order.OrderID).First();
+                        int orderId = (from order in restaurant.Orders where order.UniqueCode == UniqueCode select order.OrderID).First();
                         restaurant.InsertIntoOrder_Menu(orderId, menuId);
                     }
                 }
@@ -363,7 +363,7 @@ namespace Derby_Pub.Models.BusinessLayer
 
             restaurant.SaveChanges();
 
-            AddOrderProduct(userId, productDetalies);
+            AddOrderProduct(random, productDetalies);
         }
 
     }

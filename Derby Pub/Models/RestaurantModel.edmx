@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DerbyPubModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AccountType">
           <Key>
             <PropertyRef Name="AccountTypeID" />
@@ -118,7 +118,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             <PropertyRef Name="StateID" />
           </Key>
           <Property Name="StateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="State" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="StateName" Type="nchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -354,6 +354,12 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
         <Function Name="GetMenuDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MenuName" Type="nchar" Mode="In" />
         </Function>
+        <Function Name="GetMenuDetaliesAboutOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrderCode" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetOrdersFromUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetPriceOfMenu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MenuName" Type="nchar" Mode="In" />
         </Function>
@@ -363,6 +369,9 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
         </Function>
         <Function Name="GetProductByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CategoryName" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="GetProductDetaliesAboutOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrderCode" Type="int" Mode="In" />
         </Function>
         <Function Name="GetProductsByAllergen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="AllergenName" Type="nchar" Mode="In" />
@@ -378,7 +387,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
           <Parameter Name="OrderId" Type="int" Mode="In" />
           <Parameter Name="ProductId" Type="int" Mode="In" />
         </Function>
-        <EntityContainer Name="DerbyPubModelStoreContainer">
+        <EntityContainer Name="ModelsStoreContainer">
           <EntitySet Name="AccountType" EntityType="Self.AccountType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Allergen" EntityType="Self.Allergen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
@@ -469,10 +478,11 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DerbyPubModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="AccountType">
           <Key>
             <PropertyRef Name="AccountTypeID" />
@@ -577,7 +587,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             <PropertyRef Name="StateID" />
           </Key>
           <Property Name="StateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="State1" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="StateName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_State_Order" FromRole="State" ToRole="Orders" />
         </EntityType>
         <EntityType Name="User">
@@ -776,71 +786,93 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <FunctionImport Name="DeleteAllergen">
-          <Parameter Name="AllergenName" Mode="In" Type="String" />
+            <Parameter Name="AllergenName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DeleteCategory">
-          <Parameter Name="CategoryName" Mode="In" Type="String" />
+            <Parameter Name="CategoryName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DeleteMenu">
-          <Parameter Name="MenuName" Mode="In" Type="String" />
+            <Parameter Name="MenuName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DeleteProduct">
-          <Parameter Name="ProductName" Mode="In" Type="String" />
+            <Parameter Name="ProductName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetAllCategoryes" ReturnType="Collection(String)" />
           <FunctionImport Name="GetAllergenFromProductName" ReturnType="Collection(String)">
-          <Parameter Name="ProductName" Mode="In" Type="String" />
+            <Parameter Name="ProductName" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetAllProductWithAnAllergenBasedOnCategory" ReturnType="Collection(DerbyPubModel.GetAllProductWithAnAllergenBasedOnCategory_Result)">
+          <FunctionImport Name="GetAllMenusBasedOnAllergen" ReturnType="Collection(Models.GetAllMenusBasedOnAllergen_Result)">
+            <Parameter Name="CategoryName" Mode="In" Type="String" />
+            <Parameter Name="AllergenName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllMenusWithoutAnAllergen" ReturnType="Collection(Models.GetAllMenusWithoutAnAllergen_Result)">
+            <Parameter Name="CategoryName" Mode="In" Type="String" />
+            <Parameter Name="AllergenName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllProductsWihoutAnAllergen" ReturnType="Collection(Models.GetAllProductsWihoutAnAllergen_Result)">
+            <Parameter Name="CategoryName" Mode="In" Type="String" />
+            <Parameter Name="AllergenName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllProductWithAnAllergenBasedOnCategory" ReturnType="Collection(Models.GetAllProductWithAnAllergenBasedOnCategory_Result)">
             <Parameter Name="category" Mode="In" Type="String" />
             <Parameter Name="allegenName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetImagesByProductName" ReturnType="Collection(Binary)">
-          <Parameter Name="ProductName" Mode="In" Type="String" />
+            <Parameter Name="ProductName" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetMenuByCategory" ReturnType="Collection(DerbyPubModel.GetMenuByCategory_Result)">
-          <Parameter Name="CategoryName" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetMenuDetails" ReturnType="Collection(DerbyPubModel.GetMenuDetails_Result)">
-          <Parameter Name="MenuName" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetProductBasedOnAllergens" ReturnType="Collection(DerbyPubModel.GetProductBasedOnAllergens_Result)">
+          <FunctionImport Name="GetMenuByCategory" ReturnType="Collection(Models.GetMenuByCategory_Result)">
             <Parameter Name="CategoryName" Mode="In" Type="String" />
-            <Parameter Name="AllergenName" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetProductByCategory" ReturnType="Collection(DerbyPubModel.GetProductByCategory_Result)">
-          <Parameter Name="CategoryName" Mode="In" Type="String" />
+          <FunctionImport Name="GetMenuDetails" ReturnType="Collection(Models.GetMenuDetails_Result)">
+            <Parameter Name="MenuName" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetProductsByAllergen" ReturnType="Collection(DerbyPubModel.GetProductsByAllergen_Result)">
-          <Parameter Name="AllergenName" Mode="In" Type="String" />
+          <FunctionImport Name="GetMenuDetaliesAboutOrder" ReturnType="Collection(Models.GetMenuDetaliesAboutOrder_Result)">
+            <Parameter Name="OrderCode" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetProductsByMenuName" ReturnType="Collection(DerbyPubModel.GetProductsByMenuName_Result)">
-          <Parameter Name="MenuName" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="InsertIntoOrder_Product">
-            <Parameter Name="OrderId" Mode="In" Type="Int32" />
-            <Parameter Name="ProductId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetAllMenusBasedOnAllergen" ReturnType="Collection(DerbyPubModel.GetAllMenusBasedOnAllergen_Result)">
-            <Parameter Name="CategoryName" Mode="In" Type="String" />
-            <Parameter Name="AllergenName" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetAllMenusWithoutAnAllergen" ReturnType="Collection(DerbyPubModel.GetAllMenusWithoutAnAllergen_Result)">
-            <Parameter Name="CategoryName" Mode="In" Type="String" />
-            <Parameter Name="AllergenName" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetAllProductsWihoutAnAllergen" ReturnType="Collection(DerbyPubModel.GetAllProductsWihoutAnAllergen_Result)">
-            <Parameter Name="CategoryName" Mode="In" Type="String" />
-            <Parameter Name="AllergenName" Mode="In" Type="String" />
+          <FunctionImport Name="GetOrdersFromUser" ReturnType="Collection(Models.GetOrdersFromUser_Result)">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetPriceOfMenu" ReturnType="Collection(Double)">
-          <Parameter Name="MenuName" Mode="In" Type="String" />
+            <Parameter Name="MenuName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetProductBasedOnAllergens" ReturnType="Collection(Models.GetProductBasedOnAllergens_Result)">
+            <Parameter Name="CategoryName" Mode="In" Type="String" />
+            <Parameter Name="AllergenName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetProductByCategory" ReturnType="Collection(Models.GetProductByCategory_Result)">
+            <Parameter Name="CategoryName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetProductDetaliesAboutOrder" ReturnType="Collection(Models.GetProductDetaliesAboutOrder_Result)">
+            <Parameter Name="OrderCode" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetProductsByAllergen" ReturnType="Collection(Models.GetProductsByAllergen_Result)">
+            <Parameter Name="AllergenName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetProductsByMenuName" ReturnType="Collection(Models.GetProductsByMenuName_Result)">
+            <Parameter Name="MenuName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertIntoOrder_Menu">
             <Parameter Name="OderId" Mode="In" Type="Int32" />
             <Parameter Name="MenuId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="InsertIntoOrder_Product">
+            <Parameter Name="OrderId" Mode="In" Type="Int32" />
+            <Parameter Name="ProductId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="GetAllMenusBasedOnAllergen_Result">
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="30" />
+          <Property Type="Double" Name="Price" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetAllMenusWithoutAnAllergen_Result">
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="30" />
+          <Property Type="Double" Name="Price" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetAllProductsWihoutAnAllergen_Result">
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+          <Property Type="Single" Name="Price" Nullable="false" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="GetAllProductWithAnAllergenBasedOnCategory_Result">
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
           <Property Type="Single" Name="Price" Nullable="false" />
@@ -854,6 +886,17 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
           <Property Type="String" Name="Name" Nullable="false" MaxLength="30" />
           <Property Type="Double" Name="Price" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="GetMenuDetaliesAboutOrder_Result">
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="30" />
+          <Property Type="Int32" Name="MenuCount" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetOrdersFromUser_Result">
+          <Property Type="DateTime" Name="Estimated_Time" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="Order_Time" Nullable="false" Precision="23" />
+          <Property Type="Single" Name="Total_Price" Nullable="false" />
+          <Property Type="Int32" Name="UniqueCode" Nullable="false" />
+          <Property Type="String" Name="StateName" Nullable="false" MaxLength="20" />
+        </ComplexType>
         <ComplexType Name="GetProductBasedOnAllergens_Result">
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
           <Property Type="Single" Name="Price" Nullable="false" />
@@ -866,6 +909,10 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
           <Property Type="Int32" Name="Quantity" Nullable="false" />
           <Property Type="Int32" Name="Total_Quantity" Nullable="false" />
           <Property Type="Int32" Name="CategoryID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetProductDetaliesAboutOrder_Result">
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="ProductCount" Nullable="true" />
         </ComplexType>
         <ComplexType Name="GetProductsByAllergen_Result">
           <Property Type="Int32" Name="ProductID" Nullable="false" />
@@ -882,27 +929,14 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
           <Property Type="Int32" Name="Quantity" Nullable="false" />
           <Property Type="Single" Name="Price" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="GetAllMenusBasedOnAllergen_Result">
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="30" />
-          <Property Type="Double" Name="Price" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GetAllMenusWithoutAnAllergen_Result">
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="30" />
-          <Property Type="Double" Name="Price" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GetAllProductsWihoutAnAllergen_Result">
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
-          <Property Type="Single" Name="Price" Nullable="false" />
-          <Property Type="Int32" Name="Quantity" Nullable="false" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DerbyPubModelStoreContainer" CdmEntityContainer="RestaurantModel">
+        <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="RestaurantModel">
           <EntitySetMapping Name="AccountTypes">
-            <EntityTypeMapping TypeName="DerbyPubModel.AccountType">
+            <EntityTypeMapping TypeName="Models.AccountType">
               <MappingFragment StoreEntitySet="AccountType">
                 <ScalarProperty Name="AccountTypeID" ColumnName="AccountTypeID" />
                 <ScalarProperty Name="AccountTypeName" ColumnName="AccountTypeName" />
@@ -910,7 +944,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Allergens">
-            <EntityTypeMapping TypeName="DerbyPubModel.Allergen">
+            <EntityTypeMapping TypeName="Models.Allergen">
               <MappingFragment StoreEntitySet="Allergen">
                 <ScalarProperty Name="AllergenID" ColumnName="AllergenID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -918,7 +952,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="DerbyPubModel.Category">
+            <EntityTypeMapping TypeName="Models.Category">
               <MappingFragment StoreEntitySet="Category">
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -926,7 +960,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Images">
-            <EntityTypeMapping TypeName="DerbyPubModel.Image">
+            <EntityTypeMapping TypeName="Models.Image">
               <MappingFragment StoreEntitySet="Image">
                 <ScalarProperty Name="ImageId" ColumnName="ImageId" />
                 <ScalarProperty Name="Image1" ColumnName="Image" />
@@ -934,7 +968,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Menus">
-            <EntityTypeMapping TypeName="DerbyPubModel.Menu">
+            <EntityTypeMapping TypeName="Models.Menu">
               <MappingFragment StoreEntitySet="Menu">
                 <ScalarProperty Name="MenuID" ColumnName="MenuID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -943,7 +977,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Menu_Product">
-            <EntityTypeMapping TypeName="DerbyPubModel.Menu_Product">
+            <EntityTypeMapping TypeName="Models.Menu_Product">
               <MappingFragment StoreEntitySet="Menu_Product">
                 <ScalarProperty Name="Menu_ProductID" ColumnName="Menu_ProductID" />
                 <ScalarProperty Name="FKMenuID" ColumnName="FKMenuID" />
@@ -953,7 +987,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Order_Menu">
-            <EntityTypeMapping TypeName="DerbyPubModel.Order_Menu">
+            <EntityTypeMapping TypeName="Models.Order_Menu">
               <MappingFragment StoreEntitySet="Order_Menu">
                 <ScalarProperty Name="FKOderID" ColumnName="FKOderID" />
                 <ScalarProperty Name="FKMenuID" ColumnName="FKMenuID" />
@@ -962,7 +996,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="DerbyPubModel.Order">
+            <EntityTypeMapping TypeName="Models.Order">
               <MappingFragment StoreEntitySet="Orders">
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
@@ -977,7 +1011,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="DerbyPubModel.Product">
+            <EntityTypeMapping TypeName="Models.Product">
               <MappingFragment StoreEntitySet="Product">
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -989,15 +1023,15 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="States">
-            <EntityTypeMapping TypeName="DerbyPubModel.State">
+            <EntityTypeMapping TypeName="Models.State">
               <MappingFragment StoreEntitySet="State">
                 <ScalarProperty Name="StateID" ColumnName="StateID" />
-                <ScalarProperty Name="State1" ColumnName="State" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="DerbyPubModel.User">
+            <EntityTypeMapping TypeName="Models.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="First_Name" ColumnName="First_Name" />
@@ -1010,7 +1044,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Order_Product" TypeName="DerbyPubModel.Order_Product" StoreEntitySet="Order_Product">
+          <AssociationSetMapping Name="Order_Product" TypeName="Models.Order_Product" StoreEntitySet="Order_Product">
             <EndProperty Name="Orders">
               <ScalarProperty Name="OrderID" ColumnName="OrderID" />
             </EndProperty>
@@ -1018,7 +1052,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
               <ScalarProperty Name="ProductID" ColumnName="ProductID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Product_Allergen" TypeName="DerbyPubModel.Product_Allergen" StoreEntitySet="Product_Allergen">
+          <AssociationSetMapping Name="Product_Allergen" TypeName="Models.Product_Allergen" StoreEntitySet="Product_Allergen">
             <EndProperty Name="Allergen">
               <ScalarProperty Name="AllergenID" ColumnName="FKAllergenID" />
             </EndProperty>
@@ -1026,7 +1060,7 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
               <ScalarProperty Name="ProductID" ColumnName="FKProductID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Product_Image" TypeName="DerbyPubModel.Product_Image" StoreEntitySet="Product_Image">
+          <AssociationSetMapping Name="Product_Image" TypeName="Models.Product_Image" StoreEntitySet="Product_Image">
             <EndProperty Name="Image">
               <ScalarProperty Name="ImageId" ColumnName="ImageID" />
             </EndProperty>
@@ -1034,50 +1068,95 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
               <ScalarProperty Name="ProductID" ColumnName="ProductID" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="DeleteAllergen" FunctionName="DerbyPubModel.Store.DeleteAllergen" />
-          <FunctionImportMapping FunctionImportName="DeleteCategory" FunctionName="DerbyPubModel.Store.DeleteCategory" />
-          <FunctionImportMapping FunctionImportName="DeleteMenu" FunctionName="DerbyPubModel.Store.DeleteMenu" />
-          <FunctionImportMapping FunctionImportName="DeleteProduct" FunctionName="DerbyPubModel.Store.DeleteProduct" />
-          <FunctionImportMapping FunctionImportName="GetAllCategoryes" FunctionName="DerbyPubModel.Store.GetAllCategoryes" />
-          <FunctionImportMapping FunctionImportName="GetAllergenFromProductName" FunctionName="DerbyPubModel.Store.GetAllergenFromProductName" />
-          <FunctionImportMapping FunctionImportName="GetAllProductWithAnAllergenBasedOnCategory" FunctionName="DerbyPubModel.Store.GetAllProductWithAnAllergenBasedOnCategory">
+          <FunctionImportMapping FunctionImportName="DeleteAllergen" FunctionName="Models.Store.DeleteAllergen" />
+          <FunctionImportMapping FunctionImportName="DeleteCategory" FunctionName="Models.Store.DeleteCategory" />
+          <FunctionImportMapping FunctionImportName="DeleteMenu" FunctionName="Models.Store.DeleteMenu" />
+          <FunctionImportMapping FunctionImportName="DeleteProduct" FunctionName="Models.Store.DeleteProduct" />
+          <FunctionImportMapping FunctionImportName="GetAllCategoryes" FunctionName="Models.Store.GetAllCategoryes" />
+          <FunctionImportMapping FunctionImportName="GetAllergenFromProductName" FunctionName="Models.Store.GetAllergenFromProductName" />
+          <FunctionImportMapping FunctionImportName="GetAllMenusBasedOnAllergen" FunctionName="Models.Store.GetAllMenusBasedOnAllergen">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DerbyPubModel.GetAllProductWithAnAllergenBasedOnCategory_Result">
+              <ComplexTypeMapping TypeName="Models.GetAllMenusBasedOnAllergen_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllMenusWithoutAnAllergen" FunctionName="Models.Store.GetAllMenusWithoutAnAllergen">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.GetAllMenusWithoutAnAllergen_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllProductsWihoutAnAllergen" FunctionName="Models.Store.GetAllProductsWihoutAnAllergen">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.GetAllProductsWihoutAnAllergen_Result">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetImagesByProductName" FunctionName="DerbyPubModel.Store.GetImagesByProductName" />
-          <FunctionImportMapping FunctionImportName="GetMenuByCategory" FunctionName="DerbyPubModel.Store.GetMenuByCategory">
+          <FunctionImportMapping FunctionImportName="GetAllProductWithAnAllergenBasedOnCategory" FunctionName="Models.Store.GetAllProductWithAnAllergenBasedOnCategory">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DerbyPubModel.GetMenuByCategory_Result">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetMenuDetails" FunctionName="DerbyPubModel.Store.GetMenuDetails">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DerbyPubModel.GetMenuDetails_Result">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetProductBasedOnAllergens" FunctionName="DerbyPubModel.Store.GetProductBasedOnAllergens">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DerbyPubModel.GetProductBasedOnAllergens_Result">
+              <ComplexTypeMapping TypeName="Models.GetAllProductWithAnAllergenBasedOnCategory_Result">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetProductByCategory" FunctionName="DerbyPubModel.Store.GetProductByCategory">
+          <FunctionImportMapping FunctionImportName="GetImagesByProductName" FunctionName="Models.Store.GetImagesByProductName" />
+          <FunctionImportMapping FunctionImportName="GetMenuByCategory" FunctionName="Models.Store.GetMenuByCategory">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DerbyPubModel.GetProductByCategory_Result">
+              <ComplexTypeMapping TypeName="Models.GetMenuByCategory_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetMenuDetails" FunctionName="Models.Store.GetMenuDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.GetMenuDetails_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetMenuDetaliesAboutOrder" FunctionName="Models.Store.GetMenuDetaliesAboutOrder">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.GetMenuDetaliesAboutOrder_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MenuCount" ColumnName="MenuCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOrdersFromUser" FunctionName="Models.Store.GetOrdersFromUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.GetOrdersFromUser_Result">
+                <ScalarProperty Name="Estimated_Time" ColumnName="Estimated_Time" />
+                <ScalarProperty Name="Order_Time" ColumnName="Order_Time" />
+                <ScalarProperty Name="Total_Price" ColumnName="Total_Price" />
+                <ScalarProperty Name="UniqueCode" ColumnName="UniqueCode" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetPriceOfMenu" FunctionName="Models.Store.GetPriceOfMenu" />
+          <FunctionImportMapping FunctionImportName="GetProductBasedOnAllergens" FunctionName="Models.Store.GetProductBasedOnAllergens">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.GetProductBasedOnAllergens_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProductByCategory" FunctionName="Models.Store.GetProductByCategory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.GetProductByCategory_Result">
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
@@ -1087,9 +1166,17 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetProductsByAllergen" FunctionName="DerbyPubModel.Store.GetProductsByAllergen">
+          <FunctionImportMapping FunctionImportName="GetProductDetaliesAboutOrder" FunctionName="Models.Store.GetProductDetaliesAboutOrder">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DerbyPubModel.GetProductsByAllergen_Result">
+              <ComplexTypeMapping TypeName="Models.GetProductDetaliesAboutOrder_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProductCount" ColumnName="ProductCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProductsByAllergen" FunctionName="Models.Store.GetProductsByAllergen">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.GetProductsByAllergen_Result">
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
@@ -1101,43 +1188,17 @@ warning 6002: The table/view 'DerbyPub.dbo.Product_Image' does not have a primar
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetProductsByMenuName" FunctionName="DerbyPubModel.Store.GetProductsByMenuName">
+          <FunctionImportMapping FunctionImportName="GetProductsByMenuName" FunctionName="Models.Store.GetProductsByMenuName">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DerbyPubModel.GetProductsByMenuName_Result">
+              <ComplexTypeMapping TypeName="Models.GetProductsByMenuName_Result">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="InsertIntoOrder_Product" FunctionName="DerbyPubModel.Store.InsertIntoOrder_Product" />
-          <FunctionImportMapping FunctionImportName="GetAllMenusBasedOnAllergen" FunctionName="DerbyPubModel.Store.GetAllMenusBasedOnAllergen">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DerbyPubModel.GetAllMenusBasedOnAllergen_Result">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetAllMenusWithoutAnAllergen" FunctionName="DerbyPubModel.Store.GetAllMenusWithoutAnAllergen">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DerbyPubModel.GetAllMenusWithoutAnAllergen_Result">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetAllProductsWihoutAnAllergen" FunctionName="DerbyPubModel.Store.GetAllProductsWihoutAnAllergen">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DerbyPubModel.GetAllProductsWihoutAnAllergen_Result">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetPriceOfMenu" FunctionName="DerbyPubModel.Store.GetPriceOfMenu" />
-          <FunctionImportMapping FunctionImportName="InsertIntoOrder_Menu" FunctionName="DerbyPubModel.Store.InsertIntoOrder_Menu" />
+          <FunctionImportMapping FunctionImportName="InsertIntoOrder_Menu" FunctionName="Models.Store.InsertIntoOrder_Menu" />
+          <FunctionImportMapping FunctionImportName="InsertIntoOrder_Product" FunctionName="Models.Store.InsertIntoOrder_Product" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

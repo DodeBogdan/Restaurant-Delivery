@@ -4,30 +4,30 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e69ea1cb42e04f7f92fda2159929df5d" Name="Diagram1">
-        <EntityTypeShape EntityType="DerbyPubModel.AccountType" Width="1.5" PointX="1.5" PointY="23.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DerbyPubModel.Allergen" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DerbyPubModel.Category" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DerbyPubModel.Image" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="DerbyPubModel.Menu" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DerbyPubModel.Menu_Product" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DerbyPubModel.Order_Menu" Width="1.5" PointX="7.5" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DerbyPubModel.Order" Width="1.5" PointX="0.75" PointY="11.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DerbyPubModel.Product" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DerbyPubModel.State" Width="1.5" PointX="1.5" PointY="16.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DerbyPubModel.User" Width="1.5" PointX="1.5" PointY="18.75" IsExpanded="true" />
-        <AssociationConnector Association="DerbyPubModel.FK_User_AccountType" ManuallyRouted="false" />
-        <AssociationConnector Association="DerbyPubModel.FK_Menu_Category" ManuallyRouted="false" />
-        <AssociationConnector Association="DerbyPubModel.FK_Product_Category" ManuallyRouted="false" />
-        <AssociationConnector Association="DerbyPubModel.FK_Menu_Product_Menu" ManuallyRouted="false" />
-        <AssociationConnector Association="DerbyPubModel.FK_Menu_Product_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="DerbyPubModel.FK_Order_Menu_Menu_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="DerbyPubModel.FK_Order_Menu_Orders" ManuallyRouted="false" />
-        <AssociationConnector Association="DerbyPubModel.FK_State_Order" ManuallyRouted="false" />
-        <AssociationConnector Association="DerbyPubModel.FK_User_Order" ManuallyRouted="false" />
-        <AssociationConnector Association="DerbyPubModel.Order_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="DerbyPubModel.Product_Allergen" ManuallyRouted="false" />
-        <AssociationConnector Association="DerbyPubModel.Product_Image" ManuallyRouted="false" />
+      <Diagram DiagramId="58567f603df74da598c6f5bb5264d184" Name="Diagram1">
+        <EntityTypeShape EntityType="Models.AccountType" Width="1.5" PointX="1.5" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.Allergen" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.Category" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.Image" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.Menu" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.Menu_Product" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.Order_Menu" Width="1.5" PointX="7.5" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.Order" Width="1.5" PointX="0.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.Product" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.State" Width="1.5" PointX="1.5" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.User" Width="1.5" PointX="1.5" PointY="18.75" IsExpanded="true" />
+        <AssociationConnector Association="Models.FK_User_AccountType" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK_Menu_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK_Product_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK_Menu_Product_Menu" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK_Menu_Product_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK_Order_Menu_Menu_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK_Order_Menu_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK_State_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.FK_User_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.Order_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.Product_Allergen" ManuallyRouted="false" />
+        <AssociationConnector Association="Models.Product_Image" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

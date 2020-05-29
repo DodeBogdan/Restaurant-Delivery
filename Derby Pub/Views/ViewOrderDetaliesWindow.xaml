@@ -1,0 +1,55 @@
+﻿<Window x:Class="Derby_Pub.Views.ViewOrderDetaliesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Derby_Pub.ViewModels"
+        mc:Ignorable="d"
+        Title="DerbyPub" Height="541.2" Width="587.384">
+
+    <Window.DataContext>
+        <local:ViewOrderDetaliesViewModel/>
+    </Window.DataContext>
+    
+    <Grid Margin="0,0,2.8,0">
+        <Grid.Background>
+            <ImageBrush ImageSource="../Assets/BackgroundImage.jpg"></ImageBrush>
+        </Grid.Background>
+        <Image Margin="152,10,153,334.2" Source="../Assets/LogoDerby.png" Stretch="Fill"/>
+
+        <DataGrid x:Name="productsGrid" CanUserResizeColumns="False" CanUserResizeRows="False"
+            AutoGenerateColumns="False" HorizontalAlignment="Left" Height="222" Margin="10,182,0,0" VerticalAlignment="Top" Width="558" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding OrdersList}" SelectionMode="Single">
+
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Numele preparatului">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Name}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Cantitate">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Quantity}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBlock HorizontalAlignment="Left" Margin="10,422,0,0" TextWrapping="Wrap" Text="Pret total:" FontSize="25" VerticalAlignment="Top" Height="28" Width="109"/>
+        
+        <TextBlock HorizontalAlignment="Left" Margin="124,422,0,0" TextWrapping="Wrap" Text="{Binding TotalPrice}" FontSize="25" VerticalAlignment="Top" Height="28" Width="84"/>
+        
+        <TextBlock HorizontalAlignment="Left" Margin="10,468,0,0" TextWrapping="Wrap" Text="Transport:" VerticalAlignment="Top" Height="33" Width="109" FontSize="24"/>
+        
+        <TextBlock HorizontalAlignment="Left" Margin="124,468,0,0" TextWrapping="Wrap" Text="{Binding TransportCost}" FontSize="25" VerticalAlignment="Top" Height="28" Width="84"/>
+        
+        <TextBlock HorizontalAlignment="Left" Margin="268,422,0,0" TextWrapping="Wrap" Text="Discount:" VerticalAlignment="Top" Height="28" Width="106" FontSize="25"/>
+        
+        <TextBlock HorizontalAlignment="Left" Margin="379,422,0,0" TextWrapping="Wrap" Text="{Binding Discount}" FontSize="25" VerticalAlignment="Top" Height="28" Width="84"/>
+        
+        <Button Content="Close" HorizontalAlignment="Left" Margin="444,468,0,0" VerticalAlignment="Top" Width="106" Height="33" FontSize="20" x:Name="CloseButton" Click="CloseButton_Click"/>
+    </Grid>
+</Window>

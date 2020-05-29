@@ -89,6 +89,45 @@ namespace Derby_Pub.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetAllergenFromProductName", productNameParameter);
         }
     
+        public virtual ObjectResult<GetAllMenusBasedOnAllergen_Result> GetAllMenusBasedOnAllergen(string categoryName, string allergenName)
+        {
+            var categoryNameParameter = categoryName != null ?
+                new ObjectParameter("CategoryName", categoryName) :
+                new ObjectParameter("CategoryName", typeof(string));
+    
+            var allergenNameParameter = allergenName != null ?
+                new ObjectParameter("AllergenName", allergenName) :
+                new ObjectParameter("AllergenName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllMenusBasedOnAllergen_Result>("GetAllMenusBasedOnAllergen", categoryNameParameter, allergenNameParameter);
+        }
+    
+        public virtual ObjectResult<GetAllMenusWithoutAnAllergen_Result> GetAllMenusWithoutAnAllergen(string categoryName, string allergenName)
+        {
+            var categoryNameParameter = categoryName != null ?
+                new ObjectParameter("CategoryName", categoryName) :
+                new ObjectParameter("CategoryName", typeof(string));
+    
+            var allergenNameParameter = allergenName != null ?
+                new ObjectParameter("AllergenName", allergenName) :
+                new ObjectParameter("AllergenName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllMenusWithoutAnAllergen_Result>("GetAllMenusWithoutAnAllergen", categoryNameParameter, allergenNameParameter);
+        }
+    
+        public virtual ObjectResult<GetAllProductsWihoutAnAllergen_Result> GetAllProductsWihoutAnAllergen(string categoryName, string allergenName)
+        {
+            var categoryNameParameter = categoryName != null ?
+                new ObjectParameter("CategoryName", categoryName) :
+                new ObjectParameter("CategoryName", typeof(string));
+    
+            var allergenNameParameter = allergenName != null ?
+                new ObjectParameter("AllergenName", allergenName) :
+                new ObjectParameter("AllergenName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllProductsWihoutAnAllergen_Result>("GetAllProductsWihoutAnAllergen", categoryNameParameter, allergenNameParameter);
+        }
+    
         public virtual ObjectResult<GetAllProductWithAnAllergenBasedOnCategory_Result> GetAllProductWithAnAllergenBasedOnCategory(string category, string allegenName)
         {
             var categoryParameter = category != null ?
@@ -129,6 +168,33 @@ namespace Derby_Pub.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMenuDetails_Result>("GetMenuDetails", menuNameParameter);
         }
     
+        public virtual ObjectResult<GetMenuDetaliesAboutOrder_Result> GetMenuDetaliesAboutOrder(Nullable<int> orderCode)
+        {
+            var orderCodeParameter = orderCode.HasValue ?
+                new ObjectParameter("OrderCode", orderCode) :
+                new ObjectParameter("OrderCode", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMenuDetaliesAboutOrder_Result>("GetMenuDetaliesAboutOrder", orderCodeParameter);
+        }
+    
+        public virtual ObjectResult<GetOrdersFromUser_Result> GetOrdersFromUser(Nullable<int> userId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetOrdersFromUser_Result>("GetOrdersFromUser", userIdParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<double>> GetPriceOfMenu(string menuName)
+        {
+            var menuNameParameter = menuName != null ?
+                new ObjectParameter("MenuName", menuName) :
+                new ObjectParameter("MenuName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("GetPriceOfMenu", menuNameParameter);
+        }
+    
         public virtual ObjectResult<GetProductBasedOnAllergens_Result> GetProductBasedOnAllergens(string categoryName, string allergenName)
         {
             var categoryNameParameter = categoryName != null ?
@@ -151,6 +217,15 @@ namespace Derby_Pub.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductByCategory_Result>("GetProductByCategory", categoryNameParameter);
         }
     
+        public virtual ObjectResult<GetProductDetaliesAboutOrder_Result> GetProductDetaliesAboutOrder(Nullable<int> orderCode)
+        {
+            var orderCodeParameter = orderCode.HasValue ?
+                new ObjectParameter("OrderCode", orderCode) :
+                new ObjectParameter("OrderCode", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductDetaliesAboutOrder_Result>("GetProductDetaliesAboutOrder", orderCodeParameter);
+        }
+    
         public virtual ObjectResult<GetProductsByAllergen_Result> GetProductsByAllergen(string allergenName)
         {
             var allergenNameParameter = allergenName != null ?
@@ -169,67 +244,6 @@ namespace Derby_Pub.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsByMenuName_Result>("GetProductsByMenuName", menuNameParameter);
         }
     
-        public virtual int InsertIntoOrder_Product(Nullable<int> orderId, Nullable<int> productId)
-        {
-            var orderIdParameter = orderId.HasValue ?
-                new ObjectParameter("OrderId", orderId) :
-                new ObjectParameter("OrderId", typeof(int));
-    
-            var productIdParameter = productId.HasValue ?
-                new ObjectParameter("ProductId", productId) :
-                new ObjectParameter("ProductId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertIntoOrder_Product", orderIdParameter, productIdParameter);
-        }
-    
-        public virtual ObjectResult<GetAllMenusBasedOnAllergen_Result> GetAllMenusBasedOnAllergen(string categoryName, string allergenName)
-        {
-            var categoryNameParameter = categoryName != null ?
-                new ObjectParameter("CategoryName", categoryName) :
-                new ObjectParameter("CategoryName", typeof(string));
-    
-            var allergenNameParameter = allergenName != null ?
-                new ObjectParameter("AllergenName", allergenName) :
-                new ObjectParameter("AllergenName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllMenusBasedOnAllergen_Result>("GetAllMenusBasedOnAllergen", categoryNameParameter, allergenNameParameter);
-        }
-    
-        public virtual ObjectResult<GetAllMenusWithoutAnAllergen_Result> GetAllMenusWithoutAnAllergen(string categoryName, string allergenName)
-        {
-            var categoryNameParameter = categoryName != null ?
-                new ObjectParameter("CategoryName", categoryName) :
-                new ObjectParameter("CategoryName", typeof(string));
-    
-            var allergenNameParameter = allergenName != null ?
-                new ObjectParameter("AllergenName", allergenName) :
-                new ObjectParameter("AllergenName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllMenusWithoutAnAllergen_Result>("GetAllMenusWithoutAnAllergen", categoryNameParameter, allergenNameParameter);
-        }
-    
-        public virtual ObjectResult<GetAllProductsWihoutAnAllergen_Result> GetAllProductsWihoutAnAllergen(string categoryName, string allergenName)
-        {
-            var categoryNameParameter = categoryName != null ?
-                new ObjectParameter("CategoryName", categoryName) :
-                new ObjectParameter("CategoryName", typeof(string));
-    
-            var allergenNameParameter = allergenName != null ?
-                new ObjectParameter("AllergenName", allergenName) :
-                new ObjectParameter("AllergenName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllProductsWihoutAnAllergen_Result>("GetAllProductsWihoutAnAllergen", categoryNameParameter, allergenNameParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<double>> GetPriceOfMenu(string menuName)
-        {
-            var menuNameParameter = menuName != null ?
-                new ObjectParameter("MenuName", menuName) :
-                new ObjectParameter("MenuName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("GetPriceOfMenu", menuNameParameter);
-        }
-    
         public virtual int InsertIntoOrder_Menu(Nullable<int> oderId, Nullable<int> menuId)
         {
             var oderIdParameter = oderId.HasValue ?
@@ -241,6 +255,19 @@ namespace Derby_Pub.Models
                 new ObjectParameter("MenuId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertIntoOrder_Menu", oderIdParameter, menuIdParameter);
+        }
+    
+        public virtual int InsertIntoOrder_Product(Nullable<int> orderId, Nullable<int> productId)
+        {
+            var orderIdParameter = orderId.HasValue ?
+                new ObjectParameter("OrderId", orderId) :
+                new ObjectParameter("OrderId", typeof(int));
+    
+            var productIdParameter = productId.HasValue ?
+                new ObjectParameter("ProductId", productId) :
+                new ObjectParameter("ProductId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertIntoOrder_Product", orderIdParameter, productIdParameter);
         }
     }
 }

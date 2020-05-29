@@ -12,17 +12,20 @@ namespace Derby_Pub.ViewModels
     class OrderViewModel : BaseVM
     {
         private double sum;
-        readonly ProductsBLL productsBLL = new ProductsBLL();
+        private readonly ProductsBLL productsBLL = new ProductsBLL();
+        private readonly OrderBLL orderBLL = new OrderBLL();
+        private int ordersInInterval = 0;
 
-        public User ActualUser;
-        private List<ProductDetalies> productDetalies;
+        private User actualUser;
 
-        public List<ProductDetalies> ProductDetalies
+        public User ActualUser
         {
-            get { return productDetalies; }
+            get { return actualUser; }
             set
             {
-                productDetalies = value;
+                actualUser = value;
+                ordersInInterval = orderBLL.GetNoOrdersOfUser(ActualUser.UserID);
+
                 foreach (var product in ProductDetalies)
                 {
                     ProductList.Add(new SelectedProduct()
@@ -30,7 +33,7 @@ namespace Derby_Pub.ViewModels
                         Name = product.Name,
                         Quantity = product.Quantity
                     });
-                    if(product.Type == "Preparat")
+                    if (product.Type == "Preparat")
                         sum += product.Quantity * productsBLL.GetPriceOfProduct(product.Name);
                     else
                     {
@@ -40,13 +43,20 @@ namespace Derby_Pub.ViewModels
                 }
                 Price = sum;
                 if (sum < AppConfigHelper.PriceHighterThan)
-                    Discount = 0;
+                {
+                    if (AppConfigHelper.OrdersToDiscount < ordersInInterval)
+                    {
+                        Discount = AppConfigHelper.Discount / 100 * sum;
+                        sum -= Discount;
+                    }
+                    else
+                        Discount = 0;
+                }
                 else
                 {
                     Discount = AppConfigHelper.Discount / 100 * sum;
                     sum -= Discount;
                 }
-
                 if (sum < AppConfigHelper.PriceLowerThan)
                 {
                     Transport = AppConfigHelper.Transport;
@@ -56,6 +66,17 @@ namespace Derby_Pub.ViewModels
                     Transport = 0;
 
                 FullPrice = sum;
+            }
+        }
+
+        private List<ProductDetalies> productDetalies;
+
+        public List<ProductDetalies> ProductDetalies
+        {
+            get { return productDetalies; }
+            set
+            {
+                productDetalies = value;
             }
         }
 

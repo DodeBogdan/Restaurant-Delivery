@@ -13,5 +13,9 @@ namespace Derby_Pub.Helps
         public static double PriceLowerThan = double.Parse(ConfigurationManager.AppSettings["PriceLowerThan"]);
 
         public static double Transport = double.Parse(ConfigurationManager.AppSettings["Transport"]);
+
+        public static int OrdersToDiscount = int.Parse(ConfigurationManager.AppSettings["OrdersToDiscount"]);
+
+        public static int OrdersInTimeInterval = int.Parse(ConfigurationManager.AppSettings["OrdersInTimeInterval"]);
     }
 }

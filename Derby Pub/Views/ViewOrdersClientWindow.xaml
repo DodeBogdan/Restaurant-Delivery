@@ -1,0 +1,121 @@
+﻿<Window x:Class="Derby_Pub.Views.ViewOrdersClientWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Derby_Pub.ViewModels"
+        mc:Ignorable="d"
+        Title="DerbyPub" Height="450" Width="1100">
+    <Window.DataContext>
+        <local:ViewOrdersClientViewModel/>
+    </Window.DataContext>
+
+    <Grid Margin="0,0,-6.2,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <ImageBrush ImageSource="../Assets/BackgroundImage.jpg"></ImageBrush>
+        </Grid.Background>
+        <Image Margin="381,2,416,298" Source="../Assets/LogoDerby.png" Stretch="Fill"/>
+
+        <DataGrid HorizontalAlignment="Left" Height="200" Margin="33,127,0,0" VerticalAlignment="Top" Width="450" x:Name="ActiveOrders" CanUserResizeColumns="False" CanUserResizeRows="False" AutoGenerateColumns="False" Background="Transparent" ItemsSource="{Binding ActiveOrdersList}" SelectionMode="Single"
+                  SelectedItem="{Binding SelectedActiveOrder}">
+
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Data comenzii">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding ActiveOrderDate}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Codul comenzii">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding ActiveOrderCode}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Costul comenzii">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding ActiveOrderPrice}" Margin="10,0,-10,0" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Ora estimata a livrarii">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding ActiveOrderEstimatedTime}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid HorizontalAlignment="Left" Height="200" Margin="577,127,0,0" VerticalAlignment="Top" Width="492" x:Name="Orders" CanUserResizeColumns="False" CanUserResizeRows="False" AutoGenerateColumns="False" Background="Transparent" ItemsSource="{Binding OrdersList}" SelectionMode="Single"
+                  SelectedItem="{Binding SelectedOrder}">
+
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Data comenzii">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding OrderDate}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Codul comenzii">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding OrderCode}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Costul comenzii">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding OrderPrice}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Starea comenzii">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding OrderState}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Ora estimata a livrarii">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding OrderEstimatedTime}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+        <Button Content="Anuleaza comanda" HorizontalAlignment="Left" Margin="33,348,0,0" VerticalAlignment="Top" Width="283" Height="49" Background="Transparent" FontSize="30" FontWeight="Medium" Command="{Binding CancelOrderCommand}"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="33,74,0,0" TextWrapping="Wrap" Text="Comenzi active" VerticalAlignment="Top" Height="46" Width="450" FontSize="30" TextAlignment="Center" FontWeight="Bold"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="577,76,0,0" TextWrapping="Wrap" Text="Comenzi" VerticalAlignment="Top" Height="46" Width="492" FontSize="30" TextAlignment="Center" FontWeight="Bold"/>
+
+        <Button Content="" FontSize="25" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="75"  x:Name="BackButton" Click="BackButton_Click" RenderTransformOrigin="0.485,0.464">
+            <Button.Background>
+                <ImageBrush ImageSource="/Derby Pub;component/Assets/back-icon.png" />
+            </Button.Background>
+        </Button>
+        
+        <Button Content="Vezi detalii despre comanda:" HorizontalAlignment="Left" Margin="439,348,0,0" VerticalAlignment="Top" Width="340" Height="49" Background="Transparent" FontSize="23" FontWeight="Bold" Command="{Binding SeeDetaliesAboutCommand}"/>
+    </Grid>
+</Window>

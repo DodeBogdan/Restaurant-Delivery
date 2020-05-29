@@ -25,7 +25,10 @@ namespace Derby_Pub.Views
 
         private void SeeOrdersButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ViewOrdersClientWindow viewOrdersClientWindow = new ViewOrdersClientWindow(newUser);
+            App.Current.MainWindow.Close();
+            App.Current.MainWindow = viewOrdersClientWindow;
+            App.Current.MainWindow.Show();
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
