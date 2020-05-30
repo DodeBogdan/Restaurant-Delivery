@@ -1,0 +1,44 @@
+﻿<Window x:Class="Derby_Pub.Views.OrderDetaliesByAdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Derby_Pub.ViewModels"
+        mc:Ignorable="d"
+        Title="DerbyPub" Height="344.4" Width="378.8">
+
+    <Window.DataContext>
+        <local:OrderDetaliesByAdminViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="../Assets/BackgroundImage.jpg"></ImageBrush>
+        </Grid.Background>
+
+        <Image Margin="117,10,122,227.8" Source="../Assets/LogoDerby.png" Stretch="Fill"/>
+
+        <DataGrid x:Name="productsGrid" CanUserResizeColumns="False" CanUserResizeRows="False"
+            AutoGenerateColumns="False" HorizontalAlignment="Left" Height="149" Margin="10,90,0,0" VerticalAlignment="Top" Width="341" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding ProductList}">
+
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Numele preparatului">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Name}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Cantitate">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Quantity}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Content="Anuleaza" HorizontalAlignment="Left" Margin="134,263,0,0" VerticalAlignment="Top" Width="98" Name="Cancel" Click="Cancel_Click" Height="24"/>
+    </Grid>
+</Window>

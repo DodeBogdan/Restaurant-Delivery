@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Derby_Pub.Models.BusinessLayer
 {
-    class ProductsBLL
+    class ProductRepository
     {
         private readonly RestaurantModel restaurant = new RestaurantModel();
         internal double GetPriceOfMenu(string name)

@@ -1,13 +1,14 @@
 ﻿using Derby_Pub.Helps;
 using Derby_Pub.Models.EntityLayer;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Documents;
 
 namespace Derby_Pub.Models.BusinessLayer
 {
-    class OrderBLL
+    class OrderRepository
     {
         private readonly RestaurantModel restaurant = new RestaurantModel();
 
@@ -44,7 +45,9 @@ namespace Derby_Pub.Models.BusinessLayer
                              order.Discount,
                              order.Estimated_Time,
                              status.StateName
-                         }).ToList();
+                         })
+                         .OrderByDescending(x => x.Order_Time)
+                         .ToList();
                         
             foreach (var product in query)
             {
@@ -63,6 +66,22 @@ namespace Derby_Pub.Models.BusinessLayer
             return list;
         }
 
+        internal ClientDetalies GetClientDetalies(int orderCode)
+        {
+            var query = (from order in restaurant.Orders
+                         join user in restaurant.Users on order.UserID equals user.UserID
+                         where order.UniqueCode == orderCode
+                         select user).FirstOrDefault();
+
+            return new ClientDetalies()
+            {
+                LastName = query.Last_Name,
+                FirstName = query.First_Name,
+                Phone = query.Phone,
+                Adress = query.Adress
+            };
+        }
+
         internal ObservableCollection<AdminViewOrders> GetOrders()
         {
             ObservableCollection<AdminViewOrders> list = new ObservableCollection<AdminViewOrders>();
@@ -78,7 +97,9 @@ namespace Derby_Pub.Models.BusinessLayer
                              order.Discount,
                              order.Estimated_Time,
                              status.StateName
-                         }).ToList();
+                         })
+                         .OrderByDescending(x => x.Order_Time)
+                         .ToList();
 
             foreach (var product in query)
             {
@@ -95,6 +116,25 @@ namespace Derby_Pub.Models.BusinessLayer
             }
 
             return list;
+        }
+
+        internal Dictionary<string, int> GetDetaliesAboutOrder(int orderCode)
+        {
+            Dictionary<string, int> products = new Dictionary<string, int>();
+
+            var x = restaurant.GetProductDetaliesAboutOrder(orderCode).ToList();
+            var y = restaurant.GetMenuDetaliesAboutOrder(orderCode).ToList();
+
+            foreach(var product in x)
+            {
+                products.Add(product.Name, (int)product.ProductCount);
+            }
+            foreach(var product in y)
+            {
+                products.Add(product.Name, (int)product.MenuCount);
+            }
+
+            return products;
         }
 
         internal double GetTotalPrice(int orderCode)

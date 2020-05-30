@@ -12,8 +12,8 @@ namespace Derby_Pub.ViewModels
     class OrderViewModel : BaseVM
     {
         private double sum;
-        private readonly ProductsBLL productsBLL = new ProductsBLL();
-        private readonly OrderBLL orderBLL = new OrderBLL();
+        private readonly ProductRepository productsBLL = new ProductRepository();
+        private readonly OrderRepository orderBLL = new OrderRepository();
         private int ordersInInterval = 0;
 
         private User actualUser;

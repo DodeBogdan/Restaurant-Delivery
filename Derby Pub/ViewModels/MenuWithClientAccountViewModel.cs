@@ -15,7 +15,7 @@ namespace Derby_Pub.ViewModels
     class MenuWithClientAccountViewModel : BaseVM
     {
         private readonly List<ProductDetalies> productsName = new List<ProductDetalies>();
-        private readonly ProductsBLL productsBll = new ProductsBLL();
+        private readonly ProductRepository productsBll = new ProductRepository();
 
         #region User
 

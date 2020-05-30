@@ -10,8 +10,8 @@ namespace Derby_Pub.ViewModels
 {
     class AutentificationViewModel : BaseVM
     {
-        readonly UserBLL userBll = new UserBLL();
-        readonly OrderBLL orderBll = new OrderBLL();
+        readonly UserRepository userBll = new UserRepository();
+        readonly OrderRepository orderBll = new OrderRepository();
 
         private string email;
         public string Email

@@ -16,7 +16,7 @@ namespace Derby_Pub.ViewModels
     {
 
         private readonly RestaurantModel restaurantModel = new RestaurantModel();
-        private readonly ProductsBLL productsBll = new ProductsBLL();
+        private readonly ProductRepository productsBll = new ProductRepository();
 
         #region CategorySelect
 

@@ -13,7 +13,7 @@ namespace Derby_Pub.ViewModels
 {
     class ViewOrderDetaliesViewModel : BaseVM
     {
-        private readonly OrderBLL orderBll = new OrderBLL();
+        private readonly OrderRepository orderBll = new OrderRepository();
 
         private int orderCode;
         public int OrderCode

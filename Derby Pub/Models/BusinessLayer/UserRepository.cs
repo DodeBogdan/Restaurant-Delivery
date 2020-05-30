@@ -2,7 +2,7 @@
 
 namespace Derby_Pub.Models.BusinessLayer
 {
-    class UserBLL
+    class UserRepository
     {
         private readonly RestaurantModel restaurant = new RestaurantModel();
         public void RegisterUser(string firstName, string lastName, string email, string adress, string phone, string password)

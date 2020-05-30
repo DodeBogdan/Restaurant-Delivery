@@ -11,7 +11,7 @@ namespace Derby_Pub.ViewModels
     class RegisterViewModel : BaseVM
     {
 
-        private readonly UserBLL user = new UserBLL();
+        private readonly UserRepository user = new UserRepository();
 
         private bool firstNameValidation = false;
         private string firstName;

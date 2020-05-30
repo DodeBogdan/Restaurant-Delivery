@@ -82,6 +82,7 @@
     </Compile>
     <Compile Include="Models\EntityLayer\ActiveOrdersDisplay.cs" />
     <Compile Include="Models\EntityLayer\AdminViewOrders.cs" />
+    <Compile Include="Models\EntityLayer\ClientDetalies.cs" />
     <Compile Include="Models\EntityLayer\OrderDetalies.cs" />
     <Compile Include="Models\EntityLayer\OrdersDisplay.cs" />
     <Compile Include="Models\GetAllMenusBasedOnAllergen_Result.cs">
@@ -164,6 +165,7 @@
     </Compile>
     <Compile Include="ViewModels\AdminOrdersViewModel.cs" />
     <Compile Include="ViewModels\ChangeOrderStatusViewModel.cs" />
+    <Compile Include="ViewModels\OrderDetaliesByAdminViewModel.cs" />
     <Compile Include="ViewModels\ViewOrderDetaliesViewModel.cs" />
     <Compile Include="ViewModels\ViewOrdersClientViewModel.cs" />
     <Compile Include="Views\AdminAccountWindow.xaml.cs">
@@ -174,6 +176,9 @@
     </Compile>
     <Compile Include="Views\ChangeOrderStatusWindow.xaml.cs">
       <DependentUpon>ChangeOrderStatusWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OrderDetaliesByAdminWindow.xaml.cs">
+      <DependentUpon>OrderDetaliesByAdminWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewOrderDetaliesWindow.xaml.cs">
       <DependentUpon>ViewOrderDetaliesWindow.xaml</DependentUpon>
@@ -221,6 +226,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\OrderDetaliesByAdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\OrderWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -240,9 +249,9 @@
     <Compile Include="Helps\AppConfigHelper.cs" />
     <Compile Include="Helps\BaseVM.cs" />
     <Compile Include="Helps\RelayCommand.cs" />
-    <Compile Include="Models\BusinessLayer\OrderBLL.cs" />
-    <Compile Include="Models\BusinessLayer\ProductsBLL.cs" />
-    <Compile Include="Models\BusinessLayer\UserBLL.cs" />
+    <Compile Include="Models\BusinessLayer\OrderRepository.cs" />
+    <Compile Include="Models\BusinessLayer\ProductRepository.cs" />
+    <Compile Include="Models\BusinessLayer\UserRepository.cs" />
     <Compile Include="Models\EntityLayer\ClientProductsDisplay.cs" />
     <Compile Include="Models\EntityLayer\ProductDetalies.cs" />
     <Compile Include="Models\EntityLayer\SelectedProduct.cs" />

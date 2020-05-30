@@ -14,14 +14,14 @@ namespace Derby_Pub.ViewModels
 {
     class AdminOrdersViewModel : BaseVM
     {
-        private readonly OrderBLL orderBll = new OrderBLL();
+        private readonly OrderRepository orderRepository = new OrderRepository();
 
         private ObservableCollection<AdminViewOrders> activeOrdersList;
         public ObservableCollection<AdminViewOrders> ActiveOrdersList
         {
             get
             {
-                activeOrdersList = orderBll.GetActiveOrders();
+                activeOrdersList = orderRepository.GetActiveOrders();
                 return activeOrdersList;
             }
             set
@@ -40,6 +40,64 @@ namespace Derby_Pub.ViewModels
             {
                 selectedOrder = value;
                 OnPropertyChanged(nameof(SelectedOrder));
+                if (SelectedOrder == null)
+                {
+                    LastName = FirstName = Phone = Adress = null;
+                    return;
+                }
+                ClientDetalies clientDetalies = orderRepository.GetClientDetalies(SelectedOrder.OrderCode);
+                LastName = clientDetalies.LastName;
+                FirstName = clientDetalies.FirstName;
+                Phone = clientDetalies.Phone;
+                Adress = clientDetalies.Adress;
+            }
+        }
+
+        private string lastName;
+
+        public string LastName
+        {
+            get { return lastName; }
+            set
+            {
+                lastName = value;
+                OnPropertyChanged(nameof(LastName));
+            }
+        }
+
+        private string firstName;
+
+        public string FirstName
+        {
+            get { return firstName; }
+            set
+            {
+                firstName = value;
+                OnPropertyChanged(nameof(FirstName));
+            }
+        }
+
+        private string phone;
+
+        public string Phone
+        {
+            get { return phone; }
+            set
+            {
+                phone = value;
+                OnPropertyChanged(nameof(Phone));
+            }
+        }
+
+        private string adress;
+
+        public string Adress
+        {
+            get { return adress; }
+            set
+            {
+                adress = value;
+                OnPropertyChanged(nameof(Adress));
             }
         }
 
@@ -50,7 +108,7 @@ namespace Derby_Pub.ViewModels
         {
             get
             {
-                ordersList = orderBll.GetOrders();
+                ordersList = orderRepository.GetOrders();
                 return ordersList;
             }
             set
@@ -59,6 +117,8 @@ namespace Derby_Pub.ViewModels
                 OnPropertyChanged("OrdersList");
             }
         }
+
+        #region orderStatus
 
         private ICommand changeStatusDetalies;
         public ICommand ChangeStatusDetalies
@@ -90,10 +150,45 @@ namespace Derby_Pub.ViewModels
 
             App.Current.MainWindow = currentWindow;
 
-            orderBll.AdminChangeOrderStatus(SelectedOrder.OrderCode, status);
+            orderRepository.AdminChangeOrderStatus(SelectedOrder.OrderCode, status);
 
-            ActiveOrdersList = orderBll.GetActiveOrders();
-            OrdersList = orderBll.GetOrders();
+            ActiveOrdersList = orderRepository.GetActiveOrders();
+            OrdersList = orderRepository.GetOrders();
         }
+
+        #endregion
+
+        #region OrderDetalies
+
+        private ICommand seeDetaliesAboutCommand;
+        public ICommand SeeDetaliesAboutCommand
+        {
+            get
+            {
+                if (seeDetaliesAboutCommand == null)
+                {
+                    seeDetaliesAboutCommand = new RelayCommand(SeeDetaliesAbout);
+                }
+                return seeDetaliesAboutCommand;
+            }
+        }
+
+        private void SeeDetaliesAbout(object obj)
+        {
+            if (SelectedOrder == null)
+                return;
+
+            Dictionary<string, int> products = orderRepository.GetDetaliesAboutOrder(SelectedOrder.OrderCode);
+
+            var currentWindow = App.Current.MainWindow;
+
+            OrderDetaliesByAdminWindow orderDetaliesByAdminWindow = new OrderDetaliesByAdminWindow(products);
+            App.Current.MainWindow = orderDetaliesByAdminWindow;
+            App.Current.MainWindow.ShowDialog();
+
+            App.Current.MainWindow = currentWindow;
+        }
+
+        #endregion
     }
 }

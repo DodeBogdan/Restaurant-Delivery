@@ -16,7 +16,7 @@ namespace Derby_Pub.ViewModels
     class ViewOrdersClientViewModel : BaseVM
     {
         private User actualUser;
-        private readonly OrderBLL orderBll = new OrderBLL();
+        private readonly OrderRepository orderBll = new OrderRepository();
         public User ActualUser
         {
             get { return actualUser; }

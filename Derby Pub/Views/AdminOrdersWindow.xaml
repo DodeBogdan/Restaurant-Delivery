@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Derby_Pub.ViewModels"
         mc:Ignorable="d"
-        Title="AdminOrdersWindow" Height="671.6" Width="985.6">
+        Title="AdminOrdersWindow" Height="671.6" Width="1115.2">
 
     <Window.DataContext>
         <local:AdminOrdersViewModel/>
@@ -16,7 +16,7 @@
             <ImageBrush ImageSource="../Assets/BackgroundImage.jpg"></ImageBrush>
         </Grid.Background>
 
-        <Image Margin="747,320,-28.8,176.4" Source="../Assets/LogoDerby.png" Stretch="Fill"/>
+        <Image Margin="852,387,-0.2,109.4" Source="../Assets/LogoDerby.png" Stretch="Fill"/>
 
         <DataGrid HorizontalAlignment="Left" Height="200" Margin="11,63,0,0" VerticalAlignment="Top" Width="672" x:Name="ActiveOrders" CanUserResizeColumns="False" CanUserResizeRows="False" AutoGenerateColumns="False" Background="Transparent" ItemsSource="{Binding ActiveOrdersList}" SelectionMode="Single"
             SelectedItem="{Binding SelectedOrder}">
@@ -134,15 +134,28 @@
         </DataGrid>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Comenzi active" VerticalAlignment="Top" Height="46" Width="673" FontSize="30" TextAlignment="Center" FontWeight="Bold"/>
 
-        <TextBlock HorizontalAlignment="Left" Margin="11,274,0,0" TextWrapping="Wrap" Text="Comenzi" VerticalAlignment="Top" Height="46" Width="778" FontSize="30" TextAlignment="Center" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="11,274,0,0" TextWrapping="Wrap" Text="Comenzi" VerticalAlignment="Top" Height="46" Width="672" FontSize="30" TextAlignment="Center" FontWeight="Bold"/>
 
         <Button Content="Vezi detalii despre comanda:" HorizontalAlignment="Left" Margin="33,568,0,0" VerticalAlignment="Top" Width="340" Height="49" Background="Transparent" FontSize="23" FontWeight="Bold" Command="{Binding SeeDetaliesAboutCommand}"/>
 
-        <Button Content="Modifica starea comenzii" HorizontalAlignment="Left" Margin="711,63,0,0" VerticalAlignment="Top" Width="241" Height="49" Background="Transparent" FontSize="20" FontWeight="Bold" Command="{Binding ChangeStatusDetalies}"/>
-
-        <Button Content="Vezi detalii despre client" HorizontalAlignment="Left" Margin="707,157,0,0" VerticalAlignment="Top" Width="245" Height="50" FontSize="20" FontWeight="Bold" Background="Transparent" Command="{Binding SeeDetaliesAboutClientCommand}"/>
+        <Button Content="Modifica starea comenzii" HorizontalAlignment="Left" Margin="711,55,0,0" VerticalAlignment="Top" Width="241" Height="49" Background="Transparent" FontSize="20" FontWeight="Bold" Command="{Binding ChangeStatusDetalies}"/>
 
         <Button Content="Inapoi" HorizontalAlignment="Left" Margin="711,568,0,0" VerticalAlignment="Top" Width="241" Height="49" Background="Transparent" FontSize="30" FontWeight="Bold" x:Name="BackButton" Click="BackButton_Click"/>
+        <TextBlock HorizontalAlignment="Left" Margin="711,109,0,0" TextWrapping="Wrap" Text="Nume:" VerticalAlignment="Top" Height="50" Width="100" FontSize="25"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="711,159,0,0" TextWrapping="Wrap" Text="Prenume:" VerticalAlignment="Top" Height="50" Width="100" FontSize="24"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="711,215,0,0" TextWrapping="Wrap" Text="Telefon:" VerticalAlignment="Top" Height="50" Width="100" FontSize="25"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="711,265,0,0" TextWrapping="Wrap" Text="Adresa:" VerticalAlignment="Top" Height="50" Width="100" FontSize="25"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="816,109,0,0" TextWrapping="Wrap" Text="{Binding LastName}" VerticalAlignment="Top" Height="50" Width="266" FontSize="25"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="816,159,0,0" TextWrapping="Wrap" Text="{Binding FirstName}" VerticalAlignment="Top" Height="50" Width="266" FontSize="25"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="816,215,0,0" TextWrapping="Wrap" Text="{Binding Phone}" VerticalAlignment="Top" Height="50" Width="266" FontSize="25"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="816,265,0,0" TextWrapping="Wrap" Text="{Binding Adress}" VerticalAlignment="Top" Height="117" Width="266" FontSize="25"/>
 
     </Grid>
 </Window>

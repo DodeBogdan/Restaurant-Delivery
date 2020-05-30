@@ -10,7 +10,7 @@ namespace Derby_Pub.ViewModels
 {
     class MenuViewModel : BaseVM
     {
-        private readonly ProductsBLL productsBll = new ProductsBLL();
+        private readonly ProductRepository productsBll = new ProductRepository();
 
         private string menuName;
 
