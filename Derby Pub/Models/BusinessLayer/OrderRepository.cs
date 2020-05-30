@@ -1,10 +1,8 @@
-﻿using Derby_Pub.Helps;
-using Derby_Pub.Models.EntityLayer;
+﻿using Derby_Pub.Models.EntityLayer;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Documents;
 
 namespace Derby_Pub.Models.BusinessLayer
 {
@@ -34,7 +32,7 @@ namespace Derby_Pub.Models.BusinessLayer
             ObservableCollection<AdminViewOrders> list = new ObservableCollection<AdminViewOrders>();
 
             var query = (from order in restaurant.Orders
-                         join status in restaurant.States on order.StateID equals status.StateID 
+                         join status in restaurant.States on order.StateID equals status.StateID
                          where status.StateID != 4 && status.StateID != 5
                          select new
                          {
@@ -48,7 +46,7 @@ namespace Derby_Pub.Models.BusinessLayer
                          })
                          .OrderByDescending(x => x.Order_Time)
                          .ToList();
-                        
+
             foreach (var product in query)
             {
                 list.Add(new AdminViewOrders()
@@ -61,7 +59,7 @@ namespace Derby_Pub.Models.BusinessLayer
                     OrderDiscount = product.Discount,
                     OrderTransport = product.Transport_Cost,
                     OrderStatus = product.StateName
-                }) ;
+                });
             }
 
             return list;
@@ -127,11 +125,11 @@ namespace Derby_Pub.Models.BusinessLayer
             var x = restaurant.GetProductDetaliesAboutOrder(orderCode).ToList();
             var y = restaurant.GetMenuDetaliesAboutOrder(orderCode).ToList();
 
-            foreach(var product in x)
+            foreach (var product in x)
             {
                 products.Add(product.Name, (int)product.ProductCount);
             }
-            foreach(var product in y)
+            foreach (var product in y)
             {
                 products.Add(product.Name, (int)product.MenuCount);
             }
@@ -159,7 +157,7 @@ namespace Derby_Pub.Models.BusinessLayer
 
             currentOrder.StateID = stateId;
             restaurant.SaveChanges();
-                
+
         }
 
         internal double GetDiscountCost(int orderCode)

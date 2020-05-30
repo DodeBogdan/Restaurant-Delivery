@@ -70,7 +70,7 @@ namespace Derby_Pub.ViewModels
                 return;
             }
 
-            if(Number > NumberOfProducts)
+            if (Number > NumberOfProducts)
             {
                 MessageBox.Show("Introduceti o valoare mai mica!");
                 return;

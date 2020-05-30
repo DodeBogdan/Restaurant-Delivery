@@ -3,12 +3,7 @@ using Derby_Pub.Models;
 using Derby_Pub.Models.BusinessLayer;
 using Derby_Pub.Models.EntityLayer;
 using Derby_Pub.Views;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Derby_Pub.ViewModels

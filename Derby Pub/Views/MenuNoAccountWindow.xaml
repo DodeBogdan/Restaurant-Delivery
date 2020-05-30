@@ -93,7 +93,7 @@
             </ListView.View>
         </ListView>
 
-        <Image HorizontalAlignment="Left" Height="150" Margin="519,371,0,0" VerticalAlignment="Top" Width="200" Source="{Binding CurrentImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Image HorizontalAlignment="Left" Height="150" Margin="519,426,0,0" VerticalAlignment="Top" Width="200" Source="{Binding CurrentImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         <ComboBox HorizontalAlignment="Left" Margin="519,125,0,0" VerticalAlignment="Top" Width="120" Height="34" ItemsSource="{Binding TypeList}" SelectedIndex="0" SelectedItem="{Binding TypeSelected}"/>
     </Grid>

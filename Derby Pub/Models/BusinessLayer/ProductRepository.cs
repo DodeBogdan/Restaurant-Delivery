@@ -31,7 +31,7 @@ namespace Derby_Pub.Models.BusinessLayer
             var products = restaurant.Products
                 .Where(x => x.Total_Quantity < x.Quantity * AppConfigHelper.ProductLimit);
 
-            foreach(var product in products)
+            foreach (var product in products)
             {
                 list.Add(new SelectedProduct()
                 {
@@ -356,11 +356,11 @@ namespace Derby_Pub.Models.BusinessLayer
                         .Select(x => x.Total_Quantity / x.Quantity)
                         .FirstOrDefault();
                 default:
-                    return  (from menu in restaurant.Menus
-                                       join menu_product in restaurant.Menu_Product on menu.MenuID equals menu_product.FKMenuID
-                                       join products in restaurant.Products on menu_product.FKProductID equals products.ProductID
-                                       where menu.Name.Contains(name)
-                                       select products.Total_Quantity / products.Quantity)
+                    return (from menu in restaurant.Menus
+                            join menu_product in restaurant.Menu_Product on menu.MenuID equals menu_product.FKMenuID
+                            join products in restaurant.Products on menu_product.FKProductID equals products.ProductID
+                            where menu.Name.Contains(name)
+                            select products.Total_Quantity / products.Quantity)
                                        .Min();
             }
         }
@@ -399,7 +399,7 @@ namespace Derby_Pub.Models.BusinessLayer
                                             where menu.MenuID == menuId
                                             select product).ToList();
 
-                        foreach(var product in menuProducts)
+                        foreach (var product in menuProducts)
                         {
                             product.Total_Quantity -= product.Quantity;
                         }

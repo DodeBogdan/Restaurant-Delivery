@@ -1,18 +1,6 @@
 ﻿using Derby_Pub.Models;
 using Derby_Pub.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Derby_Pub.Views
 {
@@ -21,7 +9,7 @@ namespace Derby_Pub.Views
     /// </summary>
     public partial class ViewOrdersClientWindow : Window
     {
-        private User user;
+        private readonly User user;
         public ViewOrdersClientWindow(User user)
         {
             InitializeComponent();

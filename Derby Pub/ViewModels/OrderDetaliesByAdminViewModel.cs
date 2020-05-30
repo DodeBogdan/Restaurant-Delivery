@@ -1,12 +1,7 @@
 ﻿using Derby_Pub.Helps;
-using Derby_Pub.Models.BusinessLayer;
 using Derby_Pub.Models.EntityLayer;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Derby_Pub.ViewModels
 {
@@ -20,7 +15,7 @@ namespace Derby_Pub.ViewModels
             set
             {
                 products = value;
-                foreach(var d in Products)
+                foreach (var d in Products)
                 {
                     ProductList.Add(new SelectedProduct()
                     {

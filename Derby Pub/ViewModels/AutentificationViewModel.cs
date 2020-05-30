@@ -69,7 +69,7 @@ namespace Derby_Pub.ViewModels
                 App.Current.MainWindow = clientAccountWindow;
                 App.Current.MainWindow.Show();
             }
-            else 
+            else
             {
                 AdminAccountWindow adminAccountWindow = new AdminAccountWindow();
                 App.Current.MainWindow.Close();

@@ -136,7 +136,7 @@ namespace Derby_Pub.ViewModels
                 if (ProductSelected != null)
                 {
                     AllergenList = new ObservableCollection<string>(productRepository.GetAllergensByProductName(ProductSelected.Name));
-                    ImageList = productRepository.GetImagesFromProductName(ProductSelected.Name); 
+                    ImageList = productRepository.GetImagesFromProductName(ProductSelected.Name);
                 }
                 if (ImageList.Count != 0)
                     CurrentImage = ToImage(ImageList[0]);
