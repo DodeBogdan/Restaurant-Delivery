@@ -164,6 +164,7 @@
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AdminOrdersViewModel.cs" />
+    <Compile Include="ViewModels\AdminViewProductsViewModel.cs" />
     <Compile Include="ViewModels\ChangeOrderStatusViewModel.cs" />
     <Compile Include="ViewModels\OrderDetaliesByAdminViewModel.cs" />
     <Compile Include="ViewModels\ViewOrderDetaliesViewModel.cs" />
@@ -173,6 +174,9 @@
     </Compile>
     <Compile Include="Views\AdminOrdersWindow.xaml.cs">
       <DependentUpon>AdminOrdersWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AdminViewProductsWindow.xaml.cs">
+      <DependentUpon>AdminViewProductsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ChangeOrderStatusWindow.xaml.cs">
       <DependentUpon>ChangeOrderStatusWindow.xaml</DependentUpon>
@@ -191,6 +195,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AdminOrdersWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AdminViewProductsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

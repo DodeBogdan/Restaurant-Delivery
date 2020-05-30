@@ -40,5 +40,13 @@ namespace Derby_Pub.Views
             App.Current.MainWindow = adminOrdersWindow;
             App.Current.MainWindow.Show();
         }
+
+        private void SeeProductsButton_Click(object sender, RoutedEventArgs e)
+        {
+            AdminViewProductsWindow adminViewProductsWindow = new AdminViewProductsWindow();
+            App.Current.MainWindow.Close();
+            App.Current.MainWindow = adminViewProductsWindow;
+            App.Current.MainWindow.Show();
+        }
     }
 }

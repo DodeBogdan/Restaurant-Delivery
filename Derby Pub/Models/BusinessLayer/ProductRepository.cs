@@ -2,6 +2,7 @@
 using Derby_Pub.Models.EntityLayer;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Derby_Pub.Models.BusinessLayer
@@ -22,6 +23,26 @@ namespace Derby_Pub.Models.BusinessLayer
         {
             return restaurant.GetAllCategoryes().ToList();
         }
+
+        internal ObservableCollection<SelectedProduct> GetProductsWithLowQuantity()
+        {
+            ObservableCollection<SelectedProduct> list = new ObservableCollection<SelectedProduct>();
+
+            var products = restaurant.Products
+                .Where(x => x.Total_Quantity < x.Quantity * AppConfigHelper.ProductLimit);
+
+            foreach(var product in products)
+            {
+                list.Add(new SelectedProduct()
+                {
+                    Name = product.Name,
+                    Quantity = product.Total_Quantity
+                });
+            }
+
+            return list;
+        }
+
         internal List<byte[]> GetImagesFromProductName(string productName)
         {
             List<byte[]> images = restaurant.GetImagesByProductName(productName).ToList();
@@ -65,6 +86,17 @@ namespace Derby_Pub.Models.BusinessLayer
             productsDisplays.Sort((x, y) => x.Name.CompareTo(y.Name));
             return productsDisplays;
         }
+
+        internal void AddQuantityToProduct(string name, int count)
+        {
+            var querry = restaurant.Products
+                .Where(x => x.Name.Contains(name)).FirstOrDefault();
+
+            querry.Total_Quantity += count;
+
+            restaurant.SaveChanges();
+        }
+
         public List<ClientProductsDisplay> GetProductsContainingName(string category, string name)
         {
             var products = restaurant.GetProductByCategory(category)
@@ -313,6 +345,26 @@ namespace Derby_Pub.Models.BusinessLayer
 
             return productsDisplays;
         }
+
+        internal int GetAvailableProduct(string name, string productType)
+        {
+            switch (productType)
+            {
+                case "Preparat":
+                    return restaurant.Products
+                        .Where(x => x.Name.Contains(name))
+                        .Select(x => x.Total_Quantity / x.Quantity)
+                        .FirstOrDefault();
+                default:
+                    return  (from menu in restaurant.Menus
+                                       join menu_product in restaurant.Menu_Product on menu.MenuID equals menu_product.FKMenuID
+                                       join products in restaurant.Products on menu_product.FKProductID equals products.ProductID
+                                       where menu.Name.Contains(name)
+                                       select products.Total_Quantity / products.Quantity)
+                                       .Min();
+            }
+        }
+
         private void AddOrderProduct(int UniqueCode, List<ProductDetalies> productDetalies)
         {
             foreach (var d in productDetalies)
@@ -324,15 +376,36 @@ namespace Derby_Pub.Models.BusinessLayer
                         int productId = (from product in restaurant.Products where product.Name.Contains(d.Name) select product.ProductID).First();
                         int orderId = (from order in restaurant.Orders where order.UniqueCode == UniqueCode select order.OrderID).First();
                         restaurant.InsertIntoOrder_Product(orderId, productId);
+
+                        var querry = restaurant.Products
+                            .Where(x => x.ProductID == productId).First();
+
+                        querry.Total_Quantity -= querry.Quantity;
+
+                        restaurant.SaveChanges();
                     }
                 }
                 else
                 {
-                    for(int index = 0; index < d.Quantity; index++)
+                    for (int index = 0; index < d.Quantity; index++)
                     {
                         int menuId = (from menu in restaurant.Menus where menu.Name.Contains(d.Name) select menu.MenuID).First();
                         int orderId = (from order in restaurant.Orders where order.UniqueCode == UniqueCode select order.OrderID).First();
                         restaurant.InsertIntoOrder_Menu(orderId, menuId);
+
+                        var menuProducts = (from menu in restaurant.Menus
+                                            join menu_product in restaurant.Menu_Product on menu.MenuID equals menu_product.FKMenuID
+                                            join product in restaurant.Products on menu_product.FKProductID equals product.ProductID
+                                            where menu.MenuID == menuId
+                                            select product).ToList();
+
+                        foreach(var product in menuProducts)
+                        {
+                            product.Total_Quantity -= product.Quantity;
+                        }
+
+                        restaurant.SaveChanges();
+
                     }
                 }
             }

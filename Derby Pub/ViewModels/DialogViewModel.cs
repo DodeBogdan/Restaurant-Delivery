@@ -6,8 +6,31 @@ namespace Derby_Pub.ViewModels
 {
     class DialogViewModel : BaseVM
     {
-        private string noProducts;
+        private int numberOfProducts;
 
+        public int NumberOfProducts
+        {
+            get { return numberOfProducts; }
+            set
+            {
+                numberOfProducts = value;
+                NumberOfProductsText = $"/{NumberOfProducts}";
+            }
+        }
+        private string numberOfProductsString;
+
+        public string NumberOfProductsText
+        {
+            get { return numberOfProductsString; }
+            set
+            {
+                numberOfProductsString = value;
+                OnPropertyChanged(nameof(NumberOfProductsText));
+            }
+        }
+
+
+        private string noProducts;
         public string NoProducts
         {
             get { return noProducts; }
@@ -47,6 +70,11 @@ namespace Derby_Pub.ViewModels
                 return;
             }
 
+            if(Number > NumberOfProducts)
+            {
+                MessageBox.Show("Introduceti o valoare mai mica!");
+                return;
+            }
             App.Current.MainWindow.Close();
 
         }

@@ -11,6 +11,7 @@ namespace Derby_Pub.Models.EntityLayer
         public DateTime OrderDate { get; set; }
         public int OrderCode { get; set; }
         public double OrderPrice { get; set; }
+        public double OrderDiscount { get; set; }
         public double OrderTransport { get; set; }
         public double OrderTotalCost { get; set; }
         public DateTime OrderEstimatedTime { get; set; }

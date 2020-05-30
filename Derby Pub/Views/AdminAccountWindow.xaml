@@ -19,6 +19,6 @@
         
         <Button Content="Modifica informatiile" HorizontalAlignment="Left" Margin="78,197,0,0" VerticalAlignment="Top" Width="300" Height="75" FontSize="30" Name="InformationChangeButton"/>
         
-        <Button Content="Vezi preparate" FontSize="35" HorizontalAlignment="Left" Margin="78,357,0,0" VerticalAlignment="Top" Width="300" Height="75" x:Name="SeeProductsButton"/>
+        <Button Content="Vezi preparate" FontSize="35" HorizontalAlignment="Left" Margin="78,357,0,0" VerticalAlignment="Top" Width="300" Height="75" x:Name="SeeProductsButton" Click="SeeProductsButton_Click"/>
     </Grid>
 </Window>

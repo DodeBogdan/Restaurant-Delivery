@@ -15,7 +15,7 @@ namespace Derby_Pub.ViewModels
     class MenuWithClientAccountViewModel : BaseVM
     {
         private readonly List<ProductDetalies> productsName = new List<ProductDetalies>();
-        private readonly ProductRepository productsBll = new ProductRepository();
+        private readonly ProductRepository productRepository = new ProductRepository();
 
         #region User
 
@@ -49,7 +49,7 @@ namespace Derby_Pub.ViewModels
         {
             get
             {
-                categoryList = productsBll.GetAllCategoryes();
+                categoryList = productRepository.GetAllCategoryes();
                 return categoryList;
             }
             set
@@ -67,7 +67,7 @@ namespace Derby_Pub.ViewModels
             set
             {
                 categorySelected = value;
-                ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productsBll.GetProductsByCategory(categorySelected));
+                ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productRepository.GetProductsByCategory(categorySelected));
                 OnPropertyChanged("CategorySelected");
             }
         }
@@ -135,8 +135,8 @@ namespace Derby_Pub.ViewModels
 
                 if (ProductSelected != null)
                 {
-                    AllergenList = new ObservableCollection<string>(productsBll.GetAllergensByProductName(ProductSelected.Name));
-                    ImageList = productsBll.GetImagesFromProductName(ProductSelected.Name); 
+                    AllergenList = new ObservableCollection<string>(productRepository.GetAllergensByProductName(ProductSelected.Name));
+                    ImageList = productRepository.GetImagesFromProductName(ProductSelected.Name); 
                 }
                 if (ImageList.Count != 0)
                     CurrentImage = ToImage(ImageList[0]);
@@ -218,10 +218,10 @@ namespace Derby_Pub.ViewModels
                     switch (TypeSelected)
                     {
                         case "Preparat:":
-                            ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productsBll.GetProductsContainingName(categorySelected, SearchText));
+                            ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productRepository.GetProductsContainingName(categorySelected, SearchText));
                             break;
                         default:
-                            ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productsBll.GetProductsContainingAllergen(categorySelected, SearchText));
+                            ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productRepository.GetProductsContainingAllergen(categorySelected, SearchText));
                             break;
                     }
                     break;
@@ -229,10 +229,10 @@ namespace Derby_Pub.ViewModels
                     switch (TypeSelected)
                     {
                         case "Preparat:":
-                            ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productsBll.GetProductsNotContainingName(categorySelected, SearchText));
+                            ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productRepository.GetProductsNotContainingName(categorySelected, SearchText));
                             break;
                         default:
-                            ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productsBll.GetProductsWithoutAllergens(categorySelected, SearchText));
+                            ClientProductsList = new ObservableCollection<ClientProductsDisplay>(productRepository.GetProductsWithoutAllergens(categorySelected, SearchText));
 
                             break;
                     }
@@ -397,8 +397,9 @@ namespace Derby_Pub.ViewModels
         private void AddToCartMethod(object obj)
         {
             Window currentWindow = App.Current.MainWindow;
+            int numberOfProduct = productRepository.GetAvailableProduct(ProductSelected.Name, ProductSelected.ProductType);
 
-            DialogWindow dialogWindow = new DialogWindow();
+            DialogWindow dialogWindow = new DialogWindow(numberOfProduct);
 
             App.Current.MainWindow = dialogWindow;
             App.Current.MainWindow.ShowDialog();
@@ -410,6 +411,7 @@ namespace Derby_Pub.ViewModels
                 return;
 
             bool contains = false;
+
             foreach (var product in productsName)
             {
                 if (product.Name == ProductSelected.Name)
@@ -418,6 +420,7 @@ namespace Derby_Pub.ViewModels
                     contains = true;
                 }
             }
+
             if (!contains)
             {
                 productsName.Add(new ProductDetalies()

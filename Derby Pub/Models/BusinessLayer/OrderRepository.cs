@@ -58,6 +58,7 @@ namespace Derby_Pub.Models.BusinessLayer
                     OrderEstimatedTime = product.Estimated_Time,
                     OrderPrice = product.Total_Price + product.Discount - product.Transport_Cost,
                     OrderTotalCost = product.Total_Price,
+                    OrderDiscount = product.Discount,
                     OrderTransport = product.Transport_Cost,
                     OrderStatus = product.StateName
                 }) ;
@@ -110,6 +111,7 @@ namespace Derby_Pub.Models.BusinessLayer
                     OrderEstimatedTime = product.Estimated_Time,
                     OrderPrice = product.Total_Price + product.Discount - product.Transport_Cost,
                     OrderTotalCost = product.Total_Price,
+                    OrderDiscount = product.Discount,
                     OrderTransport = product.Transport_Cost,
                     OrderStatus = product.StateName
                 });

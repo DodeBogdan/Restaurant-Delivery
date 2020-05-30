@@ -8,9 +8,10 @@ namespace Derby_Pub.Views
     /// </summary>
     public partial class DialogWindow : Window
     {
-        public DialogWindow()
+        public DialogWindow(int numberOfProducts)
         {
             InitializeComponent();
+            ((DialogViewModel)this.DataContext).NumberOfProducts = numberOfProducts;
         }
 
         public int GetNoProducts()

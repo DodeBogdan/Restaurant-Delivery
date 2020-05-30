@@ -17,5 +17,7 @@ namespace Derby_Pub.Helps
         public static int OrdersToDiscount = int.Parse(ConfigurationManager.AppSettings["OrdersToDiscount"]);
 
         public static int OrdersInTimeInterval = int.Parse(ConfigurationManager.AppSettings["OrdersInTimeInterval"]);
+
+        public static int ProductLimit = int.Parse(ConfigurationManager.AppSettings["ProductsLimit"]);
     }
 }
