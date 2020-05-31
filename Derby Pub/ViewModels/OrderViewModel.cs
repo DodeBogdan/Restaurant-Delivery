@@ -4,7 +4,6 @@ using Derby_Pub.Models.BusinessLayer;
 using Derby_Pub.Models.EntityLayer;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows;
 using System.Windows.Input;
 
 namespace Derby_Pub.ViewModels
@@ -155,8 +154,8 @@ namespace Derby_Pub.ViewModels
 
         private void BuyProducts(object obj)
         {
-            MessageBox.Show("BUY");
             productsBLL.BuyProducts(ActualUser.UserID, Transport, Discount, sum, ProductDetalies);
+            App.Current.MainWindow.Close();
         }
     }
 }

@@ -461,6 +461,8 @@ namespace Derby_Pub.ViewModels
             App.Current.MainWindow.ShowDialog();
 
             App.Current.MainWindow = currentWindow;
+
+            productsName.Clear();
         }
 
         private ICommand removeProductsCommand;
